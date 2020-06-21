@@ -1,0 +1,65 @@
+import java.util.*;
+public class Solution {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int grd[][]=new int[][] {{1,2}};//{{2,1,1},{1,1,0},{0,1,1}};
+		System.out.print(orangesRotting(grd));
+	}
+	
+	public static int orangesRotting(int[][] grid) {
+        
+		Queue<int[]> st = new LinkedList<>();
+		int v=0,n=grid.length,m=grid[0].length;
+		int vis[][]=new int[n][m];
+
+		for(int i=0;i<n;i++) {
+			for(int j=0;j<m;j++) {
+				if(grid[i][j]==2)
+					st.add(new int[]{i,j});
+				else if(grid[i][j]==1)
+					v++;
+			}
+		}
+		
+		st.add(new int[] {-1,0});
+		int ct=0,cv=0;
+	
+		while(true) {
+			int ar[]= st.poll();
+			
+			if(ar[0]==-1) {
+				if(st.size()==0)
+					break;
+				ct++;
+				st.add(new int[] {-1,ct});
+			}
+			else {
+				int ix=ar[0],jx=ar[1];
+				vis[ix][jx]=1;
+
+				if(ix>=1&&vis[ix-1][jx]!=1&&grid[ix-1][jx]==1) {
+					vis[ix-1][jx]=1;cv++;
+					st.add(new int[] {ix-1,jx});
+				}
+				if(jx>=1&&vis[ix][jx-1]!=1&&grid[ix][jx-1]==1) {
+					vis[ix][jx-1]=1;cv++;
+					st.add(new int[] {ix,jx-1});
+				}
+				if(ix<n-1&&vis[ix+1][jx]!=1&&grid[ix+1][jx]==1) {
+					vis[ix+1][jx]=1;cv++;
+					st.add(new int[] {ix+1,jx});
+				}
+				if(jx<m-1&&vis[ix][jx+1]!=1&&grid[ix][jx+1]==1) {
+					vis[ix][jx+1]=1;cv++;
+					st.add(new int[] {ix,jx+1});
+				}
+					
+			}
+			
+		}
+		
+		if(cv!=v)
+			return -1;
+		return ct;
+    }
+}
