@@ -1,0 +1,57 @@
+import java.util.*;
+class Solution {
+	
+	//Bit manipulation 2. Less efficient
+		public int singleNumber1(int[] nums) {
+			int ones=0,twos=0,thrice=0;
+			//GET decimal format for bit representation
+			for(int nx:nums) {
+				twos=twos|(ones&nx);//find bits present twice common in new num and ones
+				ones = ones^nx;//if bit in ones and new, remove.
+				thrice=(ones&twos);
+
+				//twos may have bits twice and thrice. ones also
+				twos&=(~thrice);				
+				ones&=(~thrice);
+			}
+			
+			return ones;
+		}
+
+	
+	//Bit manipulation 1. Less efficient
+	public int singleNumberbm1(int[] nums) {
+		int bits[]=new int[32];
+		int res=0;
+		
+		for(int i=0;i<32;i++) {
+			for(int nx:nums) {
+				bits[i]+=nx>>i&1;
+				bits[i]%=3;
+			}
+		}
+		
+		//GET decimal format for bit representation
+		for(int i=0;i<32;i++) 
+			res|=(bits[i]<<i);
+		
+		return res;
+	}
+	
+	//HashMap solution
+    public int singleNumberhm(int[] nums) {
+        HashMap<Integer,Integer> hm = new HashMap<>();
+        for(int i=0;i<nums.length;i++){
+            int v=1;
+            if(hm.containsKey(nums[i]))
+                v+=hm.get(nums[i]);
+            if(v==3)
+                hm.remove(nums[i]);
+            else
+                hm.put(nums[i],v);
+        }
+        
+        Iterator it = hm.keySet().iterator();
+        return (int)it.next();
+    }
+}
