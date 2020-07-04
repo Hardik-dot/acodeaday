@@ -1,0 +1,39 @@
+class Solution {
+    public int nthUglyNumber(int n) {
+        int arr[]=new int[1700];
+        arr[1]=1;
+        int twos=1,threes=1,five=1,ct=2;
+        
+        while(ct<=n){
+            int v = Math.min(arr[twos]*2,Math.min(arr[threes]*3,arr[five]*5));
+            arr[ct++]=v;
+            if(v==arr[twos]*2) ++twos;
+            if(v==arr[threes]*3) ++threes;
+            if(v==arr[five]*5) ++five;
+        }
+        return arr[n];
+    }
+    
+    //naive
+    public int nthUglyNumberx(int n) {
+        if(n<=6)
+            return n;
+        HashSet<Integer> lix = new HashSet<Integer>();
+        lix.add(1);lix.add(2);lix.add(3);
+        lix.add(4);lix.add(5);lix.add(6);
+        int i=7,ct=7;
+        
+        while(ct<=n){
+            if(i%2==0||i%3==0||i%5==0){
+                if(i%2==0&&lix.contains(i/2))
+                {lix.add(i);ct++;}
+                else if(i%3==0&&lix.contains(i/3))
+                {lix.add(i);ct++;}
+                else if(i%5==0&&lix.contains(i/5))
+                {lix.add(i);ct++;}
+            }
+            i++;
+        }
+        return i-1;
+    }
+}
