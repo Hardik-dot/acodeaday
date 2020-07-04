@@ -1,0 +1,22 @@
+class Solution {
+    public int numSquares(int n) {
+        //square precompute
+        int sqr=(int)Math.sqrt(n)+1;
+        int sqnum[]=new int[sqr];
+        for(int i = 1 ; i<sqr;i++)
+            sqnum[i]=i*i;
+        
+        int dp[]=new int[n+1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 0;
+        
+        for(int i=1;i<=n;i++){
+            for(int s=1;s<sqr;s++){
+                if(i<sqnum[s])
+                    break;
+                dp[i]=Math.min(dp[i],dp[i-sqnum[s]]+1);
+            }
+        }
+        return dp[n];
+    }
+}
