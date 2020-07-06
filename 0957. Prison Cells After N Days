@@ -1,0 +1,84 @@
+import java.util.*;
+class Solution {
+
+	public int[] prisonAfterNDays(int[] cells, int N) {
+        HashMap<String,Integer> hm = new HashMap<>();
+		HashMap<Integer,String> hma = new HashMap<>();
+		int temp[][]=new int[2][8];
+		
+        hm.put(Arrays.toString(cells), 0);
+        hma.put(0, Arrays.toString(cells));
+
+        int arx[]=new int[8];
+        for(int i=1;i<7;i++){
+            if(cells[i-1]==cells[i+1])
+                temp[1][i]=1;
+            else
+                temp[1][i]=0;
+        }
+
+        hm.put(Arrays.toString(temp[1]), 1);
+        hma.put(1,Arrays.toString(temp[1]));
+        temp[0][0]=temp[0][7]=0;
+        int olday=0,newday=-1;
+        for(int j=2;j<=N;j++){
+            for(int i=1;i<7;i++){
+                if(j%2==0){
+                    if(temp[1][i-1]==temp[1][i+1])
+                        temp[0][i]=1;
+                    else
+                        temp[0][i]=0;
+                }else{
+                    if(temp[0][i-1]==temp[0][i+1])
+                        temp[1][i]=1;
+                    else
+                        temp[1][i]=0;
+                }
+            }
+            if(j%2==0){
+                if(hm.containsKey(Arrays.toString(temp[0]))==true){
+                    olday=hm.get(Arrays.toString(temp[0]));
+                    arx=temp[0];
+                    newday=j;
+                    break;
+                }else 
+                	{hm.put(Arrays.toString(temp[0]),j);hma.put(j,Arrays.toString(temp[0]));}
+                    
+            }
+            else{
+                if(hm.containsKey(Arrays.toString(temp[1]))){
+                    olday=hm.get(Arrays.toString(temp[1]));
+                    arx=temp[1];
+                    newday=j;
+                    break;
+                }else 
+                	{hm.put(Arrays.toString(temp[1]),j);hma.put(j,Arrays.toString(temp[1]));}
+            }
+        }
+
+        if(newday!=-1){
+        	int dif=newday-olday;
+            int df = (N-newday)/dif;
+            
+            newday+=df*dif;
+            if(newday==N)
+                return arx;
+            
+            olday+= N - newday;;
+            int[] st = new int[8];
+            int iv=0;
+            String vc = hma.get(olday);
+            for(int ix=0;ix<vc.length();ix++)
+            	if(vc.charAt(ix)!='['&&vc.charAt(ix)!=']'&&vc.charAt(ix)!=','&&vc.charAt(ix)!=' ') {
+            		st[iv++]=vc.charAt(ix)-'0';
+            	}
+            return st;
+            
+        }
+        
+        if(N%2==0)
+            return temp[0];
+        return temp[1];
+    }
+
+}
