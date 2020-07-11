@@ -1,0 +1,27 @@
+class Solution {
+    /* global valiable and local have same time complexity*/
+    //static HashSet<List<Integer>> hs = new HashSet<>();
+    //static List<List<Integer>> res = new LinkedList<List<Integer>>();
+    
+    public static void tempo(int nums[],int c,List<Integer> lix,List<List<Integer>> res){
+        //no duplicates so no need to check for redundant
+        //hs.add(new ArrayList(lix));
+        res.add(new ArrayList(lix));
+        for(;c<nums.length;c++){
+            lix.add(nums[c]);
+            tempo(nums,c+1,lix,res);
+            lix.remove(lix.size()-1);
+        }
+        return;
+    }
+    
+    public List<List<Integer>> subsets(int[] nums) {
+        //Arrays.sort(nums);
+        //hs.clear();
+        //res.clear();
+        List<List<Integer>> res = new LinkedList<List<Integer>>();
+        tempo(nums,0,new LinkedList<Integer>(),res);
+        
+        return res;
+    }
+}
