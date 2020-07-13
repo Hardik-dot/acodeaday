@@ -1,0 +1,44 @@
+ /*Initial appraoch chosen was to do a level order trav but that would be incorrect as all leaves node may not be at same level.
+ *        1       expected  [[4,5,3],[2],[1]]
+ *       / \      lvl order [[4,5],[2,3][1]] -> wrong.
+ *      2   3     
+ *     / \        Hence use height algo. See below
+ *    4   5 
+ */
+ 
+class Solution {
+    
+    public static int ht(TreeNode root,List<List<Integer>> res){
+        if(root==null)
+            return 0;
+        int htx = Math.max(ht(root.left,res),ht(root.right,res));
+        if(res.size()<=htx)
+            res.add(htx,new LinkedList<Integer>());
+        res.get(htx).add(root.val);
+        return htx+1;
+    }
+    
+    public List<List<Integer>> findLeaves(TreeNode root) {
+        
+        List<List<Integer>> res = new LinkedList<List<Integer>>();
+        int hit = ht(root,res);
+        return res;
+        
+    }
+}
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
