@@ -1,0 +1,44 @@
+class Solution {
+    
+    public boolean auxi(int v,Stack<Integer> vis,Stack<Integer> sot, int n, int[][] pre,List<Integer>[] li){
+        //not in vis and not in sot-> continue
+        //in vis and not in sot-> cycle
+        //in both -> ok
+        if(vis.contains(v)&&sot.contains(v))
+            return true;
+        if(vis.contains(v)&&!sot.contains(v))
+            return false;
+        vis.add(v);
+        for(int i=0;i<li[v].size();i++){
+            boolean rest = auxi(li[v].get(i),vis,sot,n,pre,li);
+            if(rest==false)
+                return rest;
+        }
+        sot.add(v);
+        return true;
+    }
+    
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        Stack<Integer> vis = new Stack<>();
+        Stack<Integer> sot = new Stack<>();
+        
+        List<Integer>[] li = new ArrayList[numCourses];
+        for(int i=0;i<numCourses;i++)
+            li[i]=new ArrayList<>();
+        for(int i=0;i<prerequisites.length;i++){
+            li[prerequisites[i][0]].add(prerequisites[i][1]);
+        }
+            
+
+        for(int i=0;i<numCourses;i++){
+            boolean v = auxi(i,vis,sot,numCourses,prerequisites,li);
+            if(v==false)
+                return v;
+        }
+        
+        if(sot.size()==numCourses)
+            return true;
+        return false;
+            
+    }
+}
