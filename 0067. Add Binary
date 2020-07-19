@@ -1,0 +1,30 @@
+class Solution {
+    public String addBinary(String a, String b) {
+        int i=a.length()-1,j=b.length()-1;
+        int c=0;
+        StringBuilder sc =new StringBuilder();
+        while(i>=0&&j>=0){
+            int v = a.charAt(i)-'0' + b.charAt(j)-'0'+c;
+            sc.append(v%2);
+            c=v/2;
+            i--;j--;
+        }
+        
+        while(i>=0){
+            int v = a.charAt(i)-'0'+c;
+            sc.append(v%2);
+            c=v/2;
+            i--;
+        }
+        
+        while(j>=0){
+            int v = b.charAt(j)-'0'+c;
+            sc.append(v%2);
+            c=v/2;
+            j--;
+        }
+        if(c%2==1)
+            sc.append('1');
+        return sc.reverse().toString();
+    }
+}
