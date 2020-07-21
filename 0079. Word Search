@@ -1,0 +1,33 @@
+class Solution {
+    static boolean found = false;
+    public void auxe(char[][] board, String word,int i,int j,int k,boolean vis[][]){
+        int n = board.length, m = board[0].length;
+        if(i<0||i>=n||j<0||j>=m||k>=word.length()||vis[i][j]==true||found==true)
+            return;
+        if(word.charAt(k)==board[i][j]){
+            if(k==word.length()-1){
+                found = true;
+                return;
+            }
+            vis[i][j]=true;
+            auxe(board,word,i-1,j,k+1,vis);
+            auxe(board,word,i+1,j,k+1,vis);
+            auxe(board,word,i,j-1,k+1,vis);
+            auxe(board,word,i,j+1,k+1,vis);
+            vis[i][j]=false;
+        }
+            
+    }
+    
+    public boolean exist(char[][] board, String word) {
+        int n = board.length, m = board[0].length;
+        boolean vis[][]=new boolean[n][m];
+        found = false;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                auxe(board,word,i,j,0,vis);
+            }
+        }
+        return found;
+    }
+}
