@@ -3,6 +3,8 @@
  * It could be due to -> store.add(new LinkedList<Integer>(st));
 */
 
+//Visited array not used because of Acyclic graph mentioned. For cyclic graphs use visited array.
+
 class Solution {
     
     public void auxe(int[][] graph,List<List<Integer>> store,LinkedList<Integer> st, int c){
