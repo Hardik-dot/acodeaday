@@ -1,0 +1,51 @@
+class Solution {
+    int i = 0;
+    public String openbkt(String s){
+        StringBuilder sb = new StringBuilder();
+        int num=0;
+        while(s.charAt(i)!=']'){
+            if(Character.isLetter(s.charAt(i))){
+                sb.append(s.charAt(i));
+            }
+            else if(Character.isDigit(s.charAt(i))){
+                num=num*10+(s.charAt(i)-'0');
+            }
+            else if(s.charAt(i)=='['){
+                i++;
+                String sx = openbkt(s);
+                //add str num times
+                for(int k=0;k<num;k++)
+                    sb.append(sx);
+                //reset num
+                num=0;
+            }
+            i++;
+        }
+        return sb.toString();
+    }
+    
+    public String decodeString(String s) {
+        StringBuilder sb = new StringBuilder();
+        int num=0;
+        while(i<s.length()){
+            if(Character.isLetter(s.charAt(i))){
+                sb.append(s.charAt(i));
+            }
+            else if(Character.isDigit(s.charAt(i))){
+                num=num*10+(s.charAt(i)-'0');
+            }
+            else if(s.charAt(i)=='['){
+                i++;
+                String sx = openbkt(s);
+                //add str num times
+                for(int k=0;k<num;k++)
+                    sb.append(sx);
+                //reset num
+                num=0;
+            }
+
+            i++;
+        }
+        return sb.toString();
+    }
+}
