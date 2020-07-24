@@ -1,0 +1,28 @@
+/* Store as LL took 3 sec. 
+ * Store as Stack took 4 sec.
+ * It could be due to -> store.add(new LinkedList<Integer>(st));
+*/
+
+class Solution {
+    
+    public void auxe(int[][] graph,List<List<Integer>> store,LinkedList<Integer> st, int c){
+        st.add(c);
+        if(c==graph.length-1){
+            store.add(new LinkedList<Integer>(st));
+            st.removeLast();
+            return;
+        }
+        int m = graph[c].length;
+        for(int i=0;i<m;i++)
+            auxe(graph,store,st,graph[c][i]);
+        st.removeLast();
+    }
+    
+    public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
+        int n = graph.length;
+        List<List<Integer>> store = new LinkedList<>();
+        LinkedList<Integer> st = new LinkedList<>();
+        auxe(graph,store,st,0);
+        return store;       
+    }
+}
