@@ -1,0 +1,18 @@
+class Solution {
+    public int sumOfDigits(int[] A) {
+        int res=0,mie = Integer.MAX_VALUE;
+        for(int i=0;i<A.length;i++){
+            if(A[i]<mie)
+                mie=A[i];
+        }
+        
+        while(mie>0){
+            res+=mie%10;
+            mie=mie/10;
+        }
+        
+        if(res%2==0)
+            return 1;
+        return 0;
+    }
+}
