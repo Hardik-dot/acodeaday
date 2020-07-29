@@ -1,0 +1,24 @@
+class Solution {
+    public int maxProfit(int[] prices) {
+        int low[]=new int[prices.length];
+        int high[]=new int[prices.length];
+        int mino = Integer.MAX_VALUE, maxo = Integer.MIN_VALUE;
+        for(int i=0,j=prices.length-1;i<prices.length;i++,j--){
+            if(prices[i]<mino){
+                mino = prices[i];
+            }
+            low[i]=mino;
+            if(prices[j]>maxo){
+                maxo = prices[j];
+            }
+            high[j]=maxo;
+        }
+        
+        int dif=0;
+        for(int i=0;i<prices.length;i++){
+            if(dif<high[i]-low[i])
+                dif=high[i]-low[i];
+        }
+        return dif;
+    }
+}
