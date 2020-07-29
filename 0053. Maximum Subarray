@@ -1,0 +1,18 @@
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int maxsum=nums[0],sumtill=nums[0];
+        for(int i=1;i<nums.length;i++){
+            if(nums[i]<sumtill+nums[i]){
+                sumtill+=nums[i];
+            }
+            else
+                sumtill=nums[i];
+
+            if(maxsum<sumtill){
+                maxsum=sumtill;
+            }
+                
+        }
+        return maxsum;
+    }
+}
