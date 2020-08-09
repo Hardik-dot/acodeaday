@@ -1,0 +1,42 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int closestValue(TreeNode root, double target) {
+        TreeNode curr=root;
+        double ans = Double.MAX_VALUE;int rv = 0;
+        while(curr!=null){
+            double c = Math.abs(target-root.val);
+            if(c<ans){
+                ans=c;
+                rv = root.val;
+            }
+            if(c==0.0)
+                return root.val;
+            if(target<root.val){              
+                if(root.left==null)
+                    return rv;
+                root=root.left;
+            }
+            else{                
+                if(root.right==null)
+                    return rv;
+                root=root.right;
+            }
+        }
+        
+        return rv;
+    }
+}
