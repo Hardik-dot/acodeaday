@@ -1,0 +1,14 @@
+class Solution {
+    public int titleToNumber(String s) {
+        StringBuilder y = new StringBuilder(s);
+        y = y.reverse();
+        //String y = s.reverse();
+        int r=0;
+        int i=0;
+        while(i<s.length()){
+            r=r+(int)(((int)y.charAt(i)-'A'+1)*Math.pow(26,i));
+            i++;
+        }
+        return r;
+    }
+}
