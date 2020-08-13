@@ -1,0 +1,33 @@
+class Solution {
+    //Sliding window 
+    public int dietPlanPerformance(int[] calories, int k, int lower, int upper) {
+        int i=0,res=0,sum = 0;
+        while(i<k){
+            sum+=calories[i];
+            i++;
+        }
+        if(sum>upper) res++;
+        if(sum<lower) res--;
+        
+        while(i<calories.length){
+            sum=sum+calories[i]-calories[i-k];
+            if(sum>upper) res++;
+            if(sum<lower) res--;
+            i++;
+        }
+        return res;
+    }
+    
+    public int dietPlanPerformance2(int[] calories, int k, int lower, int upper) {
+        int res=0;
+        for(int i=0;i<=calories.length-k;i++){
+            int sum=0;
+            for(int j=i;j<i+k&&j<calories.length;j++){
+                sum+=calories[j];
+            }
+            if(sum>upper) res++;
+            if(sum<lower) res--;
+        }
+        return res;
+    }
+}
