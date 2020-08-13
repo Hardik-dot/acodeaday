@@ -1,0 +1,24 @@
+class Solution {
+    List<List<Integer>> li = new ArrayList<>();
+    void aux(int[] candidates, int target, List<Integer> temp,int ix,int til,int k){
+        if(til==target&&temp.size()==k){   
+            li.add(new ArrayList<Integer>(temp));
+            return;
+        }
+        
+        for(int i=ix+1;i<candidates.length;i++){
+            if(til+candidates[i]>target)
+                return;
+            temp.add(candidates[i]);
+            aux(candidates,target,temp,i,til+candidates[i],k);
+            temp.remove(temp.size()-1);
+
+        }
+    }
+    
+    public List<List<Integer>> combinationSum3(int k, int target) {
+        int candidates[] = new int[]{1,2,3,4,5,6,7,8,9};
+        aux(candidates,target,new ArrayList<Integer>(),-1,0,k);
+        return li;
+    }
+}
