@@ -1,0 +1,26 @@
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        if(s.length()!=t.length())
+            return false;
+        int[] car = new int[128];
+        for(int i=0;i<s.length();i++){
+            car[s.charAt(i)]++;
+            car[t.charAt(i)]--;
+        }
+        
+        for(int i=0;i<128;i++)
+            if(car[i]!=0) return false;
+        return true;
+    
+    }
+    //3mns
+    public boolean isAnagram1(String s, String t) {
+        char[] c1 = s.toCharArray();
+        char[] c2 = t.toCharArray();
+        Arrays.sort(c1);Arrays.sort(c2);
+        String s1 = new String(c1),s2 = new String(c2);
+        if(s1.compareTo(s2)==0)
+            return true;
+        return false;
+    }
+}
