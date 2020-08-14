@@ -1,0 +1,25 @@
+class Solution {
+    public int longestPalindrome(String s) {
+        HashMap<Character,Integer> hm = new HashMap<>();
+        StringBuilder sb = new StringBuilder();
+        for(int i=0;i<s.length();i++){
+            char c = s.charAt(i);
+            if(hm.containsKey(c)){
+                int v = hm.get(c)+1;
+                if(v==1){
+                    hm.put(c,1);
+                }else{
+                    sb.append(c);
+                    hm.put(c,0);
+                }
+            }
+            else
+                hm.put(c,1);
+        }
+        
+        if(sb.length()*2==s.length())
+        return sb.length()*2;
+        
+        return sb.length()*2+1;
+    }
+}
