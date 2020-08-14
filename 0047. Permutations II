@@ -1,0 +1,29 @@
+class Solution {
+    List<List<Integer>> lix = new ArrayList<List<Integer>>();
+    HashSet<List<Integer>> hs = new HashSet<>();
+    
+    public void auxper1(List<Integer> tmp, int ix){
+        if(ix==tmp.size()&&!hs.contains(tmp)){
+            lix.add(new ArrayList<Integer>(tmp));
+            hs.add(new ArrayList<Integer>(tmp));
+            return;
+        }
+
+        for(int i=ix;i<tmp.size();i++){
+            Collections.swap(tmp,ix,i);
+            if(!hs.contains(tmp)){
+                auxper1(tmp,ix+1);
+                hs.add(tmp);
+            }
+            Collections.swap(tmp,ix,i);
+        }
+    }
+    
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        List<Integer> nums_lst = new ArrayList<Integer>();
+        for (int num : nums)
+            nums_lst.add(num);
+        auxper1(nums_lst, 0);
+        return lix;    
+    }
+}
