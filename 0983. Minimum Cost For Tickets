@@ -1,0 +1,26 @@
+class Solution {
+    int dp1[]=new int[366];
+    Set<Integer> dayset;
+    public int auxtra(int []costs,int d){
+        if(d>365)
+            return 0;
+        if(dp1[d]!=0)
+            return dp1[d];
+        int a;
+        if(dayset.contains(d)){
+            a=Math.min(auxtra(costs,d+7)+costs[1],auxtra(costs,d+30)+costs[2]);
+            a=Math.min(auxtra(costs,d+1)+costs[0],a);
+        }
+        else
+            a=auxtra(costs,d+1);
+        dp1[d]=a;
+        return a;
+    }
+    
+    
+    public int mincostTickets(int[] days, int[] costs) {
+        dayset = new HashSet();
+        for (int d: days) dayset.add(d);
+        return auxtra(costs,1);
+    }
+}
