@@ -1,0 +1,23 @@
+class Solution {
+    public int rob(int[] nums) {
+
+        if(nums.length==0) return 0;
+        if(nums.length==1) return nums[0];
+        return Math.max(aux(nums,0,nums.length-1),aux(nums,1,nums.length));
+
+        
+    }
+    
+    public int aux(int[] nums,int l,int r){
+        int dp[]=new int[nums.length+2];
+        for(int i=l;i<r;i++){
+            if(i==l)
+                dp[i]=nums[i];
+            else if(i==l+1)
+                dp[i]=Math.max(nums[l],nums[l+1]);
+            else
+                dp[i]=Math.max(dp[i-1],nums[i]+dp[i-2]);
+        }
+        return dp[r-1];
+    }
+}
