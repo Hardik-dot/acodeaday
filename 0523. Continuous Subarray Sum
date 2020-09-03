@@ -1,0 +1,31 @@
+class Solution {
+
+    public boolean checkSubarraySum(int[] nums, int k) {
+        if(nums.length==0) return false;
+        if(k==0){
+            for(int i=0;i<nums.length-1;i++)
+                if(nums[i]==0&&nums[i+1]==0)
+                    return true;
+            return false;
+        }
+        int sums[]= new int[nums.length];
+        sums[0]=nums[0];
+        for(int i=1;i<sums.length;i++){
+            sums[i]=nums[i]+sums[i-1];
+            if(sums[i]%k==0) return true;
+        }
+        int ix=0;
+        while(ix<nums.length-1){
+            for(int i=ix+1;i<nums.length;i++){
+                int summ = sums[i] - sums[ix] + nums[ix];
+                if (summ == k || (k != 0 && summ % k == 0))
+                    return true;   
+            }
+            ix++;
+        }
+        return false;
+    }
+    
+}
+
+//23 25 29
