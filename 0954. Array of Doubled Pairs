@@ -1,0 +1,31 @@
+class Solution {
+    public boolean canReorderDoubled(int[] A) {
+        HashMap<Integer,Integer> hm = new HashMap<>();
+        int z=0;
+        for(int i=0;i<A.length;i++){
+            int v=0;
+            if(A[i]==0) z++;
+            if(hm.containsKey(A[i]))
+                v=hm.get(A[i]);
+            hm.put(A[i],v+1);
+        }
+        if(z%2==1) return false;
+        Arrays.sort(A);
+        int res=0;
+        for(int i=0;i<A.length;i++){
+            if(A[i]==0)
+                res+=1;
+            else if(hm.get(A[i])>0&&hm.containsKey(2*A[i])){
+                int a = hm.get(A[i]);
+                int b = hm.get(2*A[i]);
+                if(a<=0||b<=0)
+                    continue;
+                hm.put(A[i],a-1);
+                hm.put(2*A[i],b-1);
+                res+=2;
+            }
+        }
+        if(res==A.length) return true;
+        return false;
+    }
+}
