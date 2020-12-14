@@ -1,0 +1,28 @@
+class Solution {
+    public List<String> summaryRanges(int[] nums) {
+        List<String> al = new LinkedList<>();
+        String x="";
+        if(nums.length==0)
+            return al;
+        int st=nums[0],end=nums[0],i=0;
+        for(i=1;i<nums.length;i++){
+            if(nums[i]==nums[i-1]+1){
+                end=nums[i];
+            }
+            else{
+                x=st+"";
+                if(st!=end)
+                    x+="->"+end;
+                al.add(x);
+                st=end=nums[i];
+            }
+        }
+        x="";
+        if(st!=end)
+            x=st+"->"+end;
+        else
+            x+=st;
+        al.add(x);        
+        return al;
+    }
+}
