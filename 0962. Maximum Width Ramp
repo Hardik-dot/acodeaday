@@ -1,0 +1,21 @@
+class Solution {
+    public int maxWidthRamp(int[] A) {
+        int res=0, m=50001;
+        HashSet<Integer> hs = new HashSet<>();
+        for(int i=0;i<A.length;i++){
+            if(res>A.length-i)
+                break;
+            if(!hs.contains(A[i])&&A[i]<m){
+                for(int j=A.length-1;j>i;j--){
+                    if(A[i]<=A[j]){
+                        res = Math.max(res,j-i);
+                        break;
+                    }
+                }
+                m=A[i];
+                hs.add(A[i]);
+            }
+        }
+        return res;
+    }
+}
