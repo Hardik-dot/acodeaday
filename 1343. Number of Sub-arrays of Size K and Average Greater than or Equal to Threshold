@@ -1,0 +1,26 @@
+/*
+Important: instead of checking avg>=thresh, compute thresh*k
+Benefit is - avg u have calculate (length-k) times, however thresh*k is only once
+so we are saving time  (from 3s to 1s)
+*/
+class Solution {
+    public int numOfSubarrays(int[] arr, int k, int thresh) {
+        int i=0,sum=0,ct=0,targ=k*thresh;
+        while(i<k&&i<arr.length){
+            sum+=arr[i];
+            i++;
+        }
+
+        if(i==k){
+            if(sum>=targ)
+                ct++;
+        }
+        
+        for(;i<arr.length;i++){
+            sum=sum+arr[i]-arr[i-k];
+            if(sum>=targ)
+                ct++;
+        }
+        return ct;
+    }
+}
