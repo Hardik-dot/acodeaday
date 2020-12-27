@@ -1,0 +1,33 @@
+class Solution {
+    int ct=0;
+    public void auxteama(int[] rating, int i, int c){
+        for(int j=i+1;j<rating.length;j++){
+            if(rating[i]<rating[j]){
+                if(c==2)
+                    ct++;
+                else
+                    auxteama(rating,j,c+1);
+            }
+        }
+    }
+    
+    public void auxteamb(int[] rating, int i, int c){
+        for(int j=i+1;j<rating.length;j++){
+            if(rating[i]>rating[j]){
+                if(c==2)
+                    ct++;
+                else
+                    auxteamb(rating,j,c+1);
+            }
+        }
+    }
+    
+    public int numTeams(int[] rating) {
+        ct=0;
+        for(int i=0;i<rating.length;i++){
+            auxteama(rating,i,1);
+            auxteamb(rating,i,1);
+        }
+        return ct;
+    }
+}
