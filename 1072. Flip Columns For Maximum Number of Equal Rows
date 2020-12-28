@@ -1,0 +1,35 @@
+class Solution {
+    HashMap<String,Integer> hs = new HashMap<>();
+    HashMap<String,String> fl =  new HashMap<>();
+    public int maxEqualRowsAfterFlips(int[][] matrix) {
+        hs.clear();fl.clear();
+        for(int i=0;i<matrix.length;i++){
+            String x = Arrays.toString(matrix[i]);
+            int v=0;
+            if(hs.containsKey(x))
+                v+=hs.get(x);
+            else{           
+                int n = matrix[0].length;
+                int[] flip = new int[n];
+                for(int j = 0; j < n; j++) flip[j] = 1 - matrix[i][j];
+                String f = Arrays.toString(flip);
+                fl.put(x,f);
+            }         
+            hs.put(x,v+1);
+        }
+        int res=0;
+        
+        for(int i=0;i<matrix.length;i++){            
+            int a=0,b=0;
+            String sa=Arrays.toString(matrix[i]);
+            String sb=fl.get(sa);
+            if(hs.containsKey(sa))
+                a=hs.get(sa);
+            if(hs.containsKey(sb))
+                b=hs.get(sb);
+            res=Math.max(res,a+b);
+        }
+        
+        return res;
+    }
+}
