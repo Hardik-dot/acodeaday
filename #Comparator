@@ -1,0 +1,6 @@
+/* Sort the pairs, firstly on strength and secondly on index. We'll need
+ * to implement a comparator to do this. */
+Arrays.sort(pairs, (a, b) -> {
+    if (a[0] == b[0]) return a[1] - b[1];
+    else return a[0] - b[0];
+});
