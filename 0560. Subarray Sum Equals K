@@ -1,0 +1,15 @@
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+        int res=0;
+        for(int i=0;i<nums.length;i++){
+            int s=nums[i];
+            if(s==k) res++;
+            for(int j=i+1;j<nums.length;j++){
+                if(s+nums[j]==k)
+                    res++;
+                s+=nums[j];
+            }
+        }
+        return res;
+    }
+}
