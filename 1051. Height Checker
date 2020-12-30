@@ -1,0 +1,13 @@
+class Solution {
+    public int heightChecker(int[] h) {
+        int t[]=h.clone();
+        Arrays.sort(t);
+        int ct=0;
+        for(int i=0;i<h.length;i++){
+            if(h[i]!=t[i]) ct++;
+        }
+        return ct;
+    }
+}
+
+//https://leetcode.com/problems/height-checker/discuss/300472/Java-0ms-O(n)-solution-no-need-to-sort
