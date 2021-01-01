@@ -1,0 +1,39 @@
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        int l=0,r=nums.length,m=0,fl=0;
+        int arr[]=new int[2];
+        arr[0]=-1;arr[1]=-1;
+        while(l<r){
+            m=l+(r-l)/2;
+            if(nums[m]==target){
+                fl=1;
+                break;
+            }
+            if(nums[m]<target)
+                l=m+1;
+            else r=m;
+        }
+        
+        
+        if(fl==0){
+            if(nums.length>0&&((l<nums.length&&l>=0&&nums[l]==target)||nums[m]==target||(r<nums.length&&nums[r]==target))){
+                if(nums[l]==target) // edge case
+                    m=l;
+                else if(nums[r]==target)
+                    m=r;      
+            }else return arr;
+        }
+        
+        int ix=m,jx=m;
+        
+        while(ix>=0&&nums[ix]==target)
+            ix--;
+        arr[0]=ix+1;
+        
+        while(jx<nums.length&&nums[jx]==target)
+            jx++;
+        
+        arr[1]=jx-1;
+        return arr;
+    }
+}
