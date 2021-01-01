@@ -1,0 +1,16 @@
+class Solution {
+    public double averageWaitingTime(int[][] c) {
+        long wt=0;int prend=-1;
+        for(int i=0;i<c.length;i++){
+            int ari=c[i][0],cook=c[i][1],ov=0;
+            if(prend>ari)
+                ov=prend-ari;
+            int end = ari+cook+ov;
+            wt+=end-ari;
+            prend=end;
+        }
+        
+        double res = (double) wt/c.length;
+        return res;
+    }
+}
