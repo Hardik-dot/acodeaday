@@ -1,0 +1,31 @@
+// Sort the array in the descending order of (minimum - actual).
+// (minimum - actual) is the amount of energy that remains after 
+// finishing a task. So we should try to accumulate as much energy
+// as possible in the beginning to complete the tasks coming up
+// ahead. 
+
+class Solution {
+    public int minimumEffort(int[][] tasks) {
+        Arrays.sort(tasks, (a1, a2) -> (a1[1] - a1[0]) - (a2[1] - a2[0]));
+        
+        int presum=0;
+        
+        for(int i=0;i<tasks.length;i++){
+            presum+=tasks[i][0];
+        }
+        
+        int res=presum;
+        
+        for(int i=tasks.length-1;i>=0;i--){
+            if(presum>=tasks[i][1])
+                presum-=tasks[i][0];
+            else{
+                int v = tasks[i][1]-presum;
+                res+=v;
+                presum+=v-tasks[i][0];
+            }
+        }
+        
+        return res;
+    }
+}
