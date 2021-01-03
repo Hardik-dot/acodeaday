@@ -1,0 +1,27 @@
+// !! USING BOOL ARR - 70 ms, USING LIST ADD/REMOVE - 600 ms
+// USE VIS ARR
+class Solution {
+    int ct=0;
+    public void perm(boolean arr[],int ix, int n){
+        if(ix==n+1){
+            ct++;
+            return;
+        }
+            
+        for(int i=1;i<=n;i++){
+            if(!arr[i]){
+                if(i%ix==0||ix%i==0){
+                    arr[i]=true;
+                    perm(arr,ix+1,n);
+                    arr[i]=false;
+                }
+            }
+        }
+    }
+    
+    public int countArrangement(int n) {
+        boolean arr[]=new boolean[16];
+        perm(arr,1,n);
+        return ct;
+    }
+}
