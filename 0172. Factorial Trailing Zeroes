@@ -1,0 +1,38 @@
+class Solution {
+    public int chk25(int n,int k){
+        int r=0;
+        while(n>0){
+            if(n%k==0)
+                r++;
+            else break;
+            n=n/k;
+        }
+        return r;
+    }
+    
+    public int trailingZeroes(int n) {
+        int two=0,fiv=0;
+        
+        for(int i=2;i<=n;i++){
+            if(i%2==0)
+                two+= chk25(i,2);
+            if(i%5==0)
+                fiv+=chk25(i,5);
+        }
+        
+        return Math.min(two,fiv);
+    }
+}
+//i have counted both 2 and 5. but ideally, no of 5 will always be less than 2. so can only check for 5.
+/* 0ms solution
+class Solution {
+    public int trailingZeroes(int n) {
+        int count=0;
+        while(n>0)
+        {
+            count=count+n/5;
+            n=n/5;
+        }
+        return count;
+    }
+}*/
