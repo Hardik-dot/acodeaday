@@ -1,0 +1,29 @@
+class Solution {
+    public int numEquivDominoPairs(int[][] dom) {
+        HashMap<Integer,Integer> hm = new HashMap<>();
+        int ct=0;
+        for(int i=0;i<dom.length;i++){
+            /*int v1 = dom[i][0]*10+dom[i][1];
+            int v2 = dom[i][1]*10+dom[i][0];
+            if(hm.containsKey(v1)){
+                hm.put(v1,hm.get(v1)+1);
+            }
+            else if(hm.containsKey(v2)){
+                hm.put(v2,hm.get(v2)+1);
+            }
+            else
+                hm.put(v1,1);*/
+            
+            int v = Math.min(dom[i][0],dom[i][1])*10+Math.max(dom[i][0],dom[i][1]);
+            
+            hm.put(v,hm.getOrDefault(v,0)+1);
+        }
+        
+        for (Map.Entry<Integer,Integer> entry : hm.entrySet())  {
+            int a = entry.getValue(); 
+            ct+=a*(a-1)/2;
+        }
+        
+        return ct;
+    }
+}
