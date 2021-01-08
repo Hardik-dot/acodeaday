@@ -1,0 +1,25 @@
+//https://leetcode.com/problems/first-missing-positive/discuss/17214/Java-simple-solution-with-documentation
+class Solution {
+
+    public int firstMissingPositive(int[] nums) {
+        TreeSet<Integer> ts = new TreeSet<Integer>();
+        for(int i:nums){
+            if(i>0) ts.add(i);
+        }
+        
+        if(ts.size()==0)
+            return 1;
+        
+        Iterator it = ts.iterator();
+        int v=0;
+
+        int ix=1;
+        while(it.hasNext()){
+            v=(int)it.next();
+            if(v!=ix)
+                return ix;
+            ix++;
+        }
+        return ix;
+    }
+}
