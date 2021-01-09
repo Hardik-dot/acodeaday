@@ -1,0 +1,22 @@
+//https://leetcode.com/problems/majority-element-ii/solution/
+class Solution {
+    //frequency count
+    public List<Integer> majorityElement(int[] nums) {
+        List<Integer> li = new LinkedList<>();
+        int v=nums.length/3;
+        HashMap<Integer,Integer> hm =new HashMap<>();
+        for(int i:nums){
+            if(!li.contains(i)){
+                int a = hm.getOrDefault(i,0)+1;
+                if(a>v){
+                    li.add(i);
+                    if(li.size()==2)
+                        break;
+                }
+                hm.put(i,a);
+            }
+            
+        }
+        return li;
+    }
+}
