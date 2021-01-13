@@ -1,0 +1,33 @@
+class Solution {
+    public int longestMountain(int[] arr) {
+        if(arr.length<3)
+            return 0;
+        int pos[]=new int[arr.length];
+        
+        if(arr[arr.length-2]>arr[arr.length-1])
+            pos[arr.length-1]=1;
+        for(int i=arr.length-2;i>0;i--){
+            if(arr[i-1]>arr[i])
+                pos[i]=1+pos[i+1];
+        }
+        int res=0;
+        
+        int v=0;
+        if(arr[0]<arr[1])
+            v=1;
+        for(int i=1;i<arr.length-1;i++){
+            if(arr[i]>arr[i-1]&&arr[i]>arr[i+1]){
+                res=Math.max(res,(1+v+pos[i+1]));
+            }
+            if(arr[i]<arr[i+1])
+                v++;
+            else v=0;
+        }
+        
+        return res;
+    }
+}
+
+//2,1,4,7,3,5
+//0 1 2 0 0 0
+//0 1 0 0 1 0
