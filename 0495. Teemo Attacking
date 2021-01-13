@@ -1,0 +1,17 @@
+class Solution {
+    public int findPoisonedDuration(int[] ts, int dur) {
+        if(ts.length==0) return 0;
+        int te=0,ct=0,pre=-1;
+        for(int i:ts){
+            if(pre!=-1){
+            if(te<i)
+                ct+=dur;
+            else
+                ct+=i-pre;
+            }
+            te=i+dur-1;
+            pre=i;
+        }
+        return ct+dur;
+    }
+}
