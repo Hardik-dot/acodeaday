@@ -1,0 +1,34 @@
+class Solution {
+    public boolean isPossibleDivide(int[] nums, int k) {
+        if(nums.length%k!=0)
+            return false;
+        TreeMap<Integer,Integer> hm = new TreeMap<>();
+        
+        for(int i:nums)
+            hm.put(i,hm.getOrDefault(i,0)+1);
+        int t=nums.length;
+        while(t>0){
+            int i=0,prev=-1;
+            for(Map.Entry<Integer,Integer> e:hm.entrySet()){
+                int ix=e.getKey();
+                int vx=e.getValue();
+                if(vx<=0)
+                    continue;
+                if(prev!=-1){
+                    if(prev+1!=ix)
+                        return false;                    
+                }
+                e.setValue(vx-1);
+                prev=ix;
+                i++;
+                
+                if(i==k)
+                    break;
+            }
+            if(i==k)
+                t=t-k;
+            else return false;
+        }
+        return true;
+    }
+}
