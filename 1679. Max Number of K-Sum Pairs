@@ -1,0 +1,29 @@
+class Solution {
+    public int maxOperations(int[] nums, int k) {
+        HashMap<Integer, Integer> hm = new HashMap<>();
+        
+        for(int i:nums)
+            hm.put(i,hm.getOrDefault(i,0)+1);
+        
+        int res=0;
+        for(Map.Entry<Integer,Integer> entry: hm.entrySet()){
+            int v=entry.getKey();
+            int vid=0;
+            if(v==k-v){
+                vid=1;
+            }
+            
+            if(entry.getValue()>vid&&hm.containsKey(k-v)){//&&hm.get(k-v)>0
+                int vx=Math.min(hm.get(v),hm.get(k-v));
+                if(v==k-v){
+                    vx=vx/2;
+                }
+                hm.put(v,hm.get(v)-vx);
+                hm.put(k-v,hm.get(k-v)-vx);
+                res=res+vx;
+            }
+        }
+        
+        return res;
+    }
+}
