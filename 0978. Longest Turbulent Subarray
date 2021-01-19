@@ -1,0 +1,33 @@
+class Solution {
+    public int maxTurbulenceSize(int[] arr) {
+        if(arr.length<2)
+            return arr.length;
+        int flag=0,maxtill=0,curr=2;
+        if(arr[0]<arr[1])
+            flag=0;
+        else
+            flag=1;
+        if(arr[0]==arr[1]){
+            curr=1;
+            maxtill=1;
+        }
+        
+        for(int i=1;i<arr.length-1;i++){
+            if(arr[i]>arr[i+1]&&flag==0){
+                flag=1;
+                curr++;
+            }else if(arr[i]<arr[i+1]&&flag==1){
+                flag=0;
+                curr++;
+            }else{
+                maxtill=Math.max(maxtill,curr);
+                curr=2;
+                if(arr[i]==arr[i+1])
+                    curr=1;
+            }
+        }
+        maxtill=Math.max(maxtill,curr);
+        
+        return maxtill;
+    }
+}
