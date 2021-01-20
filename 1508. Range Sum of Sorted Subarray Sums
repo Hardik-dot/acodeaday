@@ -1,0 +1,23 @@
+class Solution {
+    public int rangeSum(int[] nums, int n, int left, int right) {
+        PriorityQueue<Long> h1= new PriorityQueue<>(Collections.reverseOrder());
+        PriorityQueue<Long> h2= new PriorityQueue<>(Collections.reverseOrder());
+        long k1=0,k2=0;
+        for(int i=0;i<nums.length;i++){
+            long s=0;
+            for(int j=i;j<nums.length;j++){
+                s+=nums[j];
+                h1.add(s);
+                k1+=s;
+                if(h1.size()>left-1)
+                    k1=k1-h1.poll();
+                h2.add(s);
+                k2+=s;
+                if(h2.size()>right)
+                    k2=k2-h2.poll();
+            }
+        }
+        long v=(k2-k1);
+        return (int)(v%(Math.pow(10,9)+7));
+    }
+}
