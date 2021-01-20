@@ -1,0 +1,33 @@
+class Solution {
+    
+    public boolean vali(char c, Stack<Character> st){
+        if(st.peek()==c)
+            st.pop();
+        else return false;
+        
+        return true;
+    }
+    
+    public boolean isValid(String s) {
+        Stack<Character> st=new Stack<>();
+        
+        for(char c:s.toCharArray()){
+            if(c==')'){
+                if(st.isEmpty()||!vali('(',st))
+                    return false;
+            }else if(c=='}'){
+                if(st.isEmpty()||!vali('{',st))
+                    return false;
+            }else if(c==']'){
+                if(st.isEmpty()||!vali('[',st))
+                    return false;
+            }else{
+                st.add(c);
+            }
+        }
+        
+        if(!st.isEmpty())
+            return false;
+        return true;
+    }
+}
