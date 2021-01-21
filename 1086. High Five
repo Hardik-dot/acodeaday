@@ -1,0 +1,27 @@
+class Solution {
+    public int[][] highFive(int[][] items) {
+        PriorityQueue<Integer>[] pq = new PriorityQueue[1000];
+        Map<Integer,Integer> hs = new TreeMap<>();
+        
+        for(int i=0;i<items.length;i++){
+            int a=items[i][0],b=items[i][1];
+            if(pq[a]==null)
+                pq[a]=new PriorityQueue<Integer>();
+            pq[a].add(b);
+            int v=hs.getOrDefault(a,0);
+            if(pq[a].size()>5)
+                v=v-pq[a].poll();
+        
+            hs.put(a,v+b);
+        }
+        int[][] res=new int[hs.size()][2];
+        int k=0;
+        for(Map.Entry<Integer,Integer> e:hs.entrySet()){
+            res[k][0]=e.getKey();
+            res[k][1]=e.getValue()/5;
+            k++;
+        }
+        
+        return res;
+    }
+}
