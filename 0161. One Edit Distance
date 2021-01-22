@@ -1,0 +1,57 @@
+class Solution {
+    
+    public boolean aux(String s,int i,String t,int j,int fl){
+        boolean a,b;
+        if(i>=s.length()&&j>=t.length()){
+            if(fl<=1)
+                return true;
+            else return false;            
+        }else if(i<s.length()&&j>=t.length()){
+            if(fl+s.length()-i<=1)
+                return true;
+            else return false;
+        }else if(i>=s.length()&&j<t.length()){
+            if(fl+t.length()-j<=1)
+                return true;
+            else return false;
+        }
+            
+        if(s.charAt(i)==t.charAt(j)){
+            return aux(s,i+1,t,j+1,fl);
+        }else{
+            if(fl==1)
+                return false;
+            a=aux(s,i+1,t,j,fl+1);
+            b=aux(s,i,t,j+1,fl+1);
+        }
+        return a||b;
+    }
+    
+    public boolean isOneEditDistance(String s, String t) {
+        if(s.equals(t))
+            return false;
+        if(Math.abs(s.length()-t.length())>1)
+            return false;
+        
+        if(s.length()==t.length()){
+            int i=0,fl=0;
+            while(i<s.length()){
+                if(s.charAt(i)!=t.charAt(i)){
+                    if(fl==0)
+                        fl++;
+                    else return false;
+                }
+                
+                i++;
+            }
+            if(i==s.length())
+                return true;
+            else return false;
+        }
+
+        return aux(s,0,t,0,0);
+    }
+}
+
+// asdf
+// adsf
