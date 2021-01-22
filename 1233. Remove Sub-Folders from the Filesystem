@@ -1,0 +1,38 @@
+class Solution {
+    public List<String> removeSubfolders(String[] folders) {
+        Arrays.sort(folders);
+        List<String> li = new ArrayList<>();
+        for(int i=0;i<folders.length;i++){
+            li.add(folders[i]);
+        }
+        
+        for(int i=0;i<li.size();i++){
+            int j=i+1;
+            while(j<li.size()&&li.get(j).startsWith(li.get(i)+'/'))
+                li.remove(j);
+        }
+        
+        return li;
+    }
+    
+    public List<String> removeSubfoldersbrute(String[] folders) {
+        List<String> li = new ArrayList<>();
+        boolean vis[]=new boolean[folders.length];
+        for(int i=0;i<folders.length;i++){
+            int j=i+1,fl=0;
+            if(vis[i]) continue;
+            for(;j<folders.length;j++){
+                if(folders[i].startsWith(folders[j]+'/')){
+                    fl=1;break;
+                }
+                if(folders[j].startsWith(folders[i]+'/')){
+                    vis[j]=true;
+                }
+            }
+            if(fl==0)
+                li.add(folders[i]);
+        }
+        
+        return li;
+    }
+}
