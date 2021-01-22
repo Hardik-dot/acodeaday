@@ -1,0 +1,25 @@
+class Solution {
+    public int[] advantageCount(int[] A, int[] B) {
+        int[][] bx=new int[A.length][2];
+        List<Integer> li=new ArrayList<>();
+        for(int i=0;i<A.length;i++){
+            bx[i][0]=B[i];
+            bx[i][1]=i;
+            li.add(A[i]);
+        }        
+        Collections.sort(li);
+        Arrays.sort(bx,(a,b)->a[0]-b[0]);
+        
+        for(int i=0;i<A.length;i++){
+            int j=0;
+            while(j<li.size()&&li.get(j)<=bx[i][0])
+                j++;
+            if(j==li.size())
+                j=0;
+            A[bx[i][1]]=li.get(j);
+            li.remove(j);       
+        }
+        
+        return A;
+    }
+}
