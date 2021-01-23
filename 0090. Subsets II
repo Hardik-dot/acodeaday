@@ -1,0 +1,29 @@
+class Solution {
+    public void aux(int nums[],int j,List<Integer> li,HashSet<List<Integer>> hs){
+        List<Integer> la=new ArrayList<Integer>(li);
+        Collections.sort(la);
+        if(!hs.contains(la)){
+            hs.add(la);
+        }
+        if(j>=nums.length){      
+            return;
+        }
+        aux(nums,j+1,li,hs);
+        li.add(nums[j]);
+        aux(nums,j+1,li,hs);
+        li.remove(li.size()-1);
+        
+    }
+    
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        HashSet<List<Integer>> hs = new HashSet<>();
+        for(int i=0;i<nums.length;i++)
+            aux(nums,i,new ArrayList<Integer>(),hs);
+        List<List<Integer>> re= new ArrayList<>();
+        
+        Iterator it = hs.iterator();
+        while(it.hasNext())
+            re.add((List<Integer>)it.next());
+        return re;
+    }
+}
