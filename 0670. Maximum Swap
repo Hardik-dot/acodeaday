@@ -1,0 +1,35 @@
+class Solution {
+    public int maximumSwap(int num) {
+        int n=num;
+        List<Integer> li = new ArrayList<>();
+        while(n>0){
+            li.add(n%10);
+            n=n/10;
+        }
+        Collections.reverse(li);
+        List<Integer> al = new ArrayList<>(li);
+        Collections.sort(li,(a,b)->b-a);
+        int ix=0;
+        int dp[]=new int[10];
+        while(ix<al.size()){
+            dp[al.get(ix)]=ix;
+            ix++;
+        }
+        ix=0;
+        while(ix<al.size()&&al.get(ix)==li.get(ix))
+            ix++;
+        if(ix!=al.size()){
+            int tosearch=li.get(ix), toreplace=al.get(ix);
+            al.set(ix,tosearch);
+            int r=dp[tosearch];
+            al.set(r,toreplace);
+        }
+        int res=0,i=0;
+        while(i<al.size()){
+            res=res*10+al.get(i);
+            i++;
+        }
+            
+        return res;
+    }
+}
