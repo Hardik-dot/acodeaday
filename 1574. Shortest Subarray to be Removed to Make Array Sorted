@@ -1,0 +1,25 @@
+class Solution {
+    public int findLengthOfShortestSubarray(int[] arr) {
+        int i=0;
+        while(i<arr.length-1&&arr[i]<=arr[i+1])
+            i++;
+        if(i==arr.length-1)
+            return 0;
+        int j=arr.length-1;
+        while(j>i&&arr[j-1]<=arr[j]){
+            j--;
+        }
+        int res=Math.min(arr.length-i-1,j);
+        
+        int ix=0,k=0;
+        while(ix<=i&&j<arr.length){
+            if(arr[ix]<=arr[j]){
+                res=Math.min(res,j-ix-1);
+                ix++;
+            }else{
+                j++;
+            }
+        }
+        return res;
+    }
+}
