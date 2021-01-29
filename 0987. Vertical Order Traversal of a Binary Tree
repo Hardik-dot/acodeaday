@@ -1,0 +1,51 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public void aux(TreeMap<Integer,TreeMap<Integer,TreeSet<Integer>>> tm,int v,TreeNode root,int h){
+        
+        TreeMap<Integer,TreeSet<Integer>> cur=tm.getOrDefault(v,new TreeMap<Integer,TreeSet<Integer>>());
+        TreeSet<Integer> tx = cur.getOrDefault(h,new TreeSet<Integer>());
+        tx.add(root.val);
+        cur.put(h,tx);
+        tm.put(v,cur);
+        
+        if(root.left!=null){
+            aux(tm,v-1,root.left,h+1);
+        }
+        if(root.right!=null){
+            aux(tm,v+1,root.right,h+1);
+        }
+    }
+    
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        TreeMap<Integer,TreeMap<Integer,TreeSet<Integer>>> tm = new TreeMap<>();
+        aux(tm,0,root,0);
+        List<List<Integer>> re=new ArrayList<>();
+        for(Map.Entry<Integer,TreeMap<Integer,TreeSet<Integer>>> e:tm.entrySet()){
+            List<Integer> ty=new ArrayList<>();
+            for(Map.Entry<Integer,TreeSet<Integer>> c:e.getValue().entrySet()){
+                TreeSet<Integer> tst = c.getValue();
+                Iterator it = tst.iterator();
+                while(it.hasNext()){
+                    ty.add((int)it.next());
+                }
+            }
+            re.add(ty);
+        }
+        
+        return re;
+    }
+}
