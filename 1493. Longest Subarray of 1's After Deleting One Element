@@ -1,0 +1,24 @@
+class Solution {
+    public int longestSubarray(int[] nums) {
+        int ps=0;
+        List<Integer> li = new ArrayList<>();
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]==0){
+                li.add(ps);
+                ps=0;
+            }
+            ps+=nums[i];
+        }
+        li.add(ps);
+        if(li.size()==1){
+            if(li.get(0)==0)
+                return 0;
+            return li.get(0)-1;
+        }
+        int v=li.get(0);
+        for(int i=0;i<li.size()-1;i++){
+            v=Math.max(v,li.get(i)+li.get(i+1));
+        }
+        return v;
+    }
+}
