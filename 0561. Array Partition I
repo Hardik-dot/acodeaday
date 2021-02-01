@@ -1,0 +1,11 @@
+class Solution {
+    public int arrayPairSum(int[] nums) {//15ms
+        Arrays.sort(nums);
+        int v=0;
+        for(int i=0;i<nums.length;){
+            v+=nums[i];
+            i+=2;
+        }
+        return v;
+    }
+}
