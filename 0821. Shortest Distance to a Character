@@ -1,0 +1,27 @@
+class Solution {
+    public int[] shortestToChar(String s, char c) {
+        int[] res=new int[s.length()];
+        LinkedList<Integer> li = new LinkedList<>();
+        li.add(-10005);
+        for(int i=0;i<s.length();i++){
+            if(s.charAt(i)==c)
+                li.add(i);
+        }
+        li.add(Integer.MAX_VALUE);
+        int lix=0;
+        
+        for(int i=0;i<s.length();i++){
+            if(i==li.get(lix+1)){
+                res[i]=0;
+                lix++;
+            }
+            else{
+                int p=Math.abs(i-li.get(lix));
+                int q=Math.abs(li.get(lix+1)-i);
+                res[i]=Math.min(p,q);
+            }
+        }
+        return res;
+        
+    }
+}
