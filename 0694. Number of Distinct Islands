@@ -1,0 +1,37 @@
+class Solution {
+    int ia;
+    int ja;
+    boolean[][] vis;
+    Set<Pair<Integer, Integer>> currentIsland;
+    public void aux(int[][] grid,int ix, int jx){
+        if(ix>=grid.length||ix<0||jx<0||jx>=grid[0].length)
+            return;
+        if(grid[ix][jx]==0||vis[ix][jx])
+            return;
+        vis[ix][jx]=true;
+        currentIsland.add(new Pair<>(ix-ia,jx-ja));
+        aux(grid,ix-1,jx);
+        aux(grid,ix,jx-1);
+        aux(grid,ix+1,jx);
+        aux(grid,ix,jx+1);
+        return;
+    }
+    
+    public int numDistinctIslands(int[][] grid) {
+        Set<Set<Pair<Integer, Integer>>> islands = new HashSet<>();
+        vis=new boolean[grid.length][grid[0].length];
+        for(int i=0;i<grid.length;i++){
+            for(int j=0;j<grid[0].length;j++){
+                if(grid[i][j]==1){
+                    ia=i;ja=j;
+                    currentIsland=new HashSet<>();
+                    aux(grid,i,j);
+                    if(!currentIsland.isEmpty())
+                        islands.add(currentIsland);
+                    
+                }
+            }
+        }
+        return islands.size();
+    }
+}
