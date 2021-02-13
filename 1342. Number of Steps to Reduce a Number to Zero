@@ -1,0 +1,27 @@
+class Solution {
+    public int numberOfStepsNORMAL(int num) {
+        int ct=0;
+        while(num>0){
+            if(num%2==0)
+                num=num/2;
+            else
+                num--;
+            ct++;
+        }
+        return ct;
+    }
+    
+     public int numberOfSteps(int num) { //bit
+         if(num==0) return 0;
+        int ct=0;
+        while(num>0){
+            if(num%2==1)
+                ct++;
+            num=num>>1;
+            ct++;
+        }
+        return ct-1;
+    }
+    
+    
+}
