@@ -1,0 +1,55 @@
+class Solution {
+    
+    public boolean isBipartite(int[][] graph) {
+        List<HashSet<Integer>> as= new ArrayList<>();
+        as.add(new HashSet<Integer>());
+        as.add(new HashSet<Integer>());
+        Queue<Integer> qu = new LinkedList<Integer>();
+        //qu.add(0);
+        HashSet<Integer> vis=new HashSet<>();
+        for(int i=0;i<graph.length;i++)
+            vis.add(i);
+        
+        while(vis.size()>0){
+            Iterator it = vis.iterator();
+            int fc=(int)it.next();
+            qu.add(fc);
+            while(qu.size()>0){
+                int i=qu.poll();
+                if(!vis.contains(i))
+                    continue;
+                else
+                    vis.remove(i);
+                HashSet<Integer> one=as.get(0);
+                HashSet<Integer> two=as.get(1);
+                int idx=0,idy=0;
+                if(one.contains(i))
+                    idx=1;
+                else if (two.contains(i)){
+                    idx=0;
+                    idy=1;
+                }
+                else{
+                    one.add(i);
+                    idx=1;
+                    idy=0;
+                }
+
+                for(int j=0;j<graph[i].length;j++){
+                    if(as.get(idy).contains(graph[i][j]))
+                        return false;
+                    else{
+                        HashSet<Integer> tmp = as.get(idx);
+                        tmp.add(graph[i][j]);
+                    }
+
+                    if(vis.contains(graph[i][j])&&!qu.contains(graph[i][j])){
+                        qu.add(graph[i][j]);
+                    }
+                }
+            }
+        }
+        
+        return true;
+    }
+}
