@@ -1,0 +1,48 @@
+class Solution {
+    int a,b,x,ct=Integer.MAX_VALUE;
+    int dp[][]=new int[6001][2];
+    public int aux(HashSet<Integer> hs, int idx, int st,int vc,HashSet<Integer> vis){
+        
+        if(idx<0||idx>6000||hs.contains(idx)||vis.contains(idx))
+            return 0;
+        
+        if(idx==x){
+            ct=Math.min(ct,vc);
+            return 0;
+        }
+        vis.add(idx);
+        int p=Integer.MAX_VALUE,q=Integer.MAX_VALUE;
+        if(idx<4001){
+            if(dp[idx][0]==0){
+                dp[idx][0]=aux(hs,idx+a,0,vc+1,vis);
+                if(dp[idx][0]!=Integer.MAX_VALUE)
+                    dp[idx][0]++;
+            }
+            p=dp[idx][0];
+        }
+        if(st==0){
+            if(dp[idx][1]==0){
+                dp[idx][1]=aux(hs,idx-b,1,vc+1,vis);
+                if(dp[idx][1]!=Integer.MAX_VALUE)
+                    dp[idx][1]++;
+            }
+            q=dp[idx][1];
+        }
+        vis.remove(idx);
+        return Math.min(p,q);
+    }
+    
+    public int minimumJumps(int[] forbidden, int a, int b, int x) {
+        this.a=a;
+        this.b=b;
+        this.x=x;
+        HashSet<Integer> hs=new HashSet<>();
+        HashSet<Integer> vis=new HashSet<>();
+        for(int i:forbidden)
+            hs.add(i);
+        int pq=aux(hs,0,0,0,vis);
+        if(ct==Integer.MAX_VALUE)
+            ct=-1;
+        return ct;
+    }
+}
