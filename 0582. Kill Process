@@ -1,0 +1,29 @@
+class Solution {
+    public List<Integer> killProcess(List<Integer> pid, List<Integer> ppid, int kill) {
+        HashMap<Integer,List<Integer>> hm = new HashMap<>();
+        
+        for(int i=0;i<pid.size();i++){
+            int child = pid.get(i),parent = ppid.get(i);
+            List<Integer> li = hm.getOrDefault(parent, new LinkedList<Integer>());
+            li.add(child);
+            hm.put(parent,li);
+        }
+        
+        List<Integer> res = new LinkedList<Integer>();
+        Queue<Integer> qu= new LinkedList<Integer>();
+        qu.add(kill);
+        
+        while(qu.size()>0){
+            int v=qu.poll();
+            res.add(v);
+            if(hm.containsKey(v)){
+                List<Integer> li = hm.get(v);
+                Iterator ir = li.iterator();
+                while(ir.hasNext()){
+                    qu.add((int)ir.next());
+                }
+            }
+        }
+        return res;
+    }
+}
