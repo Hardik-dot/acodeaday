@@ -1,0 +1,42 @@
+class Solution {
+    public boolean aux(char[] s1, char[] s2){
+        int i=0,j=0;
+        
+        for(i=0;i<s1.length&&j<s2.length;i++){
+            while(i<s1.length&&j<s2.length){
+                if(s1[i]==s2[j]){
+                    i++;j++;
+                }
+                else i++;
+            } 
+            if(j==s2.length)
+            return true;
+        }
+
+        return false;
+    }
+    
+    public String findLongestWord(String s, List<String> d) {
+        int a=0;
+        List<String> li = new ArrayList<>();
+        for(String to:d){
+            if(li.size()!=0&&to.length()<li.get(0).length())
+                continue;
+            if(aux(s.toCharArray(),to.toCharArray())){
+                if(li.size()==0||to.length()==li.get(0).length())
+                    li.add(to);
+                else if(to.length()>li.get(0).length()){
+                    li.clear();
+                    li.add(to);
+                }
+            }
+            
+        }
+        String f="";
+        if(li.size()!=0){
+            Collections.sort(li);
+            f=li.get(0);
+        }
+        return f;
+    }
+}
