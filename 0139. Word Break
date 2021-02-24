@@ -1,0 +1,28 @@
+class Solution {
+    HashMap<Integer, HashSet<String>> hms = new HashMap<>();
+    public boolean aux(char[] ar,int idx,HashSet<String> hs){
+        StringBuilder sb=new StringBuilder();
+        for(int i=idx;i<ar.length;i++){
+            sb.append(ar[i]);
+            if(hs.contains(sb.toString())){
+                if(hms.containsKey(i)&&hms.get(i).contains(sb.toString())){
+                    continue;
+                }
+                if(i==ar.length-1||aux(ar,i+1,hs))
+                    return true;
+                else{
+                    HashSet<String> tmp=hms.getOrDefault(i,new HashSet<>());
+                    tmp.add(sb.toString());
+                    hms.put(i,tmp);
+                }
+                    
+            }
+        }    
+        return false;
+    }
+    
+    public boolean wordBreak(String s, List<String> wordDict) {
+        HashSet<String> hs = new HashSet<>(wordDict);
+        return aux(s.toCharArray(),0,hs);
+    }
+}
