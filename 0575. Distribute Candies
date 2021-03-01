@@ -1,0 +1,13 @@
+class Solution {
+    public int distributeCandies(int[] c) {
+        HashSet<Integer> hs = new HashSet<>();     
+        for(int i:c){
+            hs.add(i);
+            if(hs.size()>=c.length/2)
+                return c.length/2;
+        }
+        if(hs.size()<c.length/2)
+            return hs.size();
+        return c.length/2;
+    }
+}
