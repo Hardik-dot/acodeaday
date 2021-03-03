@@ -1,0 +1,23 @@
+class Solution {
+    int dp[][];
+    public int aux(char[] s,int ix,int jx) {
+        if(ix>jx)
+            return 0;
+        if(ix==jx)
+            return 1;
+        int a=0,b=0;
+        if(dp[ix][jx]!=0)
+            return dp[ix][jx];
+        if(s[ix]==s[jx]){
+            dp[ix][jx]=aux(s,ix+1,jx-1)+2;
+        }else{
+           dp[ix][jx]=Math.max(aux(s,ix+1,jx),aux(s,ix,jx-1)); 
+        }
+        return dp[ix][jx];
+    }
+    
+    public int longestPalindromeSubseq(String s) {
+        dp=new int[s.length()][s.length()];
+        return aux(s.toCharArray(),0,s.length()-1);
+    }
+}
