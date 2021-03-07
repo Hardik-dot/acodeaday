@@ -1,0 +1,58 @@
+class MyHashMap {
+    LinkedList<LinkedList<Integer>>[] liar= new LinkedList[20008];
+    /** Initialize your data structure here. */
+    public MyHashMap() {
+        
+    }
+    
+    /** value will always be non-negative. */
+    public void put(int key, int value) {
+        int hv = key%20007;
+        if(liar[hv]==null)
+            liar[hv]=new LinkedList<LinkedList<Integer>>();
+        for(int i=0;i<liar[hv].size();i++){
+            if(liar[hv].get(i).get(0)==key){
+                liar[hv].get(i).set(1,value);
+                return;
+            }
+        }
+        LinkedList<Integer> lit=new LinkedList<>();
+        lit.add(key);lit.add(value);
+        liar[hv].add(lit);
+        
+    }
+    
+    /** Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key */
+    public int get(int key) {
+       int hv = key%20007;
+        if(liar[hv]==null)
+            return -1;
+        for(int i=0;i<liar[hv].size();i++){
+            if(liar[hv].get(i).get(0)==key){
+                return liar[hv].get(i).get(1);
+            }
+        } 
+        return -1;
+    }
+    
+    /** Removes the mapping of the specified value key if this map contains a mapping for the key */
+    public void remove(int key) {
+        int hv = key%20007;
+        if(liar[hv]==null)
+            return;
+        for(int i=0;i<liar[hv].size();i++){
+            if(liar[hv].get(i).get(0)==key){
+                liar[hv].get(i).set(0,-1);
+                return;
+            }
+        } 
+    }
+}
+
+/**
+ * Your MyHashMap object will be instantiated and called as such:
+ * MyHashMap obj = new MyHashMap();
+ * obj.put(key,value);
+ * int param_2 = obj.get(key);
+ * obj.remove(key);
+ */
