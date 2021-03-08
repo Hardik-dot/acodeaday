@@ -1,0 +1,39 @@
+class Solution {
+    List<List<String>> lix=new LinkedList<>();
+    Boolean dp[][];
+    public boolean pali(char[] s){
+        int i=0,j=s.length-1;
+        while(i<j){
+            if(s[i]!=s[j])
+                return false;
+            i++;j--;
+        }
+        return true;
+    }
+    
+    public void aux(String s,int ix,LinkedList<String> li){
+        if(ix==s.length()){
+            LinkedList<String> r=new LinkedList<>(li);
+            lix.add(r);
+            return;
+        }
+        
+        for(int i=ix+1;i<=s.length();i++){
+            if(dp[ix][i]==null)
+                dp[ix][i]=pali(s.substring(ix,i).toCharArray());
+            if(dp[ix][i]){
+                li.add(s.substring(ix,i));
+                aux(s,i,li);
+                li.remove(li.size()-1);
+            }
+        }
+    }
+    
+    public List<List<String>> partition(String s) {
+        dp=new Boolean[s.length()+1][s.length()+1];
+        LinkedList<String> li = new LinkedList<>();
+        //li.add(s.substring(0,1));
+        aux(s,0,li);
+        return lix;
+    }
+}
