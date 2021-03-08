@@ -1,0 +1,24 @@
+class Solution {
+    public boolean isStrobogrammatic(String num) {
+        if(num.contains("2")||num.contains("3")||num.contains("4")||num.contains("5")||num.contains("7"))
+            return false;
+        char nums[]=num.toCharArray();
+        int i=0,j=num.length()-1;
+        while(i<=j){
+            if(nums[i]=='6'||nums[i]=='9'||nums[j]=='6'||nums[j]=='9'){
+                if(nums[i]=='6'&&nums[j]!='9')
+                    return false;
+                if(nums[j]=='6'&&nums[i]!='9')
+                    return false;
+                if(nums[i]=='9'&&nums[j]!='6')
+                    return false;
+                if(nums[j]=='9'&&nums[i]!='6')
+                    return false;
+                }          
+            else if(nums[i]!=nums[j])
+                return false;
+            i++;j--;
+        }
+        return true;
+    }
+}
