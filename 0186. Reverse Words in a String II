@@ -1,0 +1,44 @@
+class Solution {
+    public void reverseWords1(char[] s) {
+        LinkedList<String> words=new LinkedList<>();
+        StringBuilder sb = new StringBuilder();
+        for(int i=0;i<s.length;i++){
+            if(s[i]==' '){
+                words.addFirst(sb.toString());
+                sb = new StringBuilder();
+            }else{
+                sb.append(s[i]);
+            }
+        }
+        words.addFirst(sb.toString());
+        int jx=0,i=0;
+        for(;i<words.size()-1;i++){
+            char[] x=words.get(i).toCharArray();
+            for(int j=0;j<x.length;j++){
+                s[jx++]=x[j];
+            }
+            s[jx++]=' ';
+        }
+        String x=words.get(i);
+        for(int j=0;j<x.length();j++){
+            s[jx++]=x.charAt(j);
+        }
+    }
+    
+    public void reverseWords(char[] s) {
+        String full= String.valueOf(s);
+        String[] wr=full.split(" ");
+        int jx=0;
+        for(int i=wr.length-1;i>0;i--){
+            char[] tmp=wr[i].toCharArray();
+            for(int j=0;j<tmp.length;j++){
+                s[jx++]=tmp[j];
+            }
+            s[jx++]=' ';
+        }
+        char[] tmp=wr[0].toCharArray();
+        for(int j=0;j<tmp.length;j++){
+            s[jx++]=tmp[j];
+        }
+    }
+}
