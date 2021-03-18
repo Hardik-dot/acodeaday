@@ -1,0 +1,22 @@
+class Solution {
+    public String convert(String s, int numRows) {
+        if(numRows==1)
+            return s;
+        String[] res=new String[numRows];
+        Arrays.fill(res,"");
+        char[] ar=s.toCharArray();
+        int ht=0,ctr=1;
+        for(int i=0;i<ar.length;i++){
+            if(ht==numRows-1)    
+                ctr=-1;
+            if(ht==0)
+                ctr=1;
+            res[ht]+=ar[i];
+            ht=ht+ctr;
+        }
+        String ret="";
+        for(int i=0;i<numRows;i++)
+            ret+=res[i];
+        return ret;
+    }
+}
