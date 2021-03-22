@@ -1,0 +1,21 @@
+class Solution {
+    List<List<Integer>> lir=new LinkedList<>();
+    public void aux(int n,int k,LinkedList<Integer> lit,int idx){
+        if(lit.size()==k){
+            lir.add(new LinkedList<>(lit));
+            return;
+        }
+            
+        for(int i=idx+1;i<=n;i++){
+            lit.add(i);
+            aux(n,k,lit,i);
+            lit.removeLast();
+                
+        }
+    }
+    
+    public List<List<Integer>> combine(int n, int k) {
+        aux(n,k,new LinkedList<Integer>(),0);
+        return lir;
+    }
+}
