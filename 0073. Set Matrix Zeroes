@@ -1,0 +1,27 @@
+class Solution {
+    public void setZeroes(int[][] mat) {
+        HashSet<Integer> hsr = new HashSet<>();
+        HashSet<Integer> hsc = new HashSet<>();
+        for(int i=0;i<mat.length;i++){
+            for(int j=0;j<mat[i].length;j++){
+                if(mat[i][j]==0){
+                    hsr.add(i);
+                    hsc.add(j);
+                }
+            }
+        }
+        Iterator it = hsr.iterator();
+        while(it.hasNext()){
+            int v=(int)it.next();
+            Arrays.fill(mat[v],0);
+        }
+        it=hsc.iterator();
+        while(it.hasNext()){
+            int c=(int)it.next();
+            for(int i=0;i<mat.length;i++){
+                mat[i][c]=0;
+            }
+        }
+        
+    }
+}
