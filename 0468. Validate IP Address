@@ -1,0 +1,75 @@
+class Solution {
+    public boolean ctx(char[] x,int ct,char v){
+        for(char c:x){
+            if(c==v)
+                ct--;
+        }
+        if(ct==0)
+            return true;
+        return false;
+    }
+    public String validv4(String IP){
+        if(!ctx(IP.toCharArray(),3,'.'))
+            return "Neither";
+        String re[]=IP.split("\\.");
+        if(re.length!=4)
+            return "Neither";
+        for(String x:re){
+            if(x.length()>3||x.length()<1)
+               return "Neither";
+            if(x.charAt(0)=='0'){
+                if(x.length()!=1)
+                    return "Neither";
+            }
+            
+            try{
+                int v=Integer.parseInt(x);
+                if(v>255)
+                    return "Neither";
+            }
+            catch(NumberFormatException e){
+                return "Neither";
+            }
+        }
+        return "IPv4";
+    }
+    
+    public String validv6(String IP){
+        if(!ctx(IP.toCharArray(),7,':'))
+            return "Neither";
+        String re[]=IP.split(":");
+        
+        if(re.length!=8)
+            return "Neither";
+        for(String x:re){
+            if(x.length()>4||x.length()<1)
+               return "Neither";
+            char[] tp=x.toCharArray();
+            for(int i=0;i<x.length();i++){
+                int y=0;
+                if(tp[i]>=97){
+                    y=tp[i]-97;
+                    if(y>=6)
+                        return "Neither";
+                }else if(tp[i]>=65){
+                    y=tp[i]-65;
+                    if(y>=6)
+                        return "Neither";
+                }
+            }
+        }
+        return "IPv6";
+    }
+    
+    public String validIPAddress(String IP) {
+        if(IP.contains(".")&&IP.contains(":"))
+            return "Neither";
+        if(IP.contains(".")){
+            return validv4(IP);
+        }
+        if(IP.contains(":")){
+            return validv6(IP);
+        }
+        return "Neither";   
+    }
+}
