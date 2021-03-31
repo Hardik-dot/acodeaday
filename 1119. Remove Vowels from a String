@@ -1,0 +1,12 @@
+class Solution {
+    public String removeVowels(String s) {
+        /*String x[]= s.split("[aeiou]*");
+        String res="";
+        for(String c:x)
+            res+=c;
+        for(int i)
+        return res;*/
+        
+        return s.replaceAll("[aeiou]","");
+    }
+}
