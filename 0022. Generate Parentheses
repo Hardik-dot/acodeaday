@@ -1,0 +1,31 @@
+class Solution {
+    List<String> res=new ArrayList<>();
+    public void aux(int n,int open,int close,StringBuilder sb){
+        int a=open,b=close;
+        if(a==n&&b==n){
+            String r=sb.toString();
+            res.add(r);
+            return;
+        }
+        
+        if(a>n||b>n)
+            return;
+               
+        if(b<a){
+            sb.append(')');
+            aux(n,a,b+1,sb); 
+            sb.setLength(sb.length()-1);
+        }
+        sb.append('(');
+        aux(n,a+1,b,sb); 
+        sb.setLength(sb.length()-1);
+    }
+    
+    public List<String> generateParenthesis(int n) {
+        StringBuilder sb = new StringBuilder();
+        sb.append('(');
+        aux(n,1,0,sb); 
+        sb.setLength(sb.length()-1);
+        return res;
+    }
+}
