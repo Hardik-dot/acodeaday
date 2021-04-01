@@ -1,0 +1,13 @@
+class Solution {
+    public int maxAscendingSum(int[] nums) {
+        int sum=0;
+        for(int i=0;i<nums.length;){
+            int tmp=nums[i];
+            while(i+1<nums.length&&nums[i]<nums[i+1]){
+                tmp+=nums[i+1];i++;
+            }
+            sum=Math.max(sum,tmp);i++;
+        }
+        return sum;
+    }
+}
