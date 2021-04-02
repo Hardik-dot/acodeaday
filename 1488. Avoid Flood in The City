@@ -1,0 +1,49 @@
+class Solution {
+    public int aux(int y, TreeSet<Integer> st){
+        Iterator it = st.iterator();
+        while(it.hasNext()){
+            int c=(int)it.next();
+            if(y<c){
+                st.remove(c);
+                return c;
+            }
+        }
+        return -1;
+    }
+    
+    public int[] avoidFlood(int[] rains) {
+        HashMap<Integer,Integer> hm=new HashMap<>();
+        int res[]=new int[rains.length];
+        int flag=0;
+        TreeSet<Integer> st = new TreeSet<>();
+        for(int i=0;i<rains.length;i++){
+            if(rains[i]==0){
+                st.add(i);
+                res[i]=1;
+            }else{
+                int idx=rains[i];
+                if(!hm.containsKey(idx)){
+                    hm.put(idx,i);
+                }else{
+                    if(st.size()==0){
+                        flag=101;
+                        break;
+                    }
+                    int y=hm.get(idx);
+                    int pid=aux(y,st);
+                    if(pid==-1){
+                        flag=101;
+                        break;
+                    }
+                    res[pid]=idx;
+                    hm.put(idx,i);
+                }
+                res[i]=-1;
+            }
+        }
+        
+        if(flag==101)
+            res=new int[0];
+        return res;
+    }
+}
