@@ -1,0 +1,27 @@
+class Solution {
+    public int compress(char[] crs) {
+        int res=0;
+        
+        char[] chars=new char[crs.length+1];
+        for(int i=0;i<crs.length;i++)
+            chars[i]=crs[i];
+        chars[crs.length]=' ';
+        
+        String s="";
+        
+        for(int i=0;i<chars.length-1;){
+            int j=i,lt;
+            while(i<chars.length&&chars[i]==chars[j])
+                i++;
+
+            s=s+chars[j];
+            if(i!=j+1){
+                lt=(i-j);
+                s=s+String.valueOf(lt);
+            }
+        }
+        for(int i=0;i<s.length();i++)
+            crs[i]=s.charAt(i);
+        return s.length();
+    }
+}
