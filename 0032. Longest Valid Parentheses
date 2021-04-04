@@ -1,0 +1,32 @@
+class Solution {
+    public int longestValidParentheses(String s) {
+        int lf=0,rt=0,mx=0;
+        char[] ar=s.toCharArray();
+        for(int i=0;i<s.length();i++){
+            if(ar[i]=='(')
+                lf++;
+            else
+                rt++;
+            if(lf<rt){
+                //reset
+                lf=rt=0;
+            }else if(lf==rt){
+                mx=Math.max(mx,2*rt);
+            }
+        }
+        lf=rt=0;
+        for (int i = s.length() - 1; i >= 0; i--){
+            if(ar[i]=='(')
+                lf++;
+            else
+                rt++;
+            if(lf>rt){
+                //reset
+                lf=rt=0;
+            }else if(lf==rt){
+                mx=Math.max(mx,2*lf);
+            }
+        }
+        return mx;
+    }
+}
