@@ -1,0 +1,28 @@
+class Solution {
+    Boolean arr[];
+    public boolean aux(int[] jump,int n){
+        if(n>=jump.length-1)
+            return true;
+        if(jump[n]==0){
+            arr[n]=false;
+            return false;
+        }
+            
+        for(int i=jump[n];i>0;i--){
+            if(n+i<=jump.length){
+                if(arr[n+i]==null)
+                    arr[n+i]=aux(jump,n+i);
+                if(arr[n+i]==true)
+                    return true;
+            }         
+        }
+        return false;
+    }
+    
+    public boolean canJump(int[] nums) {
+
+        arr=new Boolean[nums.length+1];
+        arr[nums.length]=true;
+        return aux(nums,0);
+    }
+}
