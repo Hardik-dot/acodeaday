@@ -1,0 +1,19 @@
+class Solution {
+    public int secondHighest(String s) {
+        int[] ts=new int[10];
+        for(int i=0;i<s.length();i++){
+            if(s.charAt(i)<58){
+                ts[(int)s.charAt(i)-'0']=1;
+            }
+        }
+        int a=-1,b=-1;
+        for(int i=9;i>=0;i--){
+            if(ts[i]==1){
+                if(a==-1)
+                    a=ts[i];
+                else return i;
+            }
+        }
+        return -1;
+    }
+}
