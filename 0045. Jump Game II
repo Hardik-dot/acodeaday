@@ -1,0 +1,31 @@
+class Solution {
+    Integer arr[];
+    public int aux(int[] jump,int n){
+        if(n>=jump.length-1)
+            return 0;
+        if(jump[n]==0){
+            arr[n]=100000;
+            return 100000;
+        }
+        
+        if(arr[n]!=null)
+            return arr[n];
+        
+        if(n+jump[n]>=jump.length)
+            return 1;
+        int res=10000000;  
+        for(int i=jump[n];i>0;i--){
+            if(arr[n+i]==null)
+                arr[n+i]=aux(jump,n+i)+1;
+            res=Math.min(res,arr[n+i]);
+        }
+        arr[n]=res;
+        return res;
+    }
+    
+    public int jump(int[] nums) {
+        arr=new Integer[nums.length+1];
+        arr[nums.length]=1;
+        return aux(nums,0);
+    }
+}
