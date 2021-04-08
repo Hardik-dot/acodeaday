@@ -1,0 +1,35 @@
+class Solution {
+    int ct=0;
+    Integer res[];
+    public int aux(String s,int idx){
+        if(idx==s.length()){
+            return 1;
+        }
+        if(idx>s.length())
+            return 0;
+        
+        if(s.charAt(idx)=='0')
+            return 0;
+        if(idx==s.length()-1)
+            return 1;
+        if(res[idx]==null){
+            int v=0;
+            if(s.charAt(idx)=='1')
+                v = aux(s,idx+2);
+            if(s.charAt(idx)=='2'){
+                if(idx<s.length()-1){
+                    if(s.charAt(idx+1)<='6')
+                        v=aux(s,idx+2);
+                }
+            }
+            v+=aux(s,idx+1);
+            res[idx]=v;
+        }
+        return res[idx];
+        
+    }
+    public int numDecodings(String s) {
+        res=new Integer[s.length()+1];
+        return aux(s,0);
+    }
+}
