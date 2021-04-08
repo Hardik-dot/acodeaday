@@ -1,0 +1,29 @@
+class Solution {
+    List<String> res=new ArrayList<>();
+    public void aux(String digits,String[] map,String mr){
+        if(digits.length()==0){
+            res.add(mr);
+            return;
+        }    
+        int d=digits.charAt(0)-'0';
+        char[] so=map[d].toCharArray();
+        for(int i=0;i<so.length;i++)
+        aux(digits.substring(1),map,mr+so[i]);
+    }
+    
+    public List<String> letterCombinations(String digits) {
+        if(digits.length()==0)
+            return res;
+        String map[]=new String[10];
+        map[2]="abc";
+        map[3]="def";
+        map[4]="ghi";
+        map[5]="jkl";
+        map[6]="mno";
+        map[7]="pqrs";
+        map[8]="tuv";
+        map[9]="wxyz";
+        aux(digits,map,new String());
+        return res;
+    }
+}
