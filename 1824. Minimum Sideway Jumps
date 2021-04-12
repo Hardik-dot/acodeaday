@@ -1,0 +1,74 @@
+class Solution {
+    //int arr[][];
+    int res=Integer.MAX_VALUE;
+    
+    public void aux(int ind, int pth, int[][] arr,int ct){
+        if(ind==arr.length-1){
+            if(ct<res)
+                res=ct;
+            return;
+        }
+        if(ct>=res)
+            return;
+        
+        if(pth==0){
+            if(arr[ind][1]>arr[ind][2]){
+                aux(ind+arr[ind][1],1,arr,ct+1);
+                if(res!=Integer.MAX_VALUE)
+                    return;
+                aux(ind+arr[ind][2],2,arr,ct+1);
+            }else{
+                aux(ind+arr[ind][2],2,arr,ct+1);
+                if(res!=Integer.MAX_VALUE)
+                    return;
+                aux(ind+arr[ind][1],1,arr,ct+1);
+            }
+        }else if(pth==1){
+            if(arr[ind][0]>arr[ind][2]){
+                aux(ind+arr[ind][0],0,arr,ct+1);
+                if(res!=Integer.MAX_VALUE)
+                    return;
+                aux(ind+arr[ind][2],2,arr,ct+1);
+            }else{
+                aux(ind+arr[ind][2],2,arr,ct+1);
+                if(res!=Integer.MAX_VALUE)
+                    return;
+                aux(ind+arr[ind][0],0,arr,ct+1);
+            }
+        }else{
+            if(arr[ind][1]>arr[ind][0]){
+                aux(ind+arr[ind][1],1,arr,ct+1);
+                if(res!=Integer.MAX_VALUE)
+                    return;
+                aux(ind+arr[ind][0],0,arr,ct+1);
+            }else{
+                aux(ind+arr[ind][0],0,arr,ct+1);
+                if(res!=Integer.MAX_VALUE)
+                    return;
+                aux(ind+arr[ind][1],1,arr,ct+1);
+            }
+        }
+        return;
+    }
+    
+    public int minSideJumps(int[] obs) {
+        int n = obs.length;
+        int[][] arr=new int[n][3];
+        
+        for(int i=n-2;i>=0;i--){
+            for(int j=0;j<3;j++){
+                arr[i][j]=arr[i+1][j]+1;
+            }
+            if(obs[i]!=0)
+            arr[i][obs[i]-1]=-1;
+        }
+        int ind=0;
+        if(arr[ind][0]>0)
+            aux(ind+arr[ind][0],0,arr,1);
+        if(arr[ind][1]>0)
+            aux(ind+arr[ind][1],1,arr,0);
+        if(arr[ind][2]>0)
+            aux(ind+arr[ind][2],2,arr,1);
+        return res;
+    }
+}
