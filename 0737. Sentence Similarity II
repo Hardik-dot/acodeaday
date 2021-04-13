@@ -1,0 +1,40 @@
+class Solution {
+    public boolean aux(HashMap<String,HashSet<String>> hm, HashSet<String> hs,String cur,String w){
+        if(hs.contains(cur)) return false;
+        
+        HashSet<String> tmp=hm.get(cur);
+        if(tmp.contains(w)){
+            return true;
+        } 
+        hs.add(cur);
+        Iterator it = tmp.iterator();
+        while(it.hasNext()){
+            String crx=(String)it.next();
+            if(aux(hm,hs,crx,w)){
+                hm.get(crx).add(w);
+                hm.get(w).add(crx);
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean areSentencesSimilarTwo(String[] sen1, String[] sen2, List<List<String>> sp) {
+        if(sen1.length!=sen2.length)    return false;
+        HashMap<String,HashSet<String>> hm=new HashMap<>();
+        for(int i=0;i<sp.size();i++){
+            hm.putIfAbsent(sp.get(i).get(0), new HashSet<String>());
+            hm.putIfAbsent(sp.get(i).get(1), new HashSet<String>());
+            hm.get(sp.get(i).get(0)).add(sp.get(i).get(1));
+            hm.get(sp.get(i).get(1)).add(sp.get(i).get(0));
+        }
+        
+        for(int i=0;i<sen1.length;i++){
+            if(!sen1[i].equals(sen2[i])){
+                if(!hm.containsKey(sen1[i])||!aux(hm,new HashSet<>(),sen1[i],sen2[i]))
+                    return false;
+            }
+        }
+        return true;    
+    }
+}
