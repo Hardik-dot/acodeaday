@@ -1,0 +1,13 @@
+class Solution {
+    public boolean squareIsWhite(String crd) {
+        int c=crd.charAt(0)-'a',d=crd.charAt(1)-'1';
+        if(c%2==0){
+            if(d%2==0)
+                return false;
+        }else{
+            if(d%2==1)
+                return false;
+        }
+        return true;
+    }
+}
