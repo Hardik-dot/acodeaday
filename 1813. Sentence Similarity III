@@ -1,0 +1,29 @@
+class Solution {
+    //public boolean aux()
+    public boolean areSentencesSimilar(String sen1, String sen2) {
+        String[] w1=sen1.split(" ");
+        String[] w2=sen2.split(" ");
+        
+        int i=0,j=0;
+        while(i<w1.length&&j<w2.length){
+            if(!w1[i].equals(w2[j]))
+                break;
+            i++;j++;
+        }
+        if(i==w1.length||j==w2.length)
+            return true;
+        
+        int p=w1.length-1,q=w2.length-1;
+        
+        while(p>=0&&q>=0){
+            if(!w1[p].equals(w2[q]))
+                break;
+            p--;q--;
+        }
+        p++;q++;
+        if(i==p||j==q||p<=0||q<=0)
+            return true;
+        
+        return false;
+    }
+}
