@@ -1,0 +1,14 @@
+class Solution {
+    public int maximumUnits(int[][] bt, int ts) {
+        Arrays.sort(bt, (a,b)->b[1]-a[1]);
+        int i=0,ct=0;
+        while(ts>0&&i<bt.length){
+            int a=(bt[i][0]<=ts)?bt[i][0]:ts;
+            ct=ct+a*bt[i][1];
+            ts=ts-a;
+            i++;
+        }
+        
+        return ct;
+    }
+}
