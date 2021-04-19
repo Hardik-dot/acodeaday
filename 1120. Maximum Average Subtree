@@ -1,0 +1,40 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    double mx=-1;
+    public int[] aux(TreeNode root) {
+        int res[]=new int[2];
+        if(root==null)
+            return res;
+        int[] lt=aux(root.left);
+        int[] rt=aux(root.right);
+        
+        if(lt[1]+rt[1]==0){
+            res[0]=root.val;res[1]=1;
+        }else{
+            res[0]=lt[0]+rt[0]+root.val;
+            res[1]=lt[1]+rt[1]+1;
+        }
+        double v=(double)res[0]/(double)res[1];
+        mx=Math.max(mx,v);
+        return res;
+    }
+    
+    public double maximumAverageSubtree(TreeNode root) {
+        int res[]=aux(root);
+        return mx;
+    }
+}
