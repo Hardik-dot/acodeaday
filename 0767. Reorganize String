@@ -1,0 +1,44 @@
+class Solution {
+    public String reorganizeString(String S) {
+        int[] arr=new int[26];
+        
+        for(int i=0;i<S.length();i++){
+            arr[S.charAt(i)-'a']+=1;
+        }
+        PriorityQueue<custchar> pq=new PriorityQueue<>((a,b)->-a.ct+b.ct);
+        
+        for(int i=0;i<26;i++){
+            if(arr[i]!=0){
+                if(arr[i]>(S.length()+1)/2)
+                    return "";
+                pq.add(new custchar(arr[i],(char)('a'+i)));
+            }
+        }
+        StringBuilder sb=new StringBuilder();
+        while(pq.size()>1){
+            custchar a=pq.poll(),b=pq.poll();
+            sb.append(a.ltr);
+            sb.append(b.ltr);
+            a.ct--;b.ct--;
+            if(a.ct>0)pq.add(a);
+            if(b.ct>0)pq.add(b);
+        }
+        
+        if(pq.size()>0){
+            custchar a=pq.poll();
+            if(a.ct>1)
+                return "";
+            sb.append(a.ltr);
+        }
+        return sb.toString();
+    }
+}
+
+class custchar{
+    int ct;
+    char ltr;
+    custchar(int ct,char ltr){
+        this.ct=ct;
+        this.ltr=ltr;
+    }
+}
