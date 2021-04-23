@@ -1,0 +1,32 @@
+class HitCounter {
+    private Queue<Integer> q;
+    /** Initialize your data structure here. */
+    public HitCounter() {
+        this.q = new LinkedList<>();
+    }
+    
+    /** Record a hit.
+        @param timestamp - The current timestamp (in seconds granularity). */
+    public void hit(int t) {
+        this.q.add(t);
+    }
+    
+    /** Return the number of hits in the past 5 minutes.
+        @param timestamp - The current timestamp (in seconds granularity). */
+    public int getHits(int ts) {
+        while(this.q.size()>0){
+            int t=this.q.peek();
+            if(ts-t<300)
+                break;
+            this.q.poll();
+        }
+        return this.q.size();
+    }
+}
+
+/**
+ * Your HitCounter object will be instantiated and called as such:
+ * HitCounter obj = new HitCounter();
+ * obj.hit(timestamp);
+ * int param_2 = obj.getHits(timestamp);
+ */
