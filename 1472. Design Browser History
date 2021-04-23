@@ -1,0 +1,45 @@
+class BrowserHistory {
+    class node{
+        String web;
+        node next;
+        node prev;
+        node(String w){
+            web=w;
+        }
+    }
+    node hd=null;
+    public BrowserHistory(String hp) {
+        hd=new node(hp);
+    }
+    
+    public void visit(String url) {
+        node tmp=new node(url);
+        tmp.prev=hd;
+        hd.next=tmp;
+        hd=hd.next;
+    }
+    
+    public String back(int steps) {
+        while(hd.prev!=null&&steps>0){
+            hd=hd.prev;
+            steps--;
+        }
+        return hd.web;
+    }
+    
+    public String forward(int steps) {
+        while(hd.next!=null&&steps>0){
+            hd=hd.next;
+            steps--;
+        }
+        return hd.web;
+    }
+}
+
+/**
+ * Your BrowserHistory object will be instantiated and called as such:
+ * BrowserHistory obj = new BrowserHistory(homepage);
+ * obj.visit(url);
+ * String param_2 = obj.back(steps);
+ * String param_3 = obj.forward(steps);
+ */
