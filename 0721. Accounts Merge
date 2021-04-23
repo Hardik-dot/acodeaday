@@ -1,0 +1,58 @@
+class Solution {
+    TreeSet<Integer> vis =new TreeSet<>();
+    List<List<String>> acc;
+    HashMap<String, TreeSet<Integer>> hm=new HashMap<>();
+    
+    public void aux(TreeSet<String> trx, String jw){
+        TreeSet<Integer> curr=hm.get(jw);
+        Iterator it = curr.iterator();
+        while(it.hasNext()){
+            int idx=(int)it.next();
+            if(!vis.contains(idx)){
+                vis.add(idx);
+                int j=1;
+                while(j<acc.get(idx).size()){
+                    if(!trx.contains(acc.get(idx).get(j))){
+                        trx.add(acc.get(idx).get(j));
+                        aux(trx,acc.get(idx).get(j));
+                    }
+                    j++;
+                }
+            }
+        }       
+    }
+    
+    public List<List<String>> accountsMerge(List<List<String>> acco) {
+        acc=acco;
+        List<List<String>> res=new LinkedList<>();
+        for(int i=0;i<acc.size();i++){
+            for(int j=1;j<acc.get(i).size();j++){
+                String jw=acc.get(i).get(j);
+                TreeSet<Integer> ts = hm.getOrDefault(jw,new TreeSet<Integer>());
+                ts.add(i);
+                hm.put(jw,ts);
+            }
+        }
+        
+        for(int i=0;i<acc.size();i++){
+            if(vis.contains(i))
+                continue;
+            TreeSet<String> trx=new TreeSet<>();
+            vis.add(i);
+            for(int j=1;j<acc.get(i).size();j++){
+                String jw=acc.get(i).get(j);
+                trx.add(jw);
+                aux(trx,jw);
+            }
+            List<String> lit=new ArrayList<>();
+            lit.add(acc.get(i).get(0));
+            Iterator itx = trx.iterator();
+            while(itx.hasNext()){
+                lit.add((String)itx.next());
+            }
+            res.add(lit);
+        }
+        
+        return res;
+    }
+}
