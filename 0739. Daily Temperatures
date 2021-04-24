@@ -1,0 +1,29 @@
+class Solution {
+    public int[] dailyTemperatures(int[] T) {
+        Stack<tmp> st = new Stack<>();
+         
+        for(int i=0;i<T.length;i++){
+            while(st.size()>0&&T[i]>st.peek().T){
+                tmp temp=st.pop();
+                T[temp.ind]=i-temp.ind;
+            }
+            st.add(new tmp(i,T[i]));
+        }
+        while(st.size()>0){
+            tmp temp=st.pop();
+            T[temp.ind]=0;
+        }
+           
+        return T;
+    }
+    
+    class tmp{
+        int ind;
+        int T;
+        
+        tmp(int ind,int T){
+            this.ind=ind;
+            this.T=T;
+        }
+    }
+}
