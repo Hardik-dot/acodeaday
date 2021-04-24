@@ -1,0 +1,32 @@
+class Solution {
+    Integer[] dp;
+    public int aux(int[][] arr,int idx){
+        if(idx>=arr.length-1)
+            return 0;
+        if(dp[idx]==null){
+            int a=0,v=arr[idx][0]*arr[idx][1];
+            if(arr[idx+1][0]==arr[idx][0]+1)
+                a = Math.max(aux(arr,idx+2)+v,aux(arr,idx+1));
+            else
+                a = aux(arr,idx+1)+v;
+            dp[idx]=a;
+        }
+        
+        return dp[idx];
+    }
+    
+    public int deleteAndEarn(int[] nums) {
+        TreeMap<Integer, Integer> tm = new TreeMap<>();
+        for(int i=0;i<nums.length;i++)
+            tm.put(nums[i],tm.getOrDefault(nums[i],0)+1);
+        int nl=tm.size(),i=0;
+        int[][] arr=new int[nl+1][2];
+        dp=new Integer[nl+1];
+        for(Map.Entry<Integer,Integer> e:tm.entrySet()){
+            arr[i][0]=e.getKey();
+            arr[i][1]=e.getValue();i++;
+        }
+        
+        return aux(arr,0);
+    }
+}
