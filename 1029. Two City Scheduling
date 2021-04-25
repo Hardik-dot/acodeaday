@@ -1,0 +1,26 @@
+class Solution {
+    public int twoCitySchedCost(int[][] c) {
+        
+        Arrays.sort(c,(x,y)->Math.abs(y[0]-y[1])-Math.abs(x[0]-x[1]));
+        
+        int i=0,l=c.length/2,r=c.length/2,res=0;
+        while(i<c.length&&l>0&&r>0){
+            if(c[i][0]<c[i][1]) {   
+                res=res+c[i][0];l--;
+            }
+            else {   
+                res=res+c[i][1];r--;
+            }
+            i++;
+        }
+        
+        while(i<c.length&&l>0){
+            res=res+c[i][0];l--;i++;
+        }
+        while(i<c.length&&r>0){
+            res=res+c[i][1];r--;i++;
+        }
+        
+        return res;
+    }
+}
