@@ -1,0 +1,25 @@
+class Solution {
+    public int evalRPN(String[] tokens) {
+        Stack<Integer> st = new Stack<>();
+        int res=0;
+        HashMap<String, BiFunction<Integer,Integer,Integer>> ops = new HashMap<>();
+        ops.put("+", (a,b)->a+b);
+        ops.put("-", (a,b)->a-b);
+        ops.put("/", (a,b)->a/b);
+        ops.put("*", (a,b)->a*b);
+        for(String x:tokens){
+            int c;
+            if(ops.containsKey(x)){
+                int b=st.pop(),a=st.pop();
+                BiFunction<Integer,Integer,Integer> tok=ops.get(x);
+                c=tok.apply(a,b);
+                res=c;
+            }else 
+                c=Integer.parseInt(x);
+            st.add(c);
+        }
+        if(!st.isEmpty())
+            return st.pop();
+        return res;
+    }
+}
