@@ -1,0 +1,31 @@
+class Solution {
+    public int findMinDifference(List<String> timePoints) {
+        Set<Integer> al=new TreeSet<>();
+        
+        for(String x:timePoints){
+            int p=x.charAt(0)-'0',q=x.charAt(1)-'0',r=x.charAt(3)-'0',s=x.charAt(4)-'0';
+            int hr=p*10+q,mn=r*10+s;
+            int totmin=hr*60+mn;
+            int sec=totmin;
+            if(al.contains(sec))
+                return 0;
+            al.add(sec);
+        }
+        
+        int dif=Integer.MAX_VALUE;
+        int i=1,n=al.size();
+        al.add(dif);
+        
+        Iterator it=al.iterator();
+        int prev=(int)it.next(),a=prev;
+        
+        for(;i<n;i++){
+            int c=(int)it.next();
+            dif=Math.min(dif,c-prev);
+            prev=c;
+        }
+
+        dif=Math.min(dif,Math.min(prev-a,a+1440-prev));
+        return dif;
+    }
+}
