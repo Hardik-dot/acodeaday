@@ -1,0 +1,47 @@
+class Solution {
+    public Double aux(String a, String b, HashMap<String, HashMap<String,Double>> hm,HashSet<String> vis) {
+        double v=-1.0;
+        HashMap<String,Double> hs = hm.get(a);
+        if(hs==null)
+            return v;
+        if(hs.containsKey(b))
+            return hs.get(b);
+        
+        if(!vis.add(a))
+            return v;
+    
+        for(Map.Entry<String,Double> e:hm.get(a).entrySet()){
+            v=aux(e.getKey(),b,hm,vis);
+            if(v!=-1.0){
+                v=v*e.getValue();
+                return v;
+            }
+        }
+        return v;
+    }
+    
+    public double[] calcEquation(List<List<String>> eq, double[] values, List<List<String>> queries) {
+        HashMap<String, HashMap<String,Double>> hm = new HashMap<>();
+        int i=0;
+        for(List<String> lx:eq){
+            String a = lx.get(0),b=lx.get(1);
+            double p=values[i];
+            double q=(double)(1/p);
+            
+            HashMap<String,Double> lix = hm.getOrDefault(a,new HashMap<>());
+            lix.put(b,p);
+            hm.put(a,lix);
+            
+            HashMap<String,Double> lib = hm.getOrDefault(b,new HashMap<>());
+            lib.put(a,q);
+            hm.put(b,lib);
+            i++;
+        }
+        
+        double res[]=new double[queries.size()];i=0;
+        for(List<String> lx:queries){
+            res[i++]=aux(lx.get(0),lx.get(1),hm,new HashSet<String>());
+        }
+        return res;
+    }
+}
