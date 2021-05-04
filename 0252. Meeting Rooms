@@ -1,0 +1,12 @@
+class Solution {
+    public boolean canAttendMeetings(int[][] inv) {
+        Arrays.sort(inv,(x,y)->(x[0]-y[0]));
+        for(int i=0;i<inv.length-1;i++){
+            if(inv[i][1]<=inv[i+1][0])
+                continue;
+            else
+                return false;
+        }
+        return true;
+    }
+}
