@@ -1,0 +1,40 @@
+class Solution {
+    public String addBoldTag(String s, String[] dict) {
+        LinkedList<int[]> li=new LinkedList<>();
+        //intervals of all strings
+        for (String str : dict) {
+        	int index = -1;
+        	index = s.indexOf(str, index);
+        	while (index != -1) {
+        		li.add(new int[]{index, index + str.length()-1});
+        		index +=1;
+        		index = s.indexOf(str, index);
+        	}
+        }
+        
+        //merge interval
+        Collections.sort(li,(x,y)->x[0]-y[0]);
+        int i=0;
+        while(i<li.size()-1){
+            int[] a=li.get(i),b=li.get(i+1);
+            if(a[1]>=b[0]||Math.abs(a[1]-b[0])==1){
+                li.remove(i);li.remove(i);
+                li.add(i,new int[]{Math.min(a[0],b[0]),Math.max(a[1],b[1])});
+            }else i++;
+        }
+        
+        StringBuilder res=new StringBuilder();
+        
+        i=0;int prv=0;
+        while(i<li.size()){
+           int[] a=li.get(i);
+            res.append(s.substring(prv,a[0]));
+            res.append("<b>");
+            res.append(s.substring(a[0],a[1]+1));
+            res.append("</b>");
+            prv=a[1]+1;i++;
+        }
+        res.append(s.substring(prv));
+        return res.toString();
+    }
+}
