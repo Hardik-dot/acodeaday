@@ -1,0 +1,52 @@
+class Solution {
+    Integer[][] dp;
+    int mod=1000000007;
+    LinkedList<Integer> pad[]=new LinkedList[10];
+    public void init(int n){
+        pad[0]=new LinkedList<>();
+        pad[0].add(4);pad[0].add(6);
+        pad[1]=new LinkedList<>();
+        pad[1].add(6);pad[1].add(8);
+        pad[2]=new LinkedList<>();
+        pad[2].add(7);pad[2].add(9);
+        pad[3]=new LinkedList<>();
+        pad[3].add(4);pad[3].add(8);
+        pad[4]=new LinkedList<>();
+        pad[4].add(0);pad[4].add(3);pad[4].add(9);
+        pad[6]=new LinkedList<>();
+        pad[6]=new LinkedList<>();
+        pad[6].add(1);pad[6].add(7);pad[6].add(0);
+        pad[7]=new LinkedList<>();
+        pad[7].add(2);pad[7].add(6);
+        pad[8]=new LinkedList<>();
+        pad[8].add(1);pad[8].add(3);
+        pad[9]=new LinkedList<>();
+        pad[9].add(2);pad[9].add(4);
+        
+        dp=new Integer[10][n+1];
+    }
+    public int aux(int n,int id){
+        if(n==1)
+            return 1;
+        if(dp[id][n]==null){
+            long ct=0;
+            for(int i=0;i<pad[id].size();i++){
+                ct=(ct+aux(n-1,pad[id].get(i)))%mod;
+            }
+            dp[id][n]=(int)ct%mod;
+        }
+        return dp[id][n];
+    }
+    public int knightDialer(int n) {
+        if(n==1)
+            return 10;
+        init(n);
+        int ct=0;
+        for(int i=0;i<=9;i++){
+            if(i!=5)
+                ct=(ct+aux(n,i))%mod;
+        }
+
+        return ct;
+    }
+}
