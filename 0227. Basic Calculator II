@@ -1,0 +1,63 @@
+class Solution {
+    public int calculate(String s) {
+        StringBuilder sb = new StringBuilder();
+        LinkedList<String> st = new LinkedList<>();
+        for(int i=0;i<s.length();i++){
+            String x = s.charAt(i)+"";
+            if(s.charAt(i)=='+'||s.charAt(i)=='-'||s.charAt(i)=='*'||s.charAt(i)=='/'){
+                st.add(sb.toString());
+                st.add(x);
+                sb = new StringBuilder();
+            }   
+            else if(s.charAt(i)>='0'&&s.charAt(i)<='9'){
+                sb.append(x);
+            }
+        }
+        st.add(sb.toString());
+        
+        while(st.size()>1){
+            int i=0;
+            while(i<st.size()){
+                if(st.get(i).equals("/")){
+                    int b=Integer.valueOf(st.remove(i+1));
+                    st.remove(i);
+                    int a=Integer.valueOf(st.remove(i-1));
+                    int c=a/b;
+                    st.add(i-1,String.valueOf(c));
+                    break;
+                }
+                else if(st.get(i).equals("*")){
+                    int b=Integer.valueOf(st.remove(i+1));
+                    st.remove(i);
+                    int a=Integer.valueOf(st.remove(i-1));
+                    int c=a*b;
+                    st.add(i-1,String.valueOf(c));
+                    break;
+                }
+                else if(st.get(i).equals("+")){
+                    if(i+2<st.size()&&(st.get(i+2).equals("/")||st.get(i+2).equals("*"))){
+                        i++;continue;
+                    }
+                    int b=Integer.valueOf(st.remove(i+1));
+                    st.remove(i);
+                    int a=Integer.valueOf(st.remove(i-1));
+                    int c=a+b;
+                    st.add(i-1,String.valueOf(c));
+                }else if(st.get(i).equals("-")){
+                    if(i+2<st.size()&&(st.get(i+2).equals("/")||st.get(i+2).equals("*"))){
+                        i++;continue;
+                    }
+                    int b=Integer.valueOf(st.remove(i+1));
+                    st.remove(i);
+                    int a=Integer.valueOf(st.remove(i-1));
+                    int c=a-b;
+                    st.add(i-1,String.valueOf(c));
+                }
+                else i++;
+            }
+        }
+
+        return Integer.valueOf(st.get(0));
+                             
+    }
+}
