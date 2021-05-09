@@ -1,0 +1,40 @@
+class Solution {
+    public List<String> beforeAndAfterPuzzles(String[] phrases) {
+        HashMap<String, LinkedList<sent>> hm = new HashMap<>();
+        for(int i=0;i<phrases.length;i++){
+            String[] sb=phrases[i].split(" ");
+            LinkedList<sent> ts=hm.getOrDefault(sb[0],new LinkedList<>());
+            ts.add(new sent(i,phrases[i]));
+            hm.put(sb[0],ts);
+        }
+        TreeSet<String> res=new TreeSet<>();
+        for(int i=0;i<phrases.length;i++){
+            String[] sb=phrases[i].split(" ");
+            String lst=sb[sb.length-1];
+            if(hm.containsKey(lst)){
+                LinkedList<sent> ts=hm.get(lst);
+                String pre=phrases[i].substring(0,phrases[i].length()-lst.length());
+                int j=0;
+                while(j<ts.size()){
+                    sent tmp=ts.get(j);
+                    if(i!=tmp.ind)
+                    res.add(pre+tmp.phr);
+                    j++;
+                }
+            }
+            
+        }
+        
+        return new LinkedList<>(res);
+        
+    }
+    
+    class sent{
+        int ind;
+        String phr;
+        sent(int i, String w){
+            ind=i;
+            phr=w;
+        }
+    }
+}
