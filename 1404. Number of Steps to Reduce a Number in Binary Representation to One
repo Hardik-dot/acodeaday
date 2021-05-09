@@ -1,0 +1,28 @@
+class Solution {
+    public int numSteps(String s) {
+        StringBuilder sb=new StringBuilder(s);
+        int ct=0;
+        while(sb.length()>1){
+            int l=sb.length()-1;
+            if(sb.charAt(l)=='0')
+                sb.setLength(l);
+            else{
+                while(l>=0){
+                    if(sb.charAt(l)=='1')
+                        sb.setCharAt(l,'0');
+                    else{
+                        sb.setCharAt(l,'1');
+                        break;
+                    }
+                    l--;
+                }
+                if(l<0){
+                    ct=ct+sb.length()+1;
+                    break;
+                }
+            }
+            ct++;
+        }
+        return ct;
+    }
+}
