@@ -1,0 +1,28 @@
+class Solution {
+    Integer[][] dp;
+    public int aux(int[][] mat,int ix,int jx) {
+        if(dp[ix][jx]==null)
+        {
+            int vx;
+            if(ix>0){
+                vx=aux(mat,ix-1,jx);
+                if(jx>0)
+                    vx=Math.min(vx,aux(mat,ix-1,jx-1));
+                if(jx<mat[0].length-1)
+                    vx=Math.min(vx,aux(mat,ix-1,jx+1));
+                vx=vx+mat[ix][jx];
+            }else vx=mat[ix][jx];
+            dp[ix][jx]=vx;
+        }
+        return dp[ix][jx];
+    }
+    
+    public int minFallingPathSum(int[][] matrix) {
+        dp=new Integer[matrix.length][matrix[0].length];
+        int v=aux(matrix,matrix.length-1,0);
+        for(int i=1;i<matrix.length;i++)
+            v=Math.min(v,aux(matrix,matrix.length-1,i));
+        Integer[][] arx=dp;
+        return v;
+    }
+}
