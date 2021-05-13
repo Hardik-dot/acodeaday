@@ -1,0 +1,47 @@
+//https://leetcode.com/problems/longest-happy-prefix/discuss/547237/JavaPython-Rolling-Hash
+class Solution {
+      
+    public String longestPrefix1(String s) {
+        String res="";
+        int i=1,l=s.length();
+        char[] arx=s.toCharArray();
+        while(i<l){
+            if(arx[i]==arx[l-1])
+                break;
+            i++;
+        }
+        for(;i<l;i++){
+            if(arx[i]==arx[0]){
+                if(s.substring(i).equals(s.substring(0,s.length()-i)))
+                    return s.substring(i);
+            }
+        }
+        return res;
+    }
+    
+    public String longestPrefix(String s) {
+        char[] arx=s.toCharArray();
+        long l = 0, r = 0, p = 1, mod = (long)1e9 + 7;
+        int k = 0, n = s.length();
+        for(int i=0;i<n-1;i++){
+            l=(l*128+arx[i])%mod;
+            r=(r+p*arx[n-i-1])%mod;
+            if(l==r) k=i+1;
+            p=p*128%mod;
+        }
+        return s.substring(0, k);
+    }
+    
+    public String longestPrefi(String s) {
+        long l = 0, r = 0, p = 1, mod = (long)1e9 + 7;
+        int k = 0, n = s.length();
+        for (int i = 0; i < n - 1; i++) {
+            l = (l * 128 + s.charAt(i)) % mod;
+            r = (r + p * s.charAt(n - i - 1)) % mod;
+            if (l == r) k = i + 1;
+            p = p * 128 % mod;
+        }
+        return s.substring(0, k);
+    }
+}
+
