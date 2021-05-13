@@ -1,0 +1,51 @@
+class Solution {
+    public double getmed(int not0, int[] count){
+        int medi=not0/2;
+        if(not0%2==1) medi++;
+        int i=0; double res=0;
+        while(true){
+            if(medi-count[i]<=0)
+                break;
+            if(count[i]!=0)
+            medi-=count[i];
+            i++;
+        }
+        if(not0%2!=0||medi!=count[i]){
+            res=(double)i;
+        }else{
+            res=(double)i;
+            i++;
+            while(count[i]==0)
+                i++;
+            res=(double)(res+i)/(double)2;
+        }
+        return res;
+    }
+    
+    public double[] sampleStats(int[] count) {
+        double res[]=new double[5];
+        int i=0,min=0,max=0,mode=0,not0=0;
+        long sum=0;
+        while(count[i]==0&&i<256)
+            i++;
+        if(i==256)
+            return res;
+        min=i;max=i;mode=i;sum=count[i]*i;not0=count[i];i++;
+        for(;i<count.length;i++){
+            if(count[i]!=0){
+                not0+=count[i];
+                max=i;
+                sum=sum+(long)count[i]*i;
+                if(count[i]>count[mode])
+                    mode=i;
+            }
+        }
+                
+        res[0]=(double)min;
+        res[1]=(double)max;
+        res[2]=(double)((double)sum/(double)not0);
+        res[3]=getmed(not0,count);
+        res[4]=(double)mode;
+        return res;
+    }
+}
