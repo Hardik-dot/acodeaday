@@ -1,0 +1,29 @@
+class Solution {
+    public boolean checkpali(String a){
+        StringBuilder sa=new StringBuilder(a);
+        if(a.equals(sa.reverse().toString()))
+            return true;
+        return false;
+    }
+    
+    public boolean aux(String a, String b){
+        char[] aword=a.toCharArray(),bword=b.toCharArray();
+        int n=a.length(),i=0;
+        while(aword[i]==bword[n-i-1]&&i<n)
+            i++;
+        
+        if(i!=0){           
+            if(i>=n-i||checkpali(a.substring(i,n-i))||checkpali(b.substring(i,n-i)))
+                return true; 
+        }
+        return false;
+    }
+    
+    public boolean checkPalindromeFormation(String a, String b) {
+        if(checkpali(a)||checkpali(b))
+            return true;        
+        if(aux(a,b)||aux(b,a))
+            return true;
+        return false;
+    }
+}
