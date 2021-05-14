@@ -1,0 +1,40 @@
+class Solution {
+    public boolean aux(HashMap<String, LinkedList<String>> hm, int n, String from, LinkedList<String> res) {
+        if(res.size()==n)
+            return true;
+        LinkedList<String> ts=hm.get(from);
+        if(ts==null)
+            return false;
+        int i=0;
+        while(i<ts.size()){
+            String x=ts.get(i);
+            res.add(x);
+            ts.remove(i);
+            if(aux(hm,n,x,res))
+                return true;
+            res.remove(res.size()-1);
+            ts.add(i,x);i++;
+        }
+        return false;
+    }
+    public List<String> findItinerary(List<List<String>> tickets) {
+        HashMap<String, LinkedList<String>> hm=new HashMap<>();
+        int n=1;
+        for(int i=0;i<tickets.size();i++){
+            String frm=tickets.get(i).get(0);
+            String to=tickets.get(i).get(1);
+            LinkedList<String> ts=hm.getOrDefault(frm,new LinkedList<>());
+            ts.add(to);
+            hm.put(frm,ts);n++;
+        }
+        
+        for(Map.Entry<String,LinkedList<String>> e:hm.entrySet()){
+            Collections.sort(e.getValue());
+        }
+        
+        LinkedList<String> li=new LinkedList<>();
+        li.add("JFK");
+        aux(hm,n,"JFK", li);
+        return li;
+    }
+}
