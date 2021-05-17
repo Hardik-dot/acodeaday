@@ -1,0 +1,17 @@
+class Solution {
+    int[][] vis;
+    public void aux(int[][] img,int sr,int sc,int nc, int oc) {
+        if(sr<0||sc<0||sr==img.length||sc==img[0].length||img[sr][sc]!=oc||vis[sr][sc]!=0)
+            return;
+        img[sr][sc]=nc;vis[sr][sc]=1;
+        aux(img,sr-1,sc,nc,oc);
+        aux(img,sr,sc-1,nc,oc);
+        aux(img,sr+1,sc,nc,oc);
+        aux(img,sr,sc+1,nc,oc);
+    }
+    public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+        vis=new int[image.length][image[0].length];
+        aux(image,sr,sc,newColor,image[sr][sc]);
+        return image;
+    }
+}
