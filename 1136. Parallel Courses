@@ -1,0 +1,41 @@
+class Solution {
+    public int minimumSemesters(int n, int[][] relations) {
+        LinkedList<Integer> lidar[]=new LinkedList[n+1];
+        LinkedList<Integer> out[]=new LinkedList[n+1];
+        for(int ar[]:relations){
+            if(lidar[ar[1]]==null)
+                lidar[ar[1]]=new LinkedList<>();
+            lidar[ar[1]].add(ar[0]);
+            if(out[ar[0]]==null)
+                out[ar[0]]=new LinkedList<>();
+            out[ar[0]].add(ar[1]);
+        }
+        Queue<Integer> qu=new LinkedList<>();
+        HashSet<Integer> hs = new HashSet<>();
+        for(int i=1;i<=n;i++){
+            if(lidar[i]==null)
+                qu.add(i);
+        }
+        qu.add(null);int r=0;
+        while(!qu.isEmpty()){
+            if(qu.peek()==null){
+                r++;
+                if(qu.size()==1)
+                    break;
+                qu.poll();
+                qu.add(null);
+            }
+            int v=qu.poll();
+            if(out[v]!=null){
+                for(int i=0;i<out[v].size();i++){
+                    int o=out[v].get(i);
+                    lidar[o].remove((Integer)v);
+                    if(lidar[o].size()==0)
+                        qu.add(o);
+                }
+            }
+            hs.add(v);
+        }
+        return (hs.size()==n)?r:-1;
+    }
+}
