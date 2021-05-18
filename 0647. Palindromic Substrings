@@ -1,0 +1,26 @@
+class Solution {
+    public int countSubstrings(String s) {
+        boolean[][] dp=new boolean[s.length()][s.length()];
+        int r=0;
+        char[] word=s.toCharArray();
+        for(int i=0;i<s.length();i++){
+            for(int j=i;j<s.length();j++){
+                if(dp[i][j])
+                    continue;
+                int a=i,b=j;
+                while(a<=b&&word[a]==word[b]){
+                    if(dp[a][b])
+                        break;
+                    dp[a][b]=true;
+                    a++;b--;
+                }
+                if(a>=b)
+                    r+=(j-i)/2+1;
+            }
+        }
+        
+        return r;
+    }
+}
+
+//cardrart
