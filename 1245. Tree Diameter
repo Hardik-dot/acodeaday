@@ -1,0 +1,30 @@
+class Solution {
+    LinkedList<int[]> out[];
+    private int aux(int idx,int parent) {
+        int v=0;
+        for(int i=0;i<out[idx].size();i++){
+            int[] ar=out[idx].get(i);
+            if(ar[0]!=parent){
+                if(ar[1]==0)
+                    ar[1]=aux(ar[0],idx);
+                v=Math.max(v,ar[1]);
+            }
+        }
+        return v+1;
+    }
+    
+    public int treeDiameter(int[][] edges) {
+        out = new LinkedList[edges.length+1];
+        for(int i=0;i<=edges.length;i++)
+            out[i]=new LinkedList<int[]>();
+        for(int[] ar:edges){
+            out[ar[0]].add(new int[]{ar[1],0}); 
+            out[ar[1]].add(new int[]{ar[0],0}); 
+        }
+        int rs=0;
+        for(int i=0;i<=edges.length;i++)
+            rs=Math.max(rs,aux(i,-1));
+        return rs-1;
+        
+    }
+}
