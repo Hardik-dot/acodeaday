@@ -1,0 +1,28 @@
+class Solution {
+    private boolean compa(char[] a,char[] b,int[] ord) {
+        int i=0;
+        while(i<a.length&&i<b.length){
+            int p=ord[a[i]-'a'],q=ord[b[i]-'a'];
+            if(p<q)
+                return true;
+            if(p>q)
+                return false;
+            i++;
+        }
+        if(a.length>b.length)
+            return false;
+        return true;            
+    }
+    
+    public boolean isAlienSorted(String[] words, String order) {
+        int[] ord=new int[26];
+        for(int i=0;i<order.length();i++)
+            ord[order.charAt(i)-'a']=i;
+        
+        for(int i=1;i<words.length;i++){
+            if(!compa(words[i-1].toCharArray(),words[i].toCharArray(),ord))
+                return false;
+        }
+        return true;
+    }
+}
