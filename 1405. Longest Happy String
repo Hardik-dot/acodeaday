@@ -1,0 +1,38 @@
+class Solution {
+    public String longestDiverseString(int a, int b, int c) {
+        PriorityQueue<int[]> pq=new PriorityQueue<int[]>((x,y)->-x[0]+y[0]);
+        if(a!=0) pq.add(new int[]{a,97});
+        if(b!=0) pq.add(new int[]{b,98});
+        if(c!=0) pq.add(new int[]{c,99});
+        
+        StringBuilder sb=new StringBuilder();
+        while(!pq.isEmpty()){
+            int[] one=pq.poll();
+            if(one[0]>=2){
+                sb.append((char)one[1]);
+                sb.append((char)one[1]);
+                one[0]-=2;
+            }else{
+                sb.append((char)one[1]);
+                one[0]-=1;
+            }
+            
+            if(pq.isEmpty())
+                break;
+            int[] two=pq.poll();
+            if(two[0]>=2&&one[0]<two[0]){
+                sb.append((char)two[1]);
+                sb.append((char)two[1]);
+                two[0]-=2;
+            }else{
+                sb.append((char)two[1]);
+                two[0]-=1;
+            }
+            if(one[0]>0)
+                pq.add(one);
+            if(two[0]>0)
+                pq.add(two);
+        }
+        return sb.toString();
+    }
+}
