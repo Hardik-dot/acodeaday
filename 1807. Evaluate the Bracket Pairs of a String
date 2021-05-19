@@ -1,0 +1,26 @@
+class Solution {
+    public String evaluate(String s, List<List<String>> knowledge) {
+        HashMap<String,String> hm=new HashMap<>();
+        for(List<String> lx:knowledge)
+            hm.put(lx.get(0),lx.get(1));
+        StringBuilder sb=new StringBuilder();
+        int i=0,j=0;
+        char[] ar=s.toCharArray();
+        while(i<s.length()){
+            if(ar[i]=='('){
+                sb.append(s.substring(j,i));
+                j=i+1;
+                while(ar[i]!=')')
+                    i++;
+                if(hm.containsKey(s.substring(j,i)))
+                    sb.append(hm.get(s.substring(j,i)));
+                else
+                    sb.append("?");
+                j=i+1;
+            }
+            i++;
+        }
+        sb.append(s.substring(j,i));
+        return sb.toString();
+    }
+}
