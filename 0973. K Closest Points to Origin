@@ -1,0 +1,22 @@
+class Solution {
+    public int[][] kClosest(int[][] points, int k) { //21ms
+        PriorityQueue<int[]> pq=new PriorityQueue<int[]>((x,y)->(x[0]-y[0]));
+        int id=0;
+        for(int[] res:points){
+            int d=res[0]*res[0]+res[1]*res[1];
+            pq.add(new int[]{d,id++});
+        }
+        int[][] rest=new int[k][2];
+        for(int i=0;i<k;i++){
+            int t[]=pq.poll();
+            rest[i][0]=points[t[1]][0];
+            rest[i][1]=points[t[1]][1];
+        }
+        return rest;
+    }
+    
+    public int[][] kClosest1(int[][] points, int k) { //37ms
+        Arrays.sort(points,Comparator.comparing(p->p[0]*p[0]+p[1]*p[1]));
+        return Arrays.copyOfRange(points,0,k);
+    }
+}
