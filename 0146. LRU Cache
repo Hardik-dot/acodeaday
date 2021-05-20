@@ -1,0 +1,47 @@
+// TRY https://leetcode.com/problems/lru-cache/discuss/45911/Java-Hashtable-%2B-Double-linked-list-(with-a-touch-of-pseudo-nodes)
+class LRUCache {
+    HashMap<Integer,int[]> hm;
+    PriorityQueue<int[]> pq;
+    int c,t;
+    public LRUCache(int capacity) {
+        hm=new HashMap<Integer,int[]>();
+        c=capacity;t=0;
+        pq=new PriorityQueue<int[]>((x,y)->x[0]-y[0]);
+    }
+    
+    public int get(int key) {
+        int[] ar = hm.getOrDefault(key,null);
+        if(ar==null)
+            return -1;
+        pq.remove(ar);
+        ar[0]=t++;
+        pq.add(ar);
+        return ar[2];
+    }
+    
+    //ar0 time ar1 key ar2 value
+    public void put(int key, int value) {
+        if(hm.containsKey(key)){
+            int []ar=hm.get(key);
+            pq.remove(ar);
+            ar[0]=t++;
+            ar[2]=value;
+            pq.add(ar);
+        }else{
+            if(pq.size()==c){
+                int[] cr=pq.poll();
+                hm.remove(cr[1]);
+                }
+            int ar[]=new int[]{t++,key,value};
+            pq.add(ar);
+            hm.put(key,ar);
+        }
+    }
+}
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
