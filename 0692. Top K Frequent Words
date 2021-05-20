@@ -1,0 +1,36 @@
+class Solution {
+    public List<String> topKFrequent(String[] words, int k) {
+        Map<String, Integer> count = new HashMap();
+        for (String word: words)
+            count.put(word, count.getOrDefault(word, 0) + 1);
+        
+        PriorityQueue<wrd> ts = new PriorityQueue<>((a,b)-> 
+        {
+            if(a.ct==b.ct)
+                return a.w.compareTo(b.w);
+            else
+                return b.ct-a.ct;
+        });
+        
+        for(Map.Entry<String, Integer> e:count.entrySet())      
+            ts.add(new wrd(e.getKey(),e.getValue()));
+        
+        List<String> li=new LinkedList<>();
+        for(int i=0;i<k;i++){
+            wrd tmp=ts.poll();
+            li.add(tmp.w);
+        }
+        
+        return li;
+
+    }
+    
+    class wrd{
+        String w;
+        int ct;
+        wrd(String w,int c){
+            this.w=w;
+            this.ct=c;
+        }
+    }
+}
