@@ -1,0 +1,21 @@
+class Solution {
+    public int minMeetingRooms(int[][] intervals) {
+        Arrays.sort(intervals,(x,y)->x[0]-y[0]);
+        LinkedList<int[]> li=new LinkedList<>();
+        //li.add(intervals[0]);
+        for(int i=0;i<intervals.length;i++){
+            int j=0;
+            while(j<li.size()){
+                int tp[]=li.get(j);
+                if(tp[1]<=intervals[i][0]){
+                    li.set(j,intervals[i]);
+                    break;
+                }
+                j++;
+            }
+            if(j==li.size())
+                li.add(intervals[i]);
+        }
+        return li.size();
+    }
+}
