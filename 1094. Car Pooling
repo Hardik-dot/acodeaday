@@ -1,0 +1,21 @@
+class Solution {
+    public boolean carPooling(int[][] trips, int capacity) {
+        LinkedList<int[]> li=new LinkedList<>();
+        Arrays.sort(trips,(x,y)->x[1]-y[1]);
+        for(int[] ar:trips){
+            int id=0;
+             while(ar[0]>capacity&&id<li.size()){
+                int cr[]=li.get(id);
+                if(ar[1]>=cr[2]){
+                    capacity+=cr[0];
+                    li.remove(id);
+                }else id++;
+            }
+            if(ar[0]<=capacity){
+                capacity-=ar[0];
+                li.add(ar);
+            }else return false;
+        }
+        return true;
+    }
+}
