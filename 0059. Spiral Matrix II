@@ -1,0 +1,45 @@
+class Solution {
+    public int[][] generateMatrix(int n) {
+        int u=0,r=0,d=0,l=0,i=0,j=0,k=1;
+        int[][] matrix = new int[n][n];
+        int ct=n*n+1;
+        while(true){
+            int p=i,q=j;
+            while(j<matrix[0].length-r){
+                matrix[i][j++]=k++;
+            }
+            if(ct==k)
+                break;
+            u++;
+            j--;i++;        
+            
+            while(i<matrix.length-d){
+                matrix[i++][j]=k++;
+            }
+            if(ct==k)
+                break;
+            r++;
+            i--;j--;
+            
+            while(j>=l){
+                matrix[i][j--]=k++;
+            }
+            if(ct==k)
+                break;
+            d++;
+            i--;j++;
+            
+            while(i>=u){
+                matrix[i--][j]=k++;
+            }
+            if(ct==k)
+                break;
+            l++;
+            i++;j++;
+            
+            if(p==i&&q==j)
+                break;
+        }
+        return matrix;
+    }
+}
