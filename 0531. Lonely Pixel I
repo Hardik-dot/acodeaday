@@ -1,0 +1,22 @@
+class Solution {
+    public int findLonelyPixel(char[][] pic) {
+        int row[]=new int[pic.length];
+        int col[]=new int[pic[0].length];
+        Queue<int[]> status=new LinkedList<>();
+        for(int i=0;i<pic.length;i++){
+            for(int j=0;j<pic[0].length;j++){
+                if(pic[i][j]=='B'){
+                    row[i]++;col[j]++;   
+                    status.add(new int[]{i,j});
+                }
+            }
+        }
+        int ct=0;
+        while(!status.isEmpty()){
+            int[] tp=status.poll();
+            if(row[tp[0]]==1&&col[tp[1]]==1)
+                ct++;
+        }
+        return ct;
+    }
+}
