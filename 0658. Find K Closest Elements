@@ -1,0 +1,28 @@
+class Solution {
+    public List<Integer> findClosestElements(int[] arr, int k, int x) {
+        int i=0,diff=0;
+        while(i<arr.length){
+            diff=arr[i]-x;
+            if(diff>0)  break;
+            i++;
+        }
+        List<Integer> li=new LinkedList<>();
+        int j=i;i--;
+        while(i>=0&&j<arr.length&&k>0){
+            if(Math.abs(arr[i]-x)<=Math.abs(arr[j]-x))
+                li.add(0,arr[i--]);
+            else
+                li.add(arr[j++]);
+            k--;
+        }
+        while(k>0&&i>=0){
+            li.add(0,arr[i--]);
+            k--;
+        }
+        while(k>0&&j<arr.length){
+            li.add(arr[j++]);
+            k--;
+        }
+        return li;
+    }
+}
