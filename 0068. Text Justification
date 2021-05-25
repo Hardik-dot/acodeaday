@@ -1,0 +1,75 @@
+class Solution {
+    public List<List<String>> genParah(String[] words, int maxWidth) {
+        List<List<String>> parah=new LinkedList<>();
+        List<String> lin=new LinkedList<>();
+        int l=0;
+        for(String w:words){
+            if(l+w.length()<=maxWidth){
+                lin.add(w);
+                l+=w.length()+1;
+            }else{
+                lin.add(0,String.valueOf(l-lin.size()));
+                l=w.length()+1;
+                parah.add(lin);
+                lin=new LinkedList<>();
+                lin.add(w);
+            }                
+        }
+        lin.add(0,String.valueOf(l-lin.size()));
+        parah.add(lin);
+        return parah;
+    }
+    
+    public String makeLine(List<String> tmp,int maxWidth){
+        int l=Integer.valueOf(tmp.get(0));
+        int no=tmp.size()-2;
+        int totspace=maxWidth-l;
+        StringBuilder line=new StringBuilder();
+        if(no==0){
+            line.append(tmp.get(1));
+            for(int j=0;j<totspace;j++)
+                    line.append(" ");
+        }else{
+            int perspace=totspace/no,extra=totspace%no;
+            no=no+0;
+
+            for(int i=1;i<tmp.size()-1;i++){
+                line.append(tmp.get(i));
+                for(int j=0;j<perspace;j++)
+                    line.append(" ");
+                if(extra>0){
+                    line.append(" ");
+                    extra--;
+                }
+            }
+            line.append(tmp.get(tmp.size()-1));
+        }
+        return line.toString();
+    }
+    
+    public String lastLine(List<String> tmp,int maxWidth){
+        int l=Integer.valueOf(tmp.get(0));
+        StringBuilder line=new StringBuilder();
+        for(int i=1;i<tmp.size()-1;i++){
+            line.append(tmp.get(i));
+            line.append(" ");
+        }
+        line.append(tmp.get(tmp.size()-1));
+        int m=maxWidth-line.length();
+        for(int j=0;j<m;j++)
+            line.append(" ");
+        return line.toString();
+    }
+    
+    public List<String> fullJustify(String[] words, int maxWidth) {
+        List<List<String>> parah=genParah(words,maxWidth);
+        List<String> txt=new LinkedList<String>();
+        int k=0;
+        for(;k<parah.size()-1;k++){         
+            txt.add(makeLine(parah.get(k),maxWidth));
+        }
+        List<String> tmp=parah.get(k);
+        txt.add(lastLine(parah.get(k),maxWidth));
+        return txt;
+    }
+}
