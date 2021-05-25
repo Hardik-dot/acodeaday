@@ -1,0 +1,25 @@
+class Solution {
+    public String addStrings(String num1, String num2) {
+        StringBuilder ans=new StringBuilder();
+        int i=num1.length()-1,j=num2.length()-1,c=0;
+        char[] n1=num1.toCharArray(),n2=num2.toCharArray();
+        while(i>=0&&j>=0){
+            int t=n1[i--]-'0'+n2[j--]-'0'+c;
+            int r=t%10;c=t/10;
+            ans.append(r);
+        }
+        while(i>=0){
+            int t=n1[i--]-'0'+c;
+            int r=t%10;c=t/10;
+            ans.append(r);
+        }
+        while(j>=0){
+            int t=n2[j--]-'0'+c;
+            int r=t%10;c=t/10;
+            ans.append(r);
+        }
+        if(c!=0)
+            ans.append(c);
+        return ans.reverse().toString();
+    }
+}
