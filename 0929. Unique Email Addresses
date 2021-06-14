@@ -1,0 +1,13 @@
+class Solution {
+    public int numUniqueEmails(String[] emails) {
+        HashSet<String> local_store=new HashSet<>();
+        for(String x:emails){
+            String local[] = x.split("@");
+            String local_name = local[0].split("\\+")[0];
+            local_name=local_name.replaceAll("\\.","");
+            local_store.add(local_name+"@"+local[1]);
+        }
+        return local_store.size();
+        
+    }
+}
