@@ -1,0 +1,23 @@
+class Solution {
+    public int totalFruit(int[] tree) {
+        int a=tree[0],b=-1,ct=1,aind=0,bind=-1,res=1;
+        for(int i=1;i<tree.length;i++){
+            if(a==tree[i]){
+                ct++;aind=i;
+            }else if(b==-1||b==tree[i]){
+                ct++;bind=i;b=tree[i];
+            }else{
+                //new fruit
+                res=Math.max(res,ct);
+                if(bind>aind){
+                    ct=bind-aind+1;
+                    aind=i;a=tree[i];
+                }else{
+                    ct=aind-bind+1;
+                    bind=i;b=tree[i];
+                }
+            }
+        }
+        return Math.max(res,ct);
+    }
+}
