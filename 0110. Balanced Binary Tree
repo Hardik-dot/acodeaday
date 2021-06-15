@@ -1,0 +1,31 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int checker(TreeNode root){
+        if(root==null)
+            return 0;
+        int left_ht=checker(root.left);
+        int rt_ht=checker(root.right);
+        if(left_ht==-1||rt_ht==-1||Math.abs(left_ht-rt_ht)>1)
+            return -1;
+        return Math.max(left_ht,rt_ht)+1;
+    }
+    public boolean isBalanced(TreeNode root) {
+        if(checker(root)==-1)
+            return false;
+        return true;
+    }
+}
