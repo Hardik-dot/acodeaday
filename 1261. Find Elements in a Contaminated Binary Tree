@@ -1,0 +1,47 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class FindElements {
+    HashSet<Integer> treeval;
+    public void rectify(TreeNode root){
+        if(root.left!=null){
+            if(root.left.val==-1)
+            root.left.val=root.val*2+1;
+            rectify(root.left);
+        }
+        if(root.right!=null){
+            if(root.right.val==-1)
+            root.right.val=root.val*2+2;
+            rectify(root.right);
+        }
+        treeval.add(root.val);
+    }
+    public FindElements(TreeNode root) {
+        treeval=new HashSet<>();
+        if(root.val==-1)
+            root.val=0;
+        rectify(root);
+    }
+    
+    public boolean find(int target) {
+        return treeval.contains(target);
+    }
+}
+
+/**
+ * Your FindElements object will be instantiated and called as such:
+ * FindElements obj = new FindElements(root);
+ * boolean param_1 = obj.find(target);
+ */
