@@ -1,0 +1,71 @@
+class Solution {
+    class trie{
+        int isEnd;
+        trie child[];
+        trie() {
+            child=new trie[26];
+        }
+    }
+    String res;
+    public trie build(char[] word, trie root,int index){
+        if(index==word.length){
+            root.isEnd=1;return root;
+        }
+            
+        if(root.child[word[index]-'a']==null){
+            root.child[word[index]-'a']=new trie();
+        }
+        root.child[word[index]-'a']=build(word,root.child[word[index]-'a'],index+1);
+        return root;
+    }
+    
+    public void search(trie root,StringBuilder sb){
+        if(root.isEnd==0)
+            return;
+        int v=0;
+        if(res==null||res.length()<sb.length()||sb.toString().compareTo(res)<=0)
+            res=sb.toString();
+        for(int i=0;i<26;i++){
+            if(root.child[i]!=null){
+                sb.append((char)('a'+i));
+                search(root.child[i],sb);v++;
+                sb.setLength(sb.length()-1);
+            }
+        }
+    }
+    
+    
+    public String longestWord(String[] words) {
+        trie root=new trie();
+        for(String wrd:words){
+            root=build(wrd.toCharArray(),root,0);
+        }
+        
+        for(int i=0;i<26;i++){
+            if(root.child[i]!=null){
+                StringBuilder sb=new StringBuilder();
+                sb.append((char)('a'+i));
+                search(root.child[i],sb);
+            }
+        }
+        if(res==null)
+            res="";
+        return res;
+    }
+}
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
