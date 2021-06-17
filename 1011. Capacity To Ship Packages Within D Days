@@ -1,0 +1,28 @@
+class Solution {
+    public int shipWithinDays(int[] weights, int days) {
+        int sum=0,maxwt=0;
+        for(int wt:weights){
+            sum+=wt;
+            maxwt=Math.max(maxwt,wt);
+        }
+        int midwt=(maxwt+sum)/2;
+        //left - maxwt; rt - sum
+        while(maxwt<sum){
+            midwt=(maxwt+sum)/2;
+            int bucket=0,d=1;
+            for(int wt:weights){
+                if(bucket+wt>midwt){
+                    d++;bucket=0;
+                }
+                bucket+=wt;
+            }
+            
+            if(d<=days){
+                sum=midwt;
+            }else{
+                maxwt=midwt+1;
+            }
+        }
+        return maxwt;
+    }
+}
