@@ -1,0 +1,26 @@
+class Solution {
+    public int maxIceCream(int[] costs, int coins) {
+        Arrays.sort(costs);
+        int i=0,res=0;
+        while(i<costs.length&&coins>0){
+            if(coins-costs[i]>=0)
+                res++;
+            coins-=costs[i];
+            i++;
+        }
+        return res;
+    }
+    public int maxIceCreampq(int[] costs, int coins) {
+        PriorityQueue<Integer> pq=new PriorityQueue<>();
+        for(int n:costs)
+            pq.add(n);
+        int res=0;
+        while(!pq.isEmpty()&&coins>0){
+            int c=pq.poll();
+            if(coins-c>=0)
+                res++;
+            coins-=c;
+        }
+        return res;
+    }
+}
