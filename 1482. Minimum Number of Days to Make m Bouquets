@@ -1,0 +1,28 @@
+class Solution {
+    public int minDays(int[] bloomDay, int m, int k) {
+        if(m*k>bloomDay.length) return -1;
+        int minday=Integer.MAX_VALUE,maxday=Integer.MIN_VALUE;
+        for(int d:bloomDay){
+            minday=Math.min(minday,d);
+            maxday=Math.max(maxday,d);
+        }
+        
+        while(minday<maxday){
+            int mid=minday+(maxday-minday)/2;
+            int bq_ct=0,consequtive=0;
+            for(int d:bloomDay){
+                if(d<=mid)
+                    consequtive++;
+                else
+                    consequtive=0;
+                if(consequtive==k){
+                    bq_ct++;consequtive=0;
+                }
+            }
+            if(bq_ct>=m)
+                maxday=mid;
+            else minday=mid+1;
+        }
+        return minday;
+    }
+}
