@@ -1,0 +1,27 @@
+class Solution {
+    public int maximizeSweetness(int[] sweetness, int K) {
+        int minsweet=Integer.MAX_VALUE,totsweet=0;
+        for(int chunk:sweetness){
+            minsweet=Math.min(minsweet,chunk);
+            totsweet+=chunk;
+        }
+        K++;
+        while(minsweet<=totsweet){
+            int chunk_ct=1,midsweet=minsweet+(totsweet-minsweet)/2,val=0;
+            for(int chunk:sweetness){
+                val+=chunk;
+                if(val>midsweet){
+                    val=0;
+                    chunk_ct++;
+                    
+                }
+            }
+            
+            if(chunk_ct<=K)
+                totsweet=midsweet-1;
+            else
+                minsweet=midsweet+1;
+        }
+        return minsweet;
+    }
+}
