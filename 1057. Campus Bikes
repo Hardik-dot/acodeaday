@@ -1,0 +1,32 @@
+class Solution {
+    public int[] assignBikes(int[][] workers, int[][] bikes) {
+        PriorityQueue<int[]> pq = new PriorityQueue<>((x,y)->{
+            int c_d=Integer.compare(x[0],y[0]);
+            if(c_d==0){
+                int c_w=Integer.compare(x[1],y[1]);
+                if(c_w==0)
+                    return Integer.compare(x[2],y[2]);
+                return c_w;
+            }
+            return c_d;
+        });
+        
+        for(int w=0;w<workers.length;w++){
+            for(int b=0;b<bikes.length;b++){
+                int md=Math.abs(workers[w][0]-bikes[b][0])+Math.abs(workers[w][1]-bikes[b][1]);
+                pq.add(new int[]{md,w,b});
+            }
+        }
+        
+        int[] res=new int[workers.length];
+        while(!pq.isEmpty()){
+            int[] tmp=pq.poll();
+            if(workers[tmp[1]][0]!=-1&&bikes[tmp[2]][0]!=-1){
+                res[tmp[1]]=tmp[2];
+                workers[tmp[1]][0]=-1;
+                bikes[tmp[2]][0]=-1;
+            }
+        }
+        return res;
+    }
+}
