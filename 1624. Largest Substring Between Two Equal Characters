@@ -1,0 +1,15 @@
+class Solution {
+    public int maxLengthBetweenEqualCharacters(String s) {
+        Integer[] store=new Integer[26];
+        char[] str=s.toCharArray();
+        int i=0,res=1;
+        for(char c:str){
+            if(store[c-'a']==null)
+                store[c-'a']=i;
+            else
+                res=Math.max(i-store[c-'a']+1,res);
+            i++;
+        }
+        return res-2;
+    }
+}
