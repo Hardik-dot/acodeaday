@@ -1,0 +1,16 @@
+class Solution {
+    public boolean makeEqual(String[] words) {
+        int[] store=new int[26];
+        for(String w:words){
+            char[] arr=w.toCharArray();
+            for(char c:arr){
+                store[c-'a']++;
+            }
+        }
+        for(int i:store){
+            if(i%words.length!=0)
+                return false;
+        }
+        return true;
+    }
+}
