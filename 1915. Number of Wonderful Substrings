@@ -1,0 +1,48 @@
+//https://leetcode.com/problems/number-of-wonderful-substrings/discuss/1299773/Intuitive-explanation-easy-to-understand
+//https://leetcode.com/problems/number-of-wonderful-substrings/discuss/1301518/Array-of-BitMasks-and-its-Working-%2B-Intuition-C%2B%2BJava
+class Solution {
+    public long wonderfulSubstrings(String word) {
+        long res=0,ct[]=new long[1024];
+        int mask=0;ct[0]=1;
+        char[] str=word.toCharArray();
+        for(char ch:str){
+            int idx=ch-'a';
+            mask=mask^(1<<idx);
+            res+=ct[mask];
+            for(int i=0;i<10;i++){
+                int tm=mask^(1<<i);
+                res+=ct[tm];
+            }
+            ct[mask]++;
+        }
+        return res;
+    }
+    
+    public long wonderfulSubstringsbrute(String word) {
+        long res=word.length();
+        char[] str=word.toCharArray();
+        int diff=2;
+        
+        for(int i=0;i<word.length();i++){
+            //int map[]=new int[11];
+            HashSet<Integer> odd = new HashSet<>();
+            HashSet<Integer> even = new HashSet<>();
+            odd.add(str[i]-'a');
+            for(int j=i+1;j<word.length();j++){
+                int v=str[j]-'a';
+                if(odd.contains(v)){
+                    odd.remove(v);
+                    even.add(v);
+                }else if(even.contains(v)){
+                    even.remove(v);
+                    odd.add(v);
+                }else{
+                    odd.add(v);
+                }
+                if(odd.size()<=1)
+                    res++;
+            }
+        }
+        return res;
+    }
+}
