@@ -1,0 +1,32 @@
+class Solution {
+    public boolean check(Stack<Character> st, char[] prt) {
+        if(st.size()<prt.length)
+            return false;
+        int j=prt.length-1,i=st.size()-1;
+        while(j>=0&&st.get(i)==prt[j]){
+            i--;
+            j--;
+        }
+        if(j==-1)
+            return true;
+        return false;
+    }
+    
+    public String removeOccurrences(String s, String part) {
+        Stack<Character> st=new Stack<>();
+        char[] prt=part.toCharArray();
+        int pl=prt.length;
+        for(char ch:s.toCharArray()){
+            st.add(ch);
+            if(ch==prt[pl-1]){
+                if(check(st,prt)){
+                    st.setSize(st.size()-pl); 
+                }
+            }
+        }
+        StringBuilder sb=new StringBuilder();
+        while(!st.isEmpty())
+            sb.insert(0,st.pop());
+        return sb.toString();
+    }
+}
