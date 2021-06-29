@@ -1,0 +1,15 @@
+class Solution {
+    public int numSub(String s) {
+        long ct=0,res=0;
+        for(char c:s.toCharArray()){
+            if(c=='0'){
+                long kr=(ct*(ct+1))/2;
+                res=(kr+res)%(1000000007);
+                ct=0;   
+            }else ct++;
+        }
+        long kr=(ct*(ct+1))/2;
+        res=(kr+res)%(1000000007);
+        return (int)(res%1000000007);
+    }
+}
