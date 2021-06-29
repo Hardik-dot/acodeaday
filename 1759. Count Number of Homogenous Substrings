@@ -1,0 +1,15 @@
+class Solution {
+    public int countHomogenous(String s) {
+        long res=0,ct=0;
+        char pr='A';
+        for(char ch:s.toCharArray()){
+            if(ch!=pr){
+                res=(res+ct*(ct+1)/2)%1000000007;
+                ct=1;
+            }else ct++;
+            pr=ch;
+        }
+        res=(res+ct*(ct+1)/2)%1000000007;
+        return (int)res;
+    }
+}
