@@ -1,0 +1,31 @@
+class Solution {
+    public String arrangeWords(String text) {
+        String[] wrds=text.toLowerCase().split(" ");
+        PriorityQueue<Integer> pq=new PriorityQueue<>((a,b)->{
+            if(wrds[a].length()==wrds[b].length())
+                return a-b;
+            else return wrds[a].length()-wrds[b].length();
+        });
+        for(int i=0;i<wrds.length;i++){
+            pq.add(i);
+        }
+        
+        StringBuilder sb=new StringBuilder();
+        if(!pq.isEmpty()){
+            int id=pq.poll();
+            StringBuilder nsb=new StringBuilder(wrds[id]);
+            nsb.setCharAt(0,nsb.charAt(0));
+            if(nsb.charAt(0)>='a'){
+                char t=(char)((int)nsb.charAt(0)-(int)'a'+(int)'A');
+                nsb.setCharAt(0,t);
+            }
+            sb.append(nsb.toString());
+        }
+        
+        while(!pq.isEmpty()){
+            sb.append(" ");
+            sb.append(wrds[pq.poll()]);
+        }
+        return sb.toString();
+    }
+}
