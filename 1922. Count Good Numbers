@@ -1,0 +1,21 @@
+class Solution {
+    private final int mod=(int)1e9+7;
+    public long custpow(long a,long n) {
+        if(n==0)
+            return 1;
+        long half=custpow(a,n/2);
+        long res=(half*half)%mod;
+        if(n%2==1)
+            res=(res*a)%mod;
+        return res;
+    }
+    
+    public int countGoodNumbers(long n) {
+        long even=n/2,odd=even;
+        long r=custpow(20,even);
+        
+        if(n%2==1)
+            r=(r*5)%1000000007;
+        return (int)r;
+    }
+}
