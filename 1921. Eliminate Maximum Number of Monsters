@@ -1,0 +1,17 @@
+class Solution {
+    public int eliminateMaximum(int[] dist, int[] speed) {
+        PriorityQueue<Integer> time=new PriorityQueue<>();
+        for(int i=0;i<dist.length;i++){
+            double d=Math.ceil(dist[i]/(1.0*speed[i]));
+            time.add((int)d);
+        }
+        
+        int ct=0,ans=0;
+        while(!time.isEmpty()){
+            if(ct<time.peek()){
+                time.poll();ct++;ans++;
+            }else return ans;
+        }
+        return ans;
+    }
+}
