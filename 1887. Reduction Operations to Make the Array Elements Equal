@@ -1,0 +1,18 @@
+class Solution {
+    public int reductionOperations(int[] nums) {
+        TreeMap<Integer, Integer> store=new TreeMap<>(Collections.reverseOrder());
+        for(int n:nums){
+            int k=store.getOrDefault(n,0)+1;
+            store.put(n,k);
+        }
+        int ct=0,res=0;
+        Iterator it=store.entrySet().iterator();
+        while(it.hasNext()){
+            Map.Entry me=(Map.Entry) it.next();
+            if(!it.hasNext()) break;
+            ct=ct+(int)me.getValue();
+            res+=ct;
+        }
+        return res;
+    }
+}
