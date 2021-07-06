@@ -1,0 +1,36 @@
+class Solution {
+    boolean vis[][];
+    int res[];
+    public int check(int a,int b,int[][] mat){
+        if(vis[a][b])
+            return 0;
+        vis[a][b]=true;
+        PriorityQueue<int[]> pq=new PriorityQueue<>((x,y)->y[0]-x[0]);
+        int v=mat[a][b],max;
+        if(a>=1&&mat[a-1][b]>v) //up
+            pq.add(new int[]{mat[a-1][b],a-1,b,1});
+        if(b<mat[0].length-1&&mat[a][b+1]>v) //right
+            pq.add(new int[]{mat[a][b+1],a,b+1,2});
+        if(a<mat.length-1&&mat[a+1][b]>v) //down
+            pq.add(new int[]{mat[a+1][b],a+1,b,3});
+        if(b>=1&&mat[a][b-1]>v) //right
+            pq.add(new int[]{mat[a][b-1],a,b-1,4});
+        if(pq.isEmpty()){
+            res[0]=a;res[1]=b;
+            return 1;
+        }
+        while(!pq.isEmpty()){
+            int[] tm=pq.poll();
+            if(check(tm[1],tm[2],mat)==1)
+                return 1;
+        }
+        
+        return 0;
+    }
+    public int[] findPeakGrid(int[][] mat) {
+        res=new int[]{-1,-1};
+        vis=new boolean[mat.length][mat[0].length];
+        check(0,0,mat);
+        return res;
+    }
+}
