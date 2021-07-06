@@ -1,0 +1,19 @@
+class Solution {
+    public int chalkReplacer(int[] chalk, int k) {
+        TreeMap<Long,Integer> ts=new TreeMap<>();
+        long s=0;int i=0;
+        for(int c:chalk){
+            s+=c;
+            ts.put(s,i++);
+        }
+        if(k%s==0)
+            return 0;
+        long v=k%s;
+        if(ts.containsKey(v))
+            return ts.get(v)+1;
+        Map.Entry<Long,Integer> e=ts.ceilingEntry(v);
+        return e.getValue();
+    }
+}
+//5 6 11
+//3 7 8 10
