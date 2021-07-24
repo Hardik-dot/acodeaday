@@ -1,0 +1,49 @@
+class Solution {
+    public int countRestrictedPaths(int n, int[][] edges) {
+        HashMap<Integer, ArrayList<int[]>> graph = new HashMap<>();
+        for(int []e:edges) {
+            ArrayList<int[]> al = graph.getOrDefault(e[0],new ArrayList<>());
+            al.add(new int[]{e[1],e[2]});
+            graph.put(e[0],al);
+            
+            ArrayList<int[]> bl = graph.getOrDefault(e[1],new ArrayList<>());
+            bl.add(new int[]{e[0],e[2]});
+            graph.put(e[1],bl);
+        }
+        
+        int[] dist = dijkstra(graph,n);       
+        return dfs(1,n,graph,dist,new Integer[n+1]);
+    }
+    
+    public int dfs(int src, int n, HashMap<Integer, ArrayList<int[]>> graph, int[] dist, Integer[] dp){
+        if(dp[src]!=null) return dp[src];
+        if(src==n) return 1;
+        ArrayList<int[]> al = graph.getOrDefault(src,new ArrayList<>());
+        int res=0;
+        for(int[] cur:al){
+            if(dist[src]>dist[cur[0]])
+                res=(res+dfs(cur[0],n,graph,dist,dp))%1000000007;
+        }
+        return dp[src]=res;
+    }
+    
+    public int[] dijkstra(HashMap<Integer, ArrayList<int[]>> graph, int n){
+        int[] res = new int[n+1];
+        Arrays.fill(res,Integer.MAX_VALUE);
+        PriorityQueue<int[]> pq = new PriorityQueue<>((x,y)->x[1]-y[1]);
+        pq.add(new int[]{n,0});
+        while(!pq.isEmpty()) {
+            int[] curr = pq.poll();
+            int node = curr[0], cost = curr[1];
+            if(res[node]==Integer.MAX_VALUE){
+                res[node]=cost;
+                ArrayList<int[]> al = graph.getOrDefault(node,new ArrayList<>());
+                for(int[] iter:al){
+                    pq.add(new int[]{iter[0],iter[1]+cost});
+                }
+            }
+        }
+        res[0]=0;
+        return res;
+    }
+}
