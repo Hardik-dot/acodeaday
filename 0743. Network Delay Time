@@ -1,0 +1,35 @@
+class Solution {
+    
+    public int networkDelayTime(int[][] times, int n, int k) {
+        HashMap<Integer, ArrayList<int[]>> grph = new HashMap<>();
+        
+        for(int[] info:times){
+            int a=info[0],b=info[1],t=info[2];
+            ArrayList<int[]> al = grph.getOrDefault(a,new ArrayList<>());
+            al.add(new int[]{b,t});
+            grph.put(a,al);
+        }
+        
+        HashMap<Integer, Integer> track=new HashMap<>();
+        PriorityQueue<int[]> heap = new PriorityQueue<>((x,y)->(x[1]-y[1])); 
+        heap.add(new int[]{k,0});
+        int r=-1;
+        while(!heap.isEmpty()){
+            int[] cur=heap.poll();
+            if(!track.containsKey(cur[0])){
+                ArrayList<int[]> al = grph.getOrDefault(cur[0],null);
+                track.put(cur[0],cur[1]);
+                r=Math.max(r,cur[1]);
+                if(al==null)
+                    continue;
+                
+                for(int[] g:al){
+                    heap.add(new int[]{g[0],g[1]+cur[1]});
+                }           
+            }
+        }
+        if(track.size()!=n)
+            return -1;
+        return r;
+    }
+}
