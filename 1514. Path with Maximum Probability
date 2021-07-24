@@ -1,0 +1,33 @@
+class Solution {
+    public double maxProbability(int n, int[][] edges, double[] succProb, int start, int end) {
+        HashMap<Double, ArrayList<double[]>> graph = new HashMap<>();
+        double s=(double)start, e=(double)end;
+        for(int i=0;i<succProb.length;i++) {
+            ArrayList<double[]> al = graph.getOrDefault((double)edges[i][0],new ArrayList<>());
+            al.add(new double[]{(double)edges[i][1], succProb[i]});
+            graph.put((double)edges[i][0], al);
+            
+            ArrayList<double[]> bl = graph.getOrDefault((double)edges[i][1],new ArrayList<>());
+            bl.add(new double[]{ (double)edges[i][0], succProb[i]});
+            graph.put((double)edges[i][1], bl);
+        }
+        HashMap<Double, Double> hm = new HashMap<>();
+        PriorityQueue<double[]> pq = new PriorityQueue<>((a,b)->Double.compare(b[1],a[1]));
+        pq.add(new double[]{s,1.0});
+        while(!pq.isEmpty()) {
+            double[] ar = pq.poll();
+            if(ar[0]==e)
+                return ar[1];
+            if(!hm.containsKey(ar[0])){
+                hm.put(ar[0],ar[1]);
+                ArrayList<double[]> al = graph.getOrDefault(ar[0],null);
+                if(al==null) continue;
+                for(double[] gr:al) {
+                    double v = gr[1]*ar[1];
+                    pq.add(new double[]{gr[0], v});
+                }
+            }
+        }
+        return 0.0;
+    }
+}
