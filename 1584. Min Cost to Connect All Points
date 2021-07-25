@@ -1,0 +1,68 @@
+class Solution {
+    int parent[];
+    
+    public int find(int i){
+        if(parent[i]<0)
+            return i;
+        return parent[i] = find(parent[i]);
+    }
+    
+    public void union(int p_a, int p_b){
+        if(parent[p_a]<=parent[p_b]){//a is bigger chain
+            parent[p_a]+=parent[p_b];
+            parent[p_b]=p_a;
+        }else{
+            parent[p_b]+=parent[p_a];
+            parent[p_a]=p_b;
+        }
+        
+    }
+    
+    public int getDist(int[][] points, int i, int j){
+        return Math.abs(points[i][0]-points[j][0])+Math.abs(points[i][1]-points[j][1]);
+    }
+    
+    public int minCostConnectPointsKruskal(int[][] points) {
+        PriorityQueue<int[]> graph = new PriorityQueue<>((x,y)->x[0]-y[0]);
+        for(int i=0;i<points.length;i++){
+            for(int j=i+1;j<points.length;j++){
+                int d = getDist(points,i,j);
+                graph.add(new int[]{d,i,j});
+            }
+        }
+        int n = points.length,res=0,ct=0;
+        parent = new int[n];
+        Arrays.fill(parent,-1);
+        while(!graph.isEmpty()&&ct<n-1){
+            int[] pt = graph.poll();
+            int p_a=find(pt[1]), p_b=find(pt[2]);
+            if(p_a==p_b&&p_a!=-1)
+                continue;
+            res+=pt[0];
+            union(p_a,p_b);
+            parent[p_a]=p_b;
+            ct++;
+        }
+        return res;
+    }
+    
+    public int minCostConnectPoints(int[][] points) {
+        HashSet<Integer> vis = new HashSet<>();
+        int n=points.length,ct=0;
+        PriorityQueue<int[]> mst = new PriorityQueue<>((x,y)->x[0]-y[0]); //[dist,from_idx]
+        mst.add(new int[]{0,0});
+        int res=0;
+        while(!mst.isEmpty()&&ct<n){
+            int[] pt = mst.poll();
+            if(!vis.contains(pt[1])){
+                res+=pt[0];
+                vis.add(pt[1]);ct++;
+                for(int i=0;i<n;i++){
+                    if(!vis.contains(i))
+                        mst.add(new int[]{getDist(points,pt[1],i),i});
+                }
+            }
+        }
+        return res;
+    }
+}
