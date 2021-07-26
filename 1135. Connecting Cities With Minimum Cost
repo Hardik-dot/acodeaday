@@ -1,0 +1,73 @@
+class Solution {
+    public int minimumCostPrim(int n, int[][] connections) {
+        HashMap<Integer,ArrayList<int[]>> graph = new HashMap<>();
+        for(int[] edge:connections){
+            ArrayList<int[]> al = graph.getOrDefault(edge[0],new ArrayList<>());
+            al.add(new int[]{edge[1],edge[2]});
+            graph.put(edge[0],al);
+            
+            ArrayList<int[]> bl = graph.getOrDefault(edge[1],new ArrayList<>());
+            bl.add(new int[]{edge[0],edge[2]});
+            graph.put(edge[1],bl);
+        }
+        int res=0;
+        PriorityQueue<int[]> pq = new PriorityQueue<>((x,y)->(x[1]-y[1]));
+        pq.add(new int[]{1,0});
+        HashSet<Integer> vis = new HashSet<>();
+        while(!pq.isEmpty()&&vis.size()<n){
+            int[] pt=pq.poll();
+            if(vis.contains(pt[0])) continue;
+            vis.add(pt[0]);
+            res+=pt[1];
+            ArrayList<int[]> al = graph.getOrDefault(pt[0],new ArrayList<>());
+            for(int[] cur:al){
+                if(!vis.contains(cur[0]))
+                    pq.add(cur);
+            }
+        }
+        if(vis.size()!=n) return -1;
+        return res;
+    }
+    int[] parent;
+    public int find(int id){
+        if(parent[id]<0) return id;
+        return parent[id]=find(parent[id]);
+    }
+    
+    public void union(int pa,int pb){
+        if(pa<=pb){
+            parent[pa]+=parent[pb];
+            parent[pb]=pa;
+        }else{
+            parent[pb]+=parent[pa];
+            parent[pa]=pb;
+        }
+    }
+    
+    public int minimumCost(int n, int[][] connections) {
+        PriorityQueue<int[]> pq = new PriorityQueue<>((x,y)->x[2]-y[2]);
+        for(int[] pt:connections){
+            pq.add(pt);
+        }
+        parent = new int[n+1];
+        Arrays.fill(parent,-1);
+        int edges=0,res=0;
+        while(!pq.isEmpty()&&edges<n-1){
+            int[] side = pq.poll();
+            int a=side[0],b=side[1],cost=side[2];
+            int pa=find(a),pb=find(b);
+            
+            if(pa==pb&&pa!=-1)
+                continue;
+            union(pa,pb);
+            res+=cost;edges++;
+        }
+        int[] par = parent;
+        int v = find(1);
+        for(int i=2;i<parent.length;i++){
+            if(v!=find(i)) return -1;
+        }
+        return res;
+        
+    }
+}
