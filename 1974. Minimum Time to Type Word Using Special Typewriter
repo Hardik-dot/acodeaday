@@ -1,0 +1,14 @@
+class Solution {
+    public int minTimeToType(String word) {
+        int res=0;
+        char[] arr = word.toCharArray();
+        int st=0;
+        for(char c:arr){
+            int c_a=Math.abs(c-'a'-st);
+            if(c_a>13) c_a=26-c_a;
+            res=res+c_a+1;
+            st=c-'a';
+        }
+        return res;
+    }
+}
