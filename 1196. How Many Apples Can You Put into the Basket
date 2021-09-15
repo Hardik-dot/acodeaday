@@ -1,0 +1,12 @@
+class Solution {
+    public int maxNumberOfApples(int[] arr) {
+        Arrays.sort(arr);
+        int sum=5000,ct=0;
+        for(int a:arr){
+            sum=sum-a;
+            if(sum<0) return ct;
+            ct++;
+        }
+        return ct;
+    }
+}
