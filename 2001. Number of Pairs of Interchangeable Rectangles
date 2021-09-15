@@ -1,0 +1,26 @@
+class Solution {
+    public long interchangeableRectanglesbrute(int[][] rectangles) {
+        int n = rectangles.length,res=0;
+        for(int i=0;i<n;i++){
+            for(int j=i+1;j<n;j++){
+                if(rectangles[i][0]*rectangles[j][1]==rectangles[i][1]*rectangles[j][0])
+                    res++;
+            }
+        }
+        return res;
+    }
+    
+    public long interchangeableRectangles(int[][] rectangles) {
+        int n = rectangles.length;long res=0;
+        HashMap<Double,Long> rectInfo = new HashMap<>();
+        for(int[] r:rectangles){
+            double v = (double)(r[0])/(r[1]);
+            rectInfo.put(v,rectInfo.getOrDefault(v,0L)+1);
+        }
+        
+        for(Map.Entry<Double,Long> e:rectInfo.entrySet()){
+            res+=(long)(e.getValue()*(e.getValue()-1)/2);    
+        }
+        return res;
+    }
+}
