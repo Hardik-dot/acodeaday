@@ -1,0 +1,17 @@
+class Solution {
+    public int[] findBuildings(int[] heights) {
+        int max=Integer.MIN_VALUE;
+        List<Integer> ts = new ArrayList<>();
+        for(int i=heights.length-1;i>=0;i--){
+            if(heights[i]>max){
+                ts.add(i);max=heights[i];
+            }
+        }
+        int[] res=new int[ts.size()];
+        int k=ts.size()-1;
+        for(int i=0;i<ts.size();i++)
+            res[i]=ts.get(k-i);
+            
+        return res;
+    }
+}
