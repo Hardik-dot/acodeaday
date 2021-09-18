@@ -1,0 +1,25 @@
+class Solution {
+    public boolean aux(int n,ArrayList<Integer> three,int i){
+        if(n<0) return false;
+        if(n==0) return true;
+        int k=n,p=0;
+        while(i<three.size()){
+            k=k-three.get(i)+p;
+            if(k>=0&&aux(k,three,i+1)) return true;
+            p=three.get(i);
+            i++;
+        }
+        return false;
+    }
+    
+    public boolean checkPowersOfThree(int n) {
+        ArrayList<Integer> threes = new ArrayList<>();
+        int k=1;
+        while(k<=n){
+            threes.add(0,k);
+            k=k*3;
+        }
+        if(aux(n,threes,0)) return true;
+        return false;
+    }
+}
