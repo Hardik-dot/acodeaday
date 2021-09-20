@@ -1,0 +1,33 @@
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public Node left;
+    public Node right;
+    public Node parent;
+};
+*/
+
+class Solution {
+    public boolean lca(Node root,Node a){
+        if(root==null) return false;
+        if(root==a) return true;
+        return lca(root.left,a)||lca(root.right,a);
+    }
+    
+    public Node lowestCommonAncestor(Node p, Node q) {
+        //if(lca(p,q)) return p;
+        //if(lca(q,p)) return q;
+        //HashSet<Node> hs = new HashSet<Node>();
+        while(p!=null){
+            //hs.add(p);
+            if(lca(p,q)) return p;
+            p=p.parent;
+        }
+        while(q!=null){
+            if(lca(q,p)) return q;
+            q=q.parent;
+        }
+        return null;
+    }
+}
