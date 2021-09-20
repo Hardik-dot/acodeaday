@@ -1,0 +1,27 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    HashSet<Integer> hs;
+    TreeNode found=null;
+    public int lca(TreeNode root){
+        if(root==null) return 0;
+        int v=(hs.contains(root.val))?1:0;
+        v=v+lca(root.left)+lca(root.right);
+        if(v==hs.size()&&found==null) found=root;
+        return v;
+    }
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode[] nodes) {
+        hs = new HashSet<Integer>();
+        for(TreeNode n:nodes)
+            hs.add(n.val);
+        lca(root);
+        return found;
+    }
+}
