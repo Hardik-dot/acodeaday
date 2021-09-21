@@ -1,0 +1,19 @@
+class Solution {
+    public int flipgame(int[] fronts, int[] backs) {
+        TreeSet<Integer> ts = new TreeSet<>();
+        HashSet<Integer> blacklist = new HashSet<>();
+        for(int i=0;i<fronts.length;i++){
+            if(fronts[i]==backs[i]){
+                blacklist.add(fronts[i]);
+                ts.remove(fronts[i]);
+            }else{
+                if(!blacklist.contains(fronts[i]))
+                ts.add(fronts[i]);
+                if(!blacklist.contains(backs[i]))
+                ts.add(backs[i]);
+            }
+        }
+        if(ts.size()==0) return 0;
+        return ts.iterator().next();
+    }
+}
