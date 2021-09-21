@@ -1,0 +1,28 @@
+class Solution {
+    public int aux(int[] nums,int i,int l,List<Integer> z){
+        int mx=0,c=0,d=0;
+        if(z.size()%2==0)
+            return Math.max(i-l+1,mx);
+        else{
+            int a=z.get(0);
+            int b=z.get(z.size()-1);
+            c=Math.max(i-(a+1)+1,a-1-l+1);
+            d=Math.max(b-1-l+1,i-(b+1)+1);
+        }
+        return Math.max(c,d);
+    }
+    public int getMaxLen(int[] nums) {
+        List<Integer> z=new ArrayList<>();
+        int mx=0,l=0;
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]==0){
+                mx=Math.max(mx,aux(nums,i-1,l,z));
+                l=i+1;
+                z=new ArrayList<>();
+            }else if(nums[i]<0)
+                z.add(i);
+        }
+        return Math.max(mx,aux(nums,nums.length-1,l,z));
+        
+    }
+}
