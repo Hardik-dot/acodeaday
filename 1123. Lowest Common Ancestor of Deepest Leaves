@@ -1,0 +1,47 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+        int maxd=-1,ct=0;
+    TreeNode found = null;
+    public void dfs(TreeNode root,int d){
+        if(root==null) return;
+        if(d>maxd){
+            maxd=d;ct=1;
+        }else if(d==maxd) ct++;
+        
+        dfs(root.left,d+1);
+        dfs(root.right,d+1);
+    }
+    
+    public int dfs2(TreeNode root, int d){
+        if(root==null) return 0;
+        if(d==maxd){
+            if(ct==1) found=root;
+            return 1;
+        }
+        int v = dfs2(root.left,d+1)+dfs2(root.right,d+1);
+        if(v==ct&&found==null){
+            found=root;
+        }
+        return v;
+    }
+    public TreeNode lcaDeepestLeaves(TreeNode root) {
+        dfs(root,0);
+        int v=dfs2(root,0);
+        
+        return found;
+    }
+}
