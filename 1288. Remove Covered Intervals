@@ -1,0 +1,17 @@
+class Solution {
+    public int removeCoveredIntervals(int[][] inv) {
+        Arrays.sort(inv,(x,y)->{
+            if(x[0]==y[0]) return y[1]-x[1];
+            else return x[0]-y[0];
+        });
+        int l=-1,r=-1,ct=0;
+        for(int []ar:inv){
+            if(ar[0]>=l&&ar[1]<=r)
+                ct++;
+            else{
+                l=ar[0];r=ar[1];
+            }
+        }
+        return inv.length-ct;
+    }
+}
