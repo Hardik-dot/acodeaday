@@ -1,0 +1,35 @@
+public class Codec {
+    public String chklen(String s) {
+        if(s.length()<10)
+            return "00"+Integer.toString(s.length());
+        else if(s.length()<100)
+            return "0"+Integer.toString(s.length());
+        return Integer.toString(s.length());
+    }
+    
+    // Encodes a list of strings to a single string.
+    public String encode(List<String> strs) {
+        StringBuilder enc=new StringBuilder();
+        for(String s:strs){
+            enc.append(chklen(s));
+            enc.append(s);
+        }
+        return enc.toString();
+    }
+
+    // Decodes a single string to a list of strings.
+    public List<String> decode(String s) {
+        List<String> res = new ArrayList<>();
+        int i=0;
+        while(i<s.length()){
+            int lt=Integer.valueOf(s.substring(i,i+3));
+            res.add(s.substring(i+3,i+3+lt));
+            i=i+3+lt;
+        }
+        return res;
+    }
+}
+
+// Your Codec object will be instantiated and called as such:
+// Codec codec = new Codec();
+// codec.decode(codec.encode(strs));
