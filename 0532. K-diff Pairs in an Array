@@ -1,0 +1,22 @@
+class Solution {
+    public int findPairs(int[] nums, int k) {
+        HashSet<Integer> hs = new HashSet<>();
+        HashMap<Integer,Integer> hm = new HashMap<>();
+        int ct=0;
+        for(int i:nums){
+            if(hs.contains(i-k)){
+                int a=Math.min(i-k,i);
+                int b=Math.max(i-k,i);
+                hm.put(a,b);
+            }
+            if(hs.contains(i+k)){
+                int a=Math.min(i+k,i);
+                int b=Math.max(i+k,i);
+                hm.put(a,b);
+            }
+            hs.add(i);
+        
+        }
+        return hm.size();
+    }
+}
