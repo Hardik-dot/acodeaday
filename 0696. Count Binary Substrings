@@ -1,0 +1,19 @@
+class Solution {
+    public int countBinarySubstrings(String s) {
+        int z=0,o=0,ct=0;
+        char[] ar=s.toCharArray();
+        if(ar[0]=='1') o=1;
+        else z=1;
+        
+        for(int i=1;i<ar.length;i++){
+            if(ar[i]!=ar[i-1]){
+                ct+=Math.min(z,o);
+                if(ar[i]=='1') o=1;
+                else z=1;
+            }else if(ar[i]=='0') z++;
+            else o++;
+        }
+        ct+=Math.min(z,o);
+        return ct;
+    }
+}
