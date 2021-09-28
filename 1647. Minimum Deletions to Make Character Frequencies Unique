@@ -1,0 +1,23 @@
+class Solution {
+    public int minDeletions(String s) {
+        char[] ar=s.toCharArray();
+        int[] cmap = new int[26];
+        for(int i=0;i<s.length();i++){
+            cmap[ar[i]-'a']++;
+        }
+        Arrays.sort(cmap);
+        boolean[] count=new boolean[cmap[25]+1];
+        for(int c:cmap)
+            count[c]=true;
+        int i=24,res=0;
+        while(i>=0&&cmap[i]!=0){
+            if(cmap[i]==cmap[i+1]){
+                int j=cmap[i];
+                while(count[j]&&j>0) j--;
+                count[j]=true;
+                res+=cmap[i]-j;               
+            }i--;
+        }
+        return res;
+    }
+}
