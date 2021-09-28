@@ -1,0 +1,30 @@
+class Solution {
+    public int distinctEchoSubstrings(String text) {
+        HashMap<Character,List<Integer>> map = new HashMap<>();
+        char[] word = text.toCharArray();
+        for(int i=0;i<text.length();i++){
+            List<Integer> al = map.getOrDefault(word[i],new ArrayList<>());
+            al.add(i);
+            map.put(word[i],al);
+        }
+        HashSet<String> ans = new HashSet<>();
+        
+        for(Map.Entry<Character,List<Integer>> e:map.entrySet()){
+            List<Integer> al = e.getValue();
+            for(int i=0;i<al.size();i++){
+                int l=al.get(i);
+                for(int j=i+1;j<al.size();j++){
+                    int r=al.get(j);
+                    if(r+r-l>text.length()) break;
+                    int k=r+r-l;                    
+                    String one = text.substring(l,r);
+                    String two = text.substring(r,k);
+                    if(one.equals(two)&&!ans.contains(one)){
+                        ans.add(one);
+                    }
+                }
+            }
+        }
+        return ans.size();
+    }
+}
