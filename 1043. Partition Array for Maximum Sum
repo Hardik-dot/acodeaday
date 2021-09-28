@@ -1,0 +1,18 @@
+class Solution {
+    public int aux(int[] arr,int k,int start,Integer[] dp){
+        int n=arr.length;
+        int maxele=0,maxsum=0;
+        if (start >= n) return 0;
+        if(dp[start]!=null) return dp[start];
+        for(int i=start;i<Math.min(n,start+k);i++){
+            maxele=Math.max(maxele,arr[i]);
+            int v = aux(arr,k,i+1,dp);
+            maxsum=Math.max(maxsum,v+maxele*(i-start+1));
+        }
+        return dp[start]=maxsum;
+    }
+    
+    public int maxSumAfterPartitioning(int[] arr, int k) {
+        return aux(arr,k,0,new Integer[arr.length]);
+    }
+}
