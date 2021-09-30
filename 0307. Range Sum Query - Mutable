@@ -1,0 +1,57 @@
+class NumArray {
+    int[] segtree;
+    int[] nums;
+    int nu;
+    public NumArray(int[] nums) {
+        int n = (int)Math.ceil(Math.log10(nums.length)/Math.log10(2));
+        n=2*(int)Math.pow(2,n)-1;
+        segtree=new int[n];
+        construct(nums,0,0,nums.length-1);
+        nu=nums.length;
+        this.nums=nums;
+    }
+    
+    public int construct(int[] nums,int id,int l,int r){
+        if(l==r){
+            segtree[id]=nums[l];
+            return nums[l];
+        }
+        int mid = l+(r-l)/2;
+        segtree[id] = construct(nums,2*id+1,l,mid)+construct(nums,2*id+2,mid+1,r);
+        return segtree[id];
+    }
+    
+    public void updateaux(int index,int val,int l,int r,int i){
+        if(index<l||index>r) return;
+        segtree[i]+=val;
+        if(l==r) return;
+        int mid = l+(r-l)/2;
+        updateaux(index,val,l,mid,2*i+1);
+        updateaux(index,val,mid+1,r,2*i+2);
+    }
+    
+    public void update(int index, int val) {
+        int v = val-nums[index];
+        nums[index]=val;
+        updateaux(index,v,0,nu-1,0);
+    }
+    
+    public int sumaux(int left, int right, int l, int r,int id){
+        if(l>=left&&r<=right)
+            return segtree[id];
+        if(r<left||l>right) return 0;
+        int m=l+(r-l)/2;
+        return sumaux(left,right,l,m,2*id+1)+sumaux(left,right,m+1,r,2*id+2);
+    }
+    
+    public int sumRange(int left, int right) {
+        return sumaux(left,right,0,nu-1,0);
+    }
+}
+
+/**
+ * Your NumArray object will be instantiated and called as such:
+ * NumArray obj = new NumArray(nums);
+ * obj.update(index,val);
+ * int param_2 = obj.sumRange(left,right);
+ */
