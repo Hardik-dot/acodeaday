@@ -1,0 +1,32 @@
+class Solution {
+    int[] parent;
+    public int find(int id){
+        if(parent[id]==-1) return id;
+        return parent[id]=find(parent[id]);
+    }
+    public void union(int pa,int pb){
+        parent[pa]=pb;
+    }
+    
+    public boolean equationsPossible(String[] equations) {
+        parent = new int[26];
+        Arrays.fill(parent,-1);
+        for(String eq:equations){
+            int a=eq.charAt(0)-'a',b=eq.charAt(3)-'a';
+            int pa=find(a),pb=find(b);
+            if(pa==pb&&pa!=-1) continue;
+            if(eq.charAt(1)=='='){
+                union(pa,pb);
+            }
+        }
+        
+        for(String eq:equations){
+            int a=eq.charAt(0)-'a',b=eq.charAt(3)-'a';
+            int pa=find(a),pb=find(b);
+            if(eq.charAt(1)=='!'){
+                if(pa==pb&&pa!=-1) return false;
+            }
+        }
+        return true;
+    }
+}
