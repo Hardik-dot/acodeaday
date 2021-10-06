@@ -1,0 +1,28 @@
+class Solution {
+
+    long[] dp;
+    public long aux(char[] s, int ind, int k){
+        
+        if(s.length-ind==0)
+            return 1;
+        
+        if(dp[ind]!=0) 
+            return dp[ind]; 
+        long curr_num=0,ans=0;
+        for(int i=ind;i<s.length;i++){
+            curr_num=curr_num*10+s[i]-'0';
+            if(curr_num>k||curr_num<=0)
+                break;
+            ans = (ans + aux(s,i+1,k))%1000000007;
+        }
+        return dp[ind]=ans;
+    }
+    
+    
+    public int numberOfArrays(String s, int k) {
+
+        dp=new long[s.length()];
+        int r = (int)(aux(s.toCharArray(),0,k)%1000000007);
+        return r;
+    }
+}
