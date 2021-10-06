@@ -1,0 +1,31 @@
+class Solution {
+    public int[] extractInfo(int nums){
+        int brk[]=new int[3];
+        brk[0]=nums/100;
+        nums=nums%100;
+        brk[1]=nums/10;
+        brk[2]=nums%10;
+        return brk;
+    }
+    int ans=0;
+    public int aux(int[] nums,int id){
+        int parent[]=extractInfo(nums[id]);
+        int ct=0;
+        for(int i=id+1;i<nums.length;i++){
+            int[] curr=extractInfo(nums[i]);
+            if(curr[0]==parent[0]+1&&(curr[1]-1==2*(parent[1]-1)||curr[1]-1==2*(parent[1]-1)+1)){
+                ct+=aux(nums,i);
+            }
+        }
+        if(ct==0){
+            ct=1;
+        }
+            
+        ans+=parent[2]*ct;
+        return ct;
+    }
+    public int pathSum(int[] nums) {
+        aux(nums,0);
+        return ans;
+    }
+}
