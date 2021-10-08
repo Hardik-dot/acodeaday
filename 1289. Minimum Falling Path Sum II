@@ -1,0 +1,38 @@
+class Solution {
+    int minsum = Integer.MAX_VALUE;
+    Integer dp[][];
+    public int dfs(List<ArrayList<int[]>> newgrid,int lvl,int pind) {
+        //if(sum>minsum) return;
+        if(lvl==newgrid.size())
+            return 0;
+        
+        if(dp[lvl][pind]!=null) return dp[lvl][pind];
+        ArrayList<int[]> currlist = newgrid.get(lvl);
+        int v=Integer.MAX_VALUE;
+        for(int i=0;i<currlist.size();i++){
+            int[] ar = currlist.get(i);
+            if(ar[1]!=pind){
+                v=Math.min(dfs(newgrid,lvl+1,ar[1])+ar[0],v);
+            }
+        }
+        return dp[lvl][pind]=v;
+    }
+    
+    public List<ArrayList<int[]>> precompute(int[][] grid, List<ArrayList<int[]>> newgrid){
+        dp=new Integer[grid.length+1][grid[0].length+1];
+        for(int i=0;i<grid.length;i++){
+            ArrayList<int[]> pq = new ArrayList<int[]>();//(x,y)->x[0]-y[0]
+            for(int j=0;j<grid[i].length;j++){
+                pq.add(new int[]{grid[i][j],j});
+            }
+            Collections.sort(pq, (x,y)->x[0]-y[0]);
+            newgrid.add(pq);
+        }
+        return newgrid;
+    }
+    
+    public int minFallingPathSum(int[][] grid) {
+        List<ArrayList<int[]>> newgrid = precompute(grid,new ArrayList<>());
+        return dfs(newgrid,0,grid[0].length);
+    }
+}
