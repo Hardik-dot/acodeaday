@@ -1,0 +1,36 @@
+class Solution {
+    public void initStack(int[][] arr,Queue<int[]> qu){
+        for(int i=0;i<arr.length;i++){
+            for(int j=0;j<arr[0].length;j++){
+                if(arr[i][j]==1){
+                    qu.add(new int[]{i,j,0});
+                    arr[i][j]=0;
+                }
+            }
+        }
+    }
+    public int[][] highestPeak(int[][] isWater) {
+        Queue<int[]> qu = new LinkedList<>();
+        initStack(isWater,qu);
+        LinkedList<int[]> water = new LinkedList<>(qu); 
+        int[][] dirs = new int[][]{{-1,0},{0,-1},{1,0},{0,1}};
+        boolean contains[][]=new boolean[isWater.length][isWater[0].length];
+        while(!qu.isEmpty()){
+            int[] point = qu.poll();  
+            if(isWater[point[0]][point[1]]!=0) continue;
+            isWater[point[0]][point[1]]=point[2];
+            for(int[] d:dirs){
+                int i = point[0]+d[0], j = point[1]+d[1];
+                if(i>=0&&j>=0&&i<isWater.length&&j<isWater[0].length&&!contains[i][j]&&isWater[i][j]==0){
+                    qu.add(new int[]{i, j, point[2]+1});
+                    contains[i][j]=true;
+                }
+            }
+        }
+        
+        for(int[] w:water)
+            isWater[w[0]][w[1]]=0;
+        
+        return isWater;
+    }
+}
