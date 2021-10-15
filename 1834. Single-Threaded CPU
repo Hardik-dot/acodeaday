@@ -1,0 +1,39 @@
+class Solution {
+    
+    public void sortTheArray(int[][] tasks, int[][] sort_task){
+        for(int i=0;i<tasks.length;i++){
+            sort_task[i][0]=tasks[i][0];
+            sort_task[i][1]=tasks[i][1];
+            sort_task[i][2]=i;
+        }
+        Arrays.sort(sort_task, (x,y)->{
+            return x[0]-y[0];
+        });
+    }
+    
+    public int[] getOrder(int[][] tasks) {
+        int[][] sort_task = new int[tasks.length][3];
+        sortTheArray(tasks, sort_task);
+        int i=0,k=0,et=sort_task[0][0];
+        int[] anss = new int[tasks.length];
+        PriorityQueue<int[]> pq = new PriorityQueue<>((x,y)->{
+            if(x[1]==y[1]) return x[2]-y[2];
+            return x[1]-y[1];
+        });
+        while(k<sort_task.length){
+            while(i<sort_task.length&&sort_task[i][0]<=et){
+                pq.add(sort_task[i++]);
+            }
+            if(pq.isEmpty()){
+                et = sort_task[i][0];
+                while(i<sort_task.length&&sort_task[i][0]<=et){
+                pq.add(sort_task[i++]);
+            }
+            }
+            int[] tsk = pq.poll();
+            anss[k++]=tsk[2];
+            et=et+tsk[1];
+        }
+        return anss;
+    }
+}
