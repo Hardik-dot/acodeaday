@@ -1,0 +1,41 @@
+class Solution {
+    public int getRowSum(Integer[][] rsum, int i, int j, int[][] grid) {
+        if(rsum[i][j]==null)
+            rsum[i][j]=grid[i][j]+grid[i][j+1]+grid[i][j+2];
+        return rsum[i][j];
+    }
+    public int getColSum(Integer[][] csum, int i, int j, int[][] grid) {
+        if(csum[i][j]==null)
+            csum[i][j]=grid[i][j]+grid[i+1][j]+grid[i+2][j];
+        return csum[i][j];
+    }
+    public boolean checkSq(int[][] grid,int i, int j) {
+        boolean[] sq = new boolean[16];
+        for(int x=i;x<i+3;x++){
+            for(int y=j;y<j+3;y++){
+                if(sq[grid[x][y]]||grid[x][y]>9||grid[x][y]==0) return false;
+                sq[grid[x][y]]=true;
+            }
+        }
+        return true;
+    }
+    public int numMagicSquaresInside(int[][] grid) {
+        Integer[][] rsum = new Integer[grid.length][grid[0].length];
+        Integer[][] csum = new Integer[grid.length][grid[0].length];
+        int ct=0;
+        for(int i=0;i+3<=grid.length;i++){
+            for(int j=0;j+3<=grid.length;j++){
+                int r1 = getRowSum(rsum, i, j, grid);
+                if(r1!=getRowSum(rsum,i+1,j,grid)) continue;
+                if(r1!=getRowSum(rsum,i+2,j,grid)) continue;
+                if(r1!=getColSum(csum,i,j,grid)) continue;
+                if(r1!=getColSum(csum,i,j+1,grid)) continue;
+                if(r1!=getColSum(csum,i,j+2,grid)) continue;
+                if(r1!=grid[i][j]+grid[i+1][j+1]+grid[i+2][j+2]) continue;
+                if(r1!=grid[i][j+2]+grid[i+1][j+1]+grid[i+2][j]) continue;
+                if(checkSq(grid,i,j)) ct++;
+            }
+        }
+        return ct;
+    }
+}
