@@ -1,0 +1,51 @@
+class Solution {
+    public int getRowSum(int[][] rsum, int i, int j, int[][] grid, int window) {
+        if(rsum[i][j]==0){
+            for(int y=j;y<j+window;y++)
+                rsum[i][j]+=grid[i][y];
+        }
+        return rsum[i][j];
+    }
+    public int getColSum(int[][] csum, int i, int j, int[][] grid, int window) {
+        if(csum[i][j]==0){
+            for(int x=i;x<i+window;x++)
+                csum[i][j]+=grid[x][j];
+        }
+        return csum[i][j];
+    }
+    public int sumDiag(int i, int j, int[][] grid, int d, int window,int mx){
+        int v=0,x=i,y=j;
+        for(;x<i+window&&v<=mx;x=x+1,y=y+d)
+            v+=grid[x][y];
+        return v;
+    }
+    
+    public boolean numMagicSquaresInside(int[][] grid,int window) {
+        int[][] rsum = new int[grid.length][grid[0].length];
+        int[][] csum = new int[grid.length][grid[0].length];
+        int ct=0;
+        for(int i=0;i+window<=grid.length;i++){
+            for(int j=0;j+window<=grid[0].length;j++){
+                int r1 = getRowSum(rsum, i, j, grid,window);
+                int x=0;
+                for(;x<window;x++){             
+                    if(r1!=getRowSum(rsum,i+x,j,grid,window)) break;
+                    if(r1!=getColSum(csum,i,j+x,grid,window)) break;
+                }
+                if(x!=window) continue;
+                if(r1!=sumDiag(i,j,grid,1,window,r1)) continue;
+                if(r1!=sumDiag(i,j+window-1,grid,-1,window,r1)) continue;
+                return true;
+            }
+        }
+        return false;
+    }
+    public int largestMagicSquare(int[][] grid) {
+        int window = Math.min(grid.length,grid[0].length);
+        for(;window>0;window--){
+            if(numMagicSquaresInside(grid,window))
+                return window;
+        }
+        return 1;
+    }
+}
