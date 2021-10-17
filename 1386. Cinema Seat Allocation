@@ -1,0 +1,27 @@
+class Solution {
+    public int getGroup(int[] seats){
+        int aisle1 = seats[1]+seats[2], aisle2 = seats[3]+seats[4];
+        int aisle3 = seats[5]+seats[6], aisle4 = seats[7]+seats[8];
+        int ans=0;
+        if(aisle1+aisle2==0&&aisle3+aisle4==0) ans=2;
+        else if(aisle3+aisle2==0||aisle1+aisle2==0||aisle3+aisle4==0) ans=1;
+        return ans;
+    }
+    public int maxNumberOfFamilies(int n, int[][] rs) {
+        Arrays.sort(rs,(x,y)->{
+            return x[0]-y[0];
+        });
+        int[] seats = new int[10];
+        int row=rs[0][0],ans=(rs[0][0]-1)*2;
+        for(int i=0;i<rs.length;i++){
+            if(row!=rs[i][0]){
+                ans+=getGroup(seats)+(rs[i][0]-row-1)*2;
+                seats = new int[10];
+                row=rs[i][0];
+            }
+            seats[rs[i][1]-1]=1;
+        }
+        ans+=getGroup(seats)+(n-rs[rs.length-1][0])*2;
+        return ans;
+    }
+}
