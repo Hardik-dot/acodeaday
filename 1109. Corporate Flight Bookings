@@ -1,0 +1,14 @@
+class Solution {
+    public int[] corpFlightBookings(int[][] bookings, int n) {
+        int[] prefix = new int[n+1];
+        for(int[] b:bookings){
+            prefix[b[0]-1]+=b[2];
+            prefix[b[1]]-=b[2];
+        }
+        int ans[]= new int[n];
+        ans[0]=prefix[0];
+        for(int i=1;i<n;i++)
+            ans[i]+=prefix[i]+ans[i-1];
+        return ans;
+    }
+}
