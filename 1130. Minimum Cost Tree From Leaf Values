@@ -1,0 +1,25 @@
+class Solution {
+    public int aux(int[] arr, int l, int r, Integer dp[][],int maxar[][]){
+        if(l==r) return 0;
+        if(dp[l][r]!=null) return dp[l][r];
+        int ans = Integer.MAX_VALUE;
+        for(int k=l;k<r;k++){
+            int left = aux(arr,l,k,dp,maxar), right = aux(arr,k+1,r,dp,maxar);
+            ans = Math.min(ans, left+right+maxar[l][k]*maxar[k+1][r]);
+        }
+        dp[l][r]=ans;
+        return ans;
+    }
+    
+    public int mctFromLeafValues(int[] arr) {
+        int n = arr.length;
+        int maxar[][]=new int[n][n];
+        for(int i=0;i<n;i++){
+            maxar[i][i]=arr[i];
+            for(int j=i+1;j<n;j++){
+                maxar[i][j]=maxar[j][i]=Math.max(maxar[i][j-1],arr[j]);
+            }
+        }
+        return aux(arr,0,n-1,new Integer[n][n],maxar);
+    }
+}
