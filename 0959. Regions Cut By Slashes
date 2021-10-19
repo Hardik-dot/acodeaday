@@ -1,0 +1,46 @@
+class Solution {
+    
+    public void makeSquare(String[] grid, int upscale[][], int x, int y, int d){
+        for(int k=0;k<3;k++,x++,y+=d)
+            upscale[x][y]=1;
+    }
+    
+    public void makeUpscale(String[] grid, int upscale[][]){
+        int n = grid.length;
+        for(int i=0;i<n;i++){
+            String curr = grid[i];
+            for(int j=0;j<curr.length();j++){
+                if(curr.charAt(j)=='\\')
+                    makeSquare(grid, upscale, i*3, j*3, 1);
+                else if(curr.charAt(j)=='/')
+                    makeSquare(grid, upscale, i*3, j*3+2, -1);
+            }
+        } 
+    }
+    
+    public void islandPopulate(int upscale[][], int i, int j, int n){
+        if(i<0||j<0||i==n||j==n||upscale[i][j]!=0)
+            return;
+        upscale[i][j]=1;
+        islandPopulate(upscale,i-1,j,n);
+        islandPopulate(upscale,i+1,j,n);
+        islandPopulate(upscale,i,j-1,n);
+        islandPopulate(upscale,i,j+1,n);       
+    }
+    
+    public int regionsBySlashes(String[] grid) {
+        int n = grid.length;
+        int upscale[][] = new int[n*3][n*3];
+        makeUpscale(grid,upscale);
+        int ans =0;
+        for(int i=0;i<n*3;i++){
+            for(int j=0;j<n*3;j++){
+                if(upscale[i][j]==0){
+                    islandPopulate(upscale,i,j,n*3);
+                    ans++;
+                }
+            }
+        }
+        return ans;
+    }
+}
