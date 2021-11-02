@@ -1,0 +1,13 @@
+class Solution {
+    public boolean differByOne(String[] dict) {
+        HashSet<String> hs = new HashSet<>();
+        for(String d:dict){
+            for(int i=0;i<d.length();i++){
+                String temp = d.substring(0,i)+"*"+d.substring(i+1);
+                if(hs.contains(temp)) return true;
+                hs.add(temp);
+            }
+        }
+        return false;
+    }
+}
