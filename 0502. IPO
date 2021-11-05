@@ -1,0 +1,29 @@
+class Solution {
+    public int findMaximizedCapital(int k, int w, int[] profits, int[] capital) {
+        int[][] projects = new int[profits.length][2];
+        for(int i=0;i<profits.length;i++){
+            projects[i][0]=profits[i];
+            projects[i][1]=capital[i];
+        }
+        Arrays.sort(projects, (x,y)->{
+            return x[1]-y[1];
+        });
+        int i=0;
+        PriorityQueue<int[]> pq = new PriorityQueue<>((x,y)->{
+            return -x[0]+y[0];
+        });
+        int ans = w;
+        while(k>0){
+            while(i<profits.length&&w>=projects[i][1]){
+                pq.add(projects[i]);i++;
+            }
+            if(pq.isEmpty()) break;
+            int[] proj = pq.poll();
+            w=w+proj[0];
+            ans+=proj[0];k--;
+        }
+        
+        
+        return ans;
+    }
+}
