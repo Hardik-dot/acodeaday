@@ -1,0 +1,16 @@
+class Solution {
+    public List<String> stringMatching(String[] words) {
+        //HashSet<String> hs = new HashSet<>();
+        StringBuilder sb = new StringBuilder();
+        sb.append(";");
+        for(String w:words) {
+            sb.append(w);sb.append(";");
+        }
+        String x = sb.toString();
+        List<String> op = new ArrayList<>();
+        for(String w:words) {
+            if(x.indexOf(w)!=x.lastIndexOf(w)) op.add(w);
+        }
+        return op;
+    }
+}
