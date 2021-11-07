@@ -1,0 +1,16 @@
+class Solution {
+    public long arrsum(int[] nums){
+        long s=0;
+        for(int i:nums) s+=i;
+        return s;
+    }
+    public int minElements(int[] nums, int limit, int goal) {
+        long sum = arrsum(nums), ans=0;
+        
+        ans = Math.abs(goal-sum)/limit;
+        if(Math.abs(goal-sum)%limit!=0) ans++;
+        
+            
+        return (int)ans;
+    }
+}
