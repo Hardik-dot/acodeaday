@@ -1,0 +1,22 @@
+class Solution {
+    public List<String> printVertically(String s) {
+        List<String> ans = new ArrayList<>();
+        String[] words = s.split(" ");
+        int i=0;
+        while(true){
+            StringBuilder sb = new StringBuilder();
+            int ct=-1,ind=0;
+            for(String w:words){
+                if(i<w.length()){
+                    sb.append(w.charAt(i));
+                    ct=ind;
+                }else sb.append(" ");
+                ind++;
+            }
+            if(ct==-1) break;
+            ans.add(sb.substring(0,ct+1));
+            i++;
+        }
+        return ans;
+    }
+}
