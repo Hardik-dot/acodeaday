@@ -1,0 +1,23 @@
+class Solution {
+    Integer[] dp;
+    int aux(int[] candidates, int target){
+        if(target<=0){   
+            if(0==target) return 1;
+            return 0;
+        }
+        if(dp[target]!=null) return dp[target];
+        dp[target]=0;
+        for(int i=0;i<candidates.length;i++){
+            if(target-candidates[i]<0)
+                break;
+            dp[target]+=aux(candidates,target-candidates[i]);
+        }
+        return dp[target];
+    }
+    
+    public int combinationSum4(int[] candidates, int target) {
+        dp=new Integer[target+1];
+        Arrays.sort(candidates);
+        return aux(candidates,target);
+    }
+}
