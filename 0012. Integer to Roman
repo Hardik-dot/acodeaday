@@ -1,0 +1,17 @@
+class Solution {
+    public int romanToInt(String s) {
+        HashMap<String,Integer> charToDigit = new HashMap<>();
+        charToDigit.put("I",1);charToDigit.put("V",5);charToDigit.put("X",10);
+        charToDigit.put("L",50);charToDigit.put("C",100);charToDigit.put("D",500);
+        charToDigit.put("M",1000);charToDigit.put("IV",4);charToDigit.put("IX",9); 
+        charToDigit.put("XL",40);charToDigit.put("XC",90);charToDigit.put("CD",400); 
+        charToDigit.put("CM",900); 
+        int num=0;
+        for(int i=0;i<s.length();i++){
+            if(i<s.length()-1&&charToDigit.containsKey(s.substring(i,i+2))){
+                num+=charToDigit.get(s.substring(i,i+2));i++;
+            }else num+=charToDigit.get(s.substring(i,i+1));
+        }
+        return num;
+    }
+}
