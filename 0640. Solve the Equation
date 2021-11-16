@@ -1,0 +1,64 @@
+class Solution {
+    public void update(int id, StringBuilder sb, int[] coeff,boolean prev){
+        int val = 1;
+        if(sb.length()!=0) val*=Integer.valueOf(sb.toString());
+        if(prev) coeff[id]+=val;
+        else coeff[id]-=val;
+    }
+    
+    public int[] extractVals(char[] eq) {
+        int[] coeff = new int[2];
+        StringBuilder sb = new StringBuilder();
+        boolean prev=true;//+
+        for(int i=0;i<eq.length;i++){
+            if(eq[i]=='x'){
+                update(0,sb,coeff,prev);
+                sb=new StringBuilder();
+            }else if(eq[i]=='+'){
+                int val = 0;
+                if(sb.length()!=0) val=Integer.valueOf(sb.toString());
+                if(prev) coeff[1]+=val;
+                else coeff[1]-=val;
+                prev=true;
+                sb=new StringBuilder();
+            }else if(eq[i]=='-'){
+                int val = 0;
+                if(sb.length()!=0) val=Integer.valueOf(sb.toString());
+                if(prev) coeff[1]+=val;
+                else coeff[1]-=val;
+                prev=false;
+                sb=new StringBuilder();
+            }else sb.append(eq[i]);
+        }
+        int val = 0;
+        if(sb.length()!=0) val=Integer.valueOf(sb.toString());
+        if(prev) coeff[1]+=val;
+        else coeff[1]-=val;
+        return coeff;
+    }
+    
+    public String solveEquation(String equation) {
+        String[] eqs=equation.split("=");
+        int[] left = extractVals(eqs[0].toCharArray());
+        int[] right = extractVals(eqs[1].toCharArray());
+        int x=left[0]-right[0],v=-left[1]+right[1];
+        if(x==0){
+            if(v==0) return "Infinite solutions";
+            else return "No solution";
+        }
+        if(v!=0&&x%v==0) {
+            x=x/v;
+            v=1;
+        }
+        else if(x!=0&&v%x==0) {
+            v=v/x;
+            x=1;
+        }
+        if(x<0){
+            x=x*-1;v=v*-1;
+        }
+        String vs="";
+        if(x!=1)vs=String.valueOf(x);
+        return vs+"x="+v;
+    }
+}
