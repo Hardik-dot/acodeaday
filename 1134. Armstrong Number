@@ -1,0 +1,11 @@
+class Solution {
+    public boolean isArmstrong(int n) {
+        int len = String.valueOf(n).length();
+        int sum=0,or=n;
+        while(n>0){
+            sum+=Math.pow(n%10,len);
+            n=n/10;
+        }
+        return (sum==or)?true:false;
+    }
+}
