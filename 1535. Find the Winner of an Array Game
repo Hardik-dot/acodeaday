@@ -1,0 +1,20 @@
+class Solution {
+    public int getWinner(int[] arr, int k) {
+        int mx=0;
+        LinkedList<Integer> al = new LinkedList<>();
+        for(int a:arr){
+            al.add(a);
+            mx=Math.max(a,mx);
+        }
+        if(arr.length<=k) return mx;
+        int prev=al.get(0),ct=k;
+        while(al.size()>1&&ct>0){
+            if(al.get(0)>al.get(1)){
+                al.remove(1);ct--;
+            }else{
+                al.remove(0);ct=k-1;
+            }
+        }
+        return al.get(0);
+    }
+}
