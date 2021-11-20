@@ -1,0 +1,26 @@
+class Solution {
+    public int[] getCount(char[] chars){
+        int[] ct = new int[26];
+        for(char c:chars)
+            ct[c-'a']++;
+        return ct;
+    }
+    
+    public boolean check(int[] a, int[] b){
+        for(int i=0;i<26;i++)
+            if(a[i]<b[i])
+                return false;
+        return true;
+    }
+    
+    public int countCharacters(String[] words, String chars) {
+        int[] ct = getCount(chars.toCharArray());
+        int ans=0;
+        for(String w:words){
+            int[] curr = getCount(w.toCharArray());
+            if(check(ct,curr))
+                ans+=w.length();
+        }
+        return ans;
+    }
+}
