@@ -1,0 +1,25 @@
+class Solution {
+    public int validSubarrays(int[] nums) {
+        int ans=0;
+        Stack<Integer> stack = new Stack<>();
+        for(int i=0;i<nums.length;i++){
+            while(stack.size()>0&&stack.peek()>nums[i])
+                stack.pop();
+            stack.add(nums[i]);
+            ans+=stack.size();
+        }
+        return ans;
+    }
+    
+    public int validSubarraysBRUTE(int[] nums) {
+        int ans=0;
+        for(int i=0;i<nums.length;i++){
+            int j=i+1 ;
+            for(;j<nums.length&&nums[i]<=nums[j];){
+                j++;
+            }
+            ans+=j-i;
+        }
+        return ans;
+    }
+}
