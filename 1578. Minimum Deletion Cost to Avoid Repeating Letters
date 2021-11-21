@@ -1,0 +1,22 @@
+class Solution {
+    public int minCost(String s, int[] cost) {
+        char prev = 'A';
+        int max=Integer.MIN_VALUE,ct=0,ans=0,curr=0;
+        for(int i=0;i<cost.length;i++){
+            if(s.charAt(i)!=prev){
+                if(ct>1) 
+                    ans+=curr-max;
+                max=cost[i];
+                ct=1;
+                curr=max;
+                prev=s.charAt(i);
+            }else{
+            ct++;
+            max=Math.max(max,cost[i]);
+            curr+=cost[i];
+            }
+        }
+        if(ct>1) ans+=curr-max;
+        return ans;
+    }
+}
