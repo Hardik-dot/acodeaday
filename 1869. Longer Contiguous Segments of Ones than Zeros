@@ -1,0 +1,19 @@
+class Solution {
+    public boolean checkZeroOnes(String s) {
+        char[] arr = s.toCharArray();
+        int ct=0;
+        int[] counts=new int[3];
+        char prev='2';
+        for(char c:arr){
+            if(c!=prev){
+                counts[prev-'0']=Math.max(counts[prev-'0'],ct);
+                ct=0;prev=c;
+            }
+            ct++;
+        }
+                counts[prev-'0']=Math.max(counts[prev-'0'],ct);
+        
+                
+        return (counts[0]>=counts[1])?false:true;
+    }
+}
