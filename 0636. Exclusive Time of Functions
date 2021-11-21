@@ -1,0 +1,29 @@
+class Solution {
+    public int[] extract(String s){
+        String[] parts = s.split(":");
+        return new int[]{Integer.valueOf(parts[0]), Integer.valueOf(parts[2])};
+    }
+    
+    public int[] exclusiveTime(int n, List<String> logs) {
+        Stack<int[]> st = new Stack<int[]>();
+        int[] exec = new int[n];
+        st.add(new int[]{-1,-1});
+        int prev=0;
+        for(int i=0;i<logs.size();i++){
+            String s = logs.get(i);
+            int[] det = extract(s);
+            if(s.contains("start")){
+                int[] hd = st.peek();
+                if(hd[1]!=-1)
+                exec[hd[0]]+=det[1]-prev;
+                st.add(det);
+                prev=det[1];
+            }else{
+                int[] hd = st.pop();
+                exec[hd[0]]+=det[1]-prev+1;
+                prev=det[1]+1;
+            }
+        }
+        return exec;
+    }
+}
