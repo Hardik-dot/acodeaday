@@ -1,0 +1,19 @@
+class Solution {
+    public boolean check(int[] sensor1, int[] sensor2, int i) {
+        while(i<sensor1.length&&sensor1[i]==sensor2[i-1])
+            i++;
+        if(i==sensor1.length) return true;
+        return false;
+    }
+    public int badSensor(int[] sensor1, int[] sensor2) {
+        int i=0;
+        while(i<sensor1.length&&sensor1[i]==sensor2[i])
+            i++;
+        if(i==sensor1.length) return -1;
+        boolean one=check(sensor1,sensor2,i+1),two=check(sensor2,sensor1,i+1);
+        if(one&&two) return -1;
+        if(one) return 2;
+        if(two) return 1;
+        return -1;
+    }
+}
