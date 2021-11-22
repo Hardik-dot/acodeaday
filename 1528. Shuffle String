@@ -1,0 +1,9 @@
+class Solution {
+    public String restoreString(String s, int[] indices) {
+        char[] asn = new char[indices.length];
+        int ind=0;
+        for(int i:indices)
+            asn[i]=s.charAt(ind++);
+        return String.valueOf(asn);
+    }
+}
