@@ -1,0 +1,24 @@
+class Solution {
+    public int[] minOperations(String boxes) {
+        int ct=0,op=0;
+        int[] left=new int[boxes.length()];
+        for(int i=0;i<boxes.length();i++){
+            left[i]+=op;
+            if(boxes.charAt(i)=='1'){
+                ct++;
+            }
+            op+=ct;
+        }
+        ct=0;op=0;
+        for(int i=boxes.length()-1,j=0;i>=0;i--,j++){
+            left[i]+=op;
+            if(boxes.charAt(i)=='1'){
+                ct++;
+            }op+=ct;
+        }
+        return left;
+    }
+}
+// 0 0 1 0 1 1
+// 0 1 2 3 4 5
+//           
