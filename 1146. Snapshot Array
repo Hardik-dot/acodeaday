@@ -1,0 +1,48 @@
+class SnapshotArray {
+    int sid=0;
+    List<int[]>[] arr;
+    public SnapshotArray(int length) {
+        arr = new ArrayList[length];
+        sid=0;
+    }
+    
+    public void set(int index, int val) {
+        if(arr[index]==null)
+            arr[index]=new ArrayList<int[]>();
+        int last = arr[index].size();
+        if(last!=0&&arr[index].get(last-1)[0]==sid)
+            arr[index].get(last-1)[1]=val;
+        else
+        arr[index].add(new int[]{sid,val});
+    }
+    
+    public int snap() {
+        return sid++;
+    }
+    
+    public int bins(List<int[]> al, int target){
+        int l=0,r=al.size()-1;
+        while(l<=r){
+            int m=l+(r-l)/2;
+            if(al.get(m)[0]==target) return m;
+            if(al.get(m)[0]<target) l=m+1;
+            else r=m-1;
+        }
+        return r;
+    }
+    
+    public int get(int index, int snap_id) {
+        if(arr[index]==null||arr[index].get(0)[0]>snap_id) return 0;
+        int i=bins(arr[index],snap_id);
+        //if(i==0) return 0;
+        return arr[index].get(i)[1];
+    }
+}
+
+/**
+ * Your SnapshotArray object will be instantiated and called as such:
+ * SnapshotArray obj = new SnapshotArray(length);
+ * obj.set(index,val);
+ * int param_2 = obj.snap();
+ * int param_3 = obj.get(index,snap_id);
+ */
