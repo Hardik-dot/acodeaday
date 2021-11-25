@@ -1,0 +1,17 @@
+class Solution {
+    public int sumOfUnique(int[] nums) {
+        HashSet<Integer> hs = new HashSet<>();
+        HashSet<Integer> vis = new HashSet<>();
+        int sum=0;
+        for(int n:nums){
+            if(!hs.contains(n)){
+                sum+=n;
+                hs.add(n);
+            }else if(!vis.contains(n)){
+                sum-=n;
+                vis.add(n);
+            }
+        }
+        return sum;
+    }
+}
