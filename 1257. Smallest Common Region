@@ -1,0 +1,26 @@
+class Solution {
+    public String findSmallestRegion(List<List<String>> regions, String region1, String region2) {
+        HashMap<String, String> parent = new HashMap<>();
+        for(List<String> reg:regions){
+            for(int i=1;i<reg.size();i++)
+                parent.put(reg.get(i),reg.get(0));
+        }
+        HashSet<String> s1=new HashSet<>(), s2=new HashSet<>();
+        s1.add(region1);s2.add(region2);
+        String ans=null;
+        while(true){
+            String p1=parent.get(region1),p2=parent.get(region2);
+            if(p1==null&&p2==null) break;
+            if(p2!=null&&s1.contains(p2)) {
+                ans=p2;break;
+            }
+            if(p1!=null&&(s2.contains(p1)||p1.equals(p2))) {
+                ans=p1;break;
+            }
+                
+            s1.add(p1);s2.add(p2);
+            region1=p1;region2=p2;
+        }
+        return ans;
+    }
+}
