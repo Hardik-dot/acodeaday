@@ -1,0 +1,32 @@
+//https://leetcode.com/problems/maximum-gap/discuss/1241681/JavaPython-Bucket-Idea-with-Picture-Clean-and-Concise-O(N)
+class Solution {
+    public int maximumGap(int[] nums) {
+        if (nums == null || nums.length < 2)
+        return 0;
+        int max=nums[0],min=nums[0];
+        for(int n:nums){
+            max=Math.max(max,n);
+            min=Math.min(min,n);
+        }
+        int bucket = (int)Math.ceil((double)(max-min)/(nums.length-1));
+        int[] maxarr=new int[nums.length-1];
+        int[] minarr=new int[nums.length-1];
+        Arrays.fill(maxarr,Integer.MIN_VALUE);
+        Arrays.fill(minarr,Integer.MAX_VALUE);
+        
+        for(int i:nums){
+            if(i==min||i==max) continue;
+            int ind=(i-min)/bucket;
+            maxarr[ind]=Math.max(maxarr[ind],i);
+            minarr[ind]=Math.min(minarr[ind],i);
+        }
+        int prev=min,diff=Integer.MIN_VALUE;
+        for(int i=0;i<nums.length-1;i++){
+            if(maxarr[i]==Integer.MIN_VALUE&&minarr[i]==Integer.MAX_VALUE) continue;
+            diff=Math.max(diff,minarr[i]-prev);
+            prev=maxarr[i];
+        }
+        return Math.max(diff,max-prev);
+    }
+    
+}
