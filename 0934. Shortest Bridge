@@ -1,0 +1,60 @@
+class Solution {
+    public PriorityQueue<int[]> bfs(int i, int j, int[][] grid){
+        Queue<int[]> trav=new LinkedList<>();
+        PriorityQueue<int[]> out=new PriorityQueue<>((x,y)->-x[2]+y[2]);
+        trav.add(new int[]{i,j});
+        
+        while(!trav.isEmpty()){
+            int[] pt=trav.poll();
+            i=pt[0];j=pt[1];
+            if(i<0||j<0||i==grid.length||j==grid[0].length||grid[i][j]!=1)
+                continue;
+            grid[i][j]=2;out.add(new int[]{i,j,0});
+            trav.add(new int[]{i+1,j});
+            trav.add(new int[]{i-1,j});
+            trav.add(new int[]{i,j+1});
+            trav.add(new int[]{i,j-1});
+        }
+        return out;
+    }
+    public int shortestDist(int[][] grid,PriorityQueue<int[]> trav){
+        int[][] dir = new int[][]{{-1,0},{1,0},{0,-1},{0,1}};
+        while(!trav.isEmpty()){
+            int[] pt=trav.poll();
+            int i=pt[0], j=pt[1];
+            if(i<0||j<0||i==grid.length||j==grid[0].length)//||grid[i][j]!=1)
+                continue;
+            if(grid[i][j]==1) 
+                return -1+pt[2]*-1;
+            if(grid[i][j]<0) continue;
+            grid[i][j]=pt[2]-1;
+            
+            for(int k=0;k<4;k++){
+                int ni=i+dir[k][0],nj=j+dir[k][1];
+                if(ni<0||nj<0||ni==grid.length||nj==grid[0].length) continue;
+                if(grid[ni][nj]==1) return pt[2]*-1;
+                trav.add(new int[]{ni,nj,grid[i][j]});
+            }
+        }
+        return 0;
+    }
+    public int shortestBridge(int[][] grid) {
+        int i=0,j=0;
+        boolean fl=false;
+        PriorityQueue<int[]> out=null;
+        for(;i<grid.length;i++){
+            for(j=0;j<grid[0].length;j++){
+                if(grid[i][j]==1){
+                    if(!fl){
+                        out=bfs(i,j,grid);fl=true;
+                    }
+                    else break;
+                }
+            }
+            if(j!=grid[0].length) break;
+        }
+        
+        return shortestDist(grid,out);
+        
+    }
+}
