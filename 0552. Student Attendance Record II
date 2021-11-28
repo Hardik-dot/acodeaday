@@ -1,0 +1,18 @@
+class Solution {
+    Integer[][][] dp;
+    int mod = 1000000007;
+    public int helper(int n,int a,int l){
+        if(n==0) return 1;
+        if(dp[n][a][l]==null){
+            dp[n][a][l]=helper(n-1,a,0)%mod;
+            if(a==0) dp[n][a][l]=(dp[n][a][l]+helper(n-1,a+1,0)%mod)%mod;
+            if(l<2) dp[n][a][l]=(dp[n][a][l]+helper(n-1,a,l+1)%mod)%mod;
+        }
+        return dp[n][a][l];
+    }
+    public int checkRecord(int n) {
+        dp=new Integer[n+1][2][3];//n a l
+        return helper(n,0,0);
+        
+    }
+}
