@@ -1,0 +1,16 @@
+class Solution {
+    public boolean checkRecord(String s) {
+        int a=0,l=0,i=0;
+        while(i<s.length()&&a<2&&l<3){
+            if(s.charAt(i)=='L'){
+                l++;
+            }else{
+                l=0;
+                if(s.charAt(i)=='A') a++;
+            }
+            i++;
+        }
+        if(a>1||l>2) return false;
+        return (i==s.length())?true:false;
+    }
+}
