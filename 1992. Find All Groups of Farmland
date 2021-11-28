@@ -1,0 +1,39 @@
+class Solution {
+    public int horizontal(int row,int s,int[][] land){
+        while(s<land[0].length&&land[row][s]==1){
+            land[row][s]=0;
+            s++;
+        }
+        return s-1;
+    }
+    public int vertical(int col,int s,int[][] land){
+        land[s][col]=1;
+        while(s<land.length&&land[s][col]==1){
+            land[s][col]=0;
+            s++;
+        }
+        return s-1;
+    }
+    
+    public void modify(int[][] land,int i,int j,int m,int n){
+        for(int x=i;x<=m;x++)
+            for(int y=j;y<=n;y++)
+                land[x][y]=0;
+    }
+    
+    public int[][] findFarmland(int[][] land) {
+        List<int[]> temp =new ArrayList<>();
+        for(int i=0;i<land.length;i++){
+            for(int j=0;j<land[0].length;j++){
+                if(land[i][j]==1){
+                    int col=horizontal(i,j,land);
+                    int row=vertical(j,i,land);
+                    modify(land,i+1,j+1,row,col);
+                    temp.add(new int[]{i,j,row,col});
+                    j=col;
+                }
+            }
+        }
+        return temp.toArray(new int[0][]);
+    }
+}
