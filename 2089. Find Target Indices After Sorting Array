@@ -1,0 +1,31 @@
+class Solution {
+    public int bins(int[] nums,int target) {
+        int l=0,r=nums.length-1;
+        while(l<=r){
+            int m=l+(r-l)/2;
+            if(nums[m]==target)
+                return m;
+            else if(nums[m]<target)
+                l=m+1;
+            else r=m-1;
+        }
+        return -1;
+    }
+    
+    public List<Integer> targetIndices(int[] nums, int target) {
+        Arrays.sort(nums);
+        int ind=bins(nums,target),i=ind;
+        List<Integer> out = new ArrayList<>();
+        while(i>=0&&nums[i]==target){
+            out.add(0,i);
+            i--;
+        }
+        i=ind+1;
+        while(ind!=-1&&i<nums.length&&nums[i]==target){
+            out.add(i);
+            i++;
+        }
+        //Collections.sort(out);
+        return out;
+    }
+}
