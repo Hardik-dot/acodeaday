@@ -1,0 +1,63 @@
+class Solution {
+    /*public int[] genCharCt(char[] w){
+        int[] ct=new int[26];
+        for(char c:w)
+            ct[c-'a']++;
+        return ct;
+    }
+    
+    public boolean checkWord(int[][]  w2ct, String w){
+        int[] ct = genCharCt(w.toCharArray());
+        for(int i=0;i<w2ct.length;i++)
+            for(int k=0;k<26;k++)
+                if(w2ct[i][k]>ct[k])
+                    return false;
+        return true;
+    }
+    
+    public List<String> wordSubsets(String[] words1, String[] words2) {
+        int[][]  w2Ct=new int[words2.length][26];
+        for(int i=0;i<words2.length;i++)
+            w2Ct[i]=genCharCt(words2[i].toCharArray());
+        List<String> ans = new ArrayList<>();
+        for(String w:words1){
+            if(checkWord(w2Ct,w))
+                ans.add(w);
+        }
+        return ans;
+    }*/
+    
+    public int[] genCharCt(char[] w){
+        int[] ct=new int[26];
+        for(char c:w)
+            ct[c-'a']++;
+        return ct;
+    }
+    
+    public void updateCt(char[] w, int[] w2ct){
+        int[] ct=genCharCt(w);
+        for(int i=0;i<26;i++)
+            w2ct[i]=Math.max(ct[i],w2ct[i]);
+    }
+    
+    public boolean checkWord(char[] w, int[] w2ct){
+        int[] curr=genCharCt(w);
+        for(int i=0;i<26;i++)
+            if(w2ct[i]>curr[i])
+                return false;
+        return true;
+    }
+    
+    public List<String> wordSubsets(String[] words1, String[] words2) {
+        int[] w2ct=new int[26];
+        
+        for(String w2:words2)
+            updateCt(w2.toCharArray(),w2ct);
+        List<String> ans = new ArrayList<>();
+        for(String w:words1){
+            if(checkWord(w.toCharArray(),w2ct))
+                ans.add(w);
+        }
+        return ans;
+    }
+}
