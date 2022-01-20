@@ -1,0 +1,15 @@
+class Solution {
+    Integer[][] dp;
+    public int aux(int[] colors, int l, int r){
+        if(dp[l][r]==null){
+            if(colors[l]!=colors[r]||l>=r)
+                dp[l][r] = r-l;
+            else dp[l][r]=Math.max(aux(colors,l+1,r),aux(colors,l,r-1));
+        }
+        return dp[l][r];
+    }
+    public int maxDistance(int[] colors) {
+        dp=new Integer[colors.length][colors.length];
+        return aux(colors,0,colors.length-1);
+    }
+}
