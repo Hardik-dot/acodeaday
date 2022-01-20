@@ -1,0 +1,36 @@
+/*https://leetcode.com/problems/random-flip-matrix/discuss/155341/Intuitive-Algorithm-Explanation-Step-By-Step.*/
+import java.util.*;
+class Solution {
+    int m,n;
+    HashSet<String> matrix = new HashSet<>();
+    
+    public Solution(int m, int n) {
+        this.m=m;
+        this.n=n;
+        matrix = new HashSet<>();
+    }
+    
+    public int[] flip() {
+        int i=0,j=0;
+        Random rand = new Random();
+        while(true){
+            i=rand.nextInt(m);
+            j=rand.nextInt(n);
+            if(!matrix.contains(i+"*"+j))
+                break;
+        }
+        matrix.add(i+"*"+j);
+        return new int[]{i,j};
+    }
+    
+    public void reset() {
+        matrix = new HashSet<>();
+    }
+}
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution obj = new Solution(m, n);
+ * int[] param_1 = obj.flip();
+ * obj.reset();
+ */
