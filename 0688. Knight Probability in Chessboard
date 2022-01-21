@@ -1,0 +1,23 @@
+class Solution {
+    Double[][][] dp;
+    int[][] dirs=new int[][]{{-1,-2},{-2,-1},{-2,1},{-1,2},{1,-2},{2,-1},{2,1},{1,2}};
+    
+    public Double aux(int n, int k, int i, int j){
+        if(i<0||j<0||i>=n||j>=n) return 0.0;
+        
+        if(k==0) return 1.0;
+        
+        if(dp[i][j][k]==null){
+            double v=0.0;
+            for(int[] d:dirs)
+                v+=aux(n,k-1,i+d[0],j+d[1])*0.125;
+            dp[i][j][k]=v;
+        }
+        return dp[i][j][k];
+    }
+    
+    public double knightProbability(int n, int k, int row, int column) {
+        dp=new Double[n][n][k+1];
+        return aux(n,k,row,column);
+    }
+}
