@@ -1,0 +1,24 @@
+class Solution {
+    public int[] platesBetweenCandles(String s, int[][] queries) {
+        TreeSet<Integer> track = new TreeSet<>();
+        int[] left=new int[s.length()];
+        int ct=0;
+        for(int i=0;i<s.length();i++){
+            if(s.charAt(i)=='|'){
+                track.add(i);
+                left[i]=ct;
+            }
+            else ct++;
+        }
+        
+        int[] out = new int[queries.length];
+        for(int i=0;i<queries.length;i++){
+            int[] q =queries[i];
+            Integer p1=track.ceiling(q[0]),p2=track.floor(q[1]);
+            if(p1!=null&&p2!=null&&p1<p2)
+                out[i]=left[p2]-left[p1];
+            
+        }
+        return out;
+    }
+}
