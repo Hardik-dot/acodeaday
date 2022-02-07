@@ -1,0 +1,20 @@
+class Solution {
+    public int brightestPosition(int[][] lights) {
+        TreeMap<Integer, Integer> street = new TreeMap<>();
+        for(int[] l:lights){
+            int left=l[0]-l[1],right=l[0]+l[1]+1;
+            street.put(left,street.getOrDefault(left,0)+1);
+            street.put(right,street.getOrDefault(right,0)-1);
+        }
+        int pos=0,mx=-1,curr=0;
+        
+        for(Map.Entry<Integer, Integer> e:street.entrySet()){
+            curr+=e.getValue();
+            if(curr>mx){
+                pos=e.getKey();
+                mx=curr;
+            }
+        }
+        return pos;
+    }
+}
