@@ -1,0 +1,13 @@
+class Solution {
+    public int reachNumber(int target) {
+        int i=0,sum=0;
+        target=Math.abs(target);
+        while(sum<target){
+            sum+=++i;
+        }
+        int diff=sum-target;
+        if(diff%2!=0)
+            return i+1+i%2;
+        return i;
+    }
+}
