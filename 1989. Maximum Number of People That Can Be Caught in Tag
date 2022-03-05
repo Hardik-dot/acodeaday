@@ -1,0 +1,16 @@
+class Solution {
+    public int catchMaximumAmountofPeople(int[] team, int dist) {
+        int ans=0,zero=0;
+        for(int i=0;i<team.length;i++){
+            if(team[i]==1){
+                zero=Math.max(zero,i-dist);
+                while(zero<team.length&&zero<=i+dist){
+                    if(team[zero++]==0){
+                        ans++;break;
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+}
