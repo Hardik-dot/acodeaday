@@ -1,0 +1,16 @@
+class Solution {
+    public int[] pivotArray(int[] nums, int pivot) {
+        int i1=0,l=0,n=nums.length,r=n-1,i2=r;
+        int[] res = new int[nums.length];
+        Arrays.fill(res,pivot);
+        while(l<n){
+            if(nums[l]<pivot)
+                res[i1++]=nums[l];
+            if(pivot<nums[r])
+                res[i2--]=nums[r];
+            r--;
+            l++;
+        }
+        return res;
+    }
+}
