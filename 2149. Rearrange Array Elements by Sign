@@ -1,0 +1,26 @@
+class Solution {
+    private int getnext(int i, int[] nums, int flag){
+        while(i<nums.length){
+            if(flag*nums[i]>0)
+                return i;
+            i++;
+        }
+        return -1;
+    }
+    public int[] rearrangeArray(int[] nums) {
+        int pos=-1;
+        int neg=-1;
+        int[] ans=new int[nums.length];
+        
+        for(int i=0;i<nums.length;i++){
+            if(i%2==0){
+                pos=getnext(pos+1,nums,1);
+                ans[i]=nums[pos];
+            }else{
+                neg=getnext(neg+1,nums,-1);
+                ans[i]=nums[neg];
+            }
+        }
+        return ans;
+    }
+}
