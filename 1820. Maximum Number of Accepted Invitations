@@ -1,0 +1,33 @@
+//https://leetcode.com/problems/maximum-number-of-accepted-invitations/discuss/1177540/JAVA-or-Maximum-Bipartite-Matching
+class Solution {
+    public int maximumInvitations(int[][] grid) {
+        int b = grid.length, g=grid[0].length;
+        
+        int[] fix = new int[g];
+        
+        Arrays.fill(fix,-1);
+        
+        int ans=0;
+        for(int i=0;i<b;i++){
+            boolean[] seen = new boolean[g];
+            if(dfs(grid,i,seen,fix))
+                ans++;
+        }
+        return ans;
+    }
+    
+    private boolean dfs(int[][] grid, int boy, boolean[] seen, int[] fix){
+        int b = grid.length, g=grid[0].length;
+        
+        for(int i=0;i<g;i++){
+            if(grid[boy][i]==1&&seen[i]==false){
+                seen[i]=true;
+                if(fix[i]==-1||dfs(grid,fix[i],seen,fix)){
+                    fix[i]=boy;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}
