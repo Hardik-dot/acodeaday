@@ -1,0 +1,23 @@
+class Solution {
+    public boolean isNStraightHand(int[] hand, int groupSize) {
+        Arrays.sort(hand);
+        int ct=0;
+        for(int i=0;i<hand.length;i++){
+            if(hand[i]==-1) 
+                continue;
+            
+            int j=i+1,prev=i,cur=1;
+            
+            while(cur<groupSize&&j<hand.length){
+                if(hand[j]==hand[prev]+1){
+                    hand[prev]=-1;
+                    cur++;prev=j;
+                }
+                j++;
+            }
+            hand[prev]=-1;
+            if(cur!=groupSize) return false;        
+        }
+        return true;
+    }
+}
