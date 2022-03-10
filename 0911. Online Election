@@ -1,0 +1,25 @@
+class TopVotedCandidate {
+    int[] tot=new int[5001];
+    TreeMap<Integer, Integer> track = new TreeMap<>();
+    
+    public TopVotedCandidate(int[] p, int[] t) {
+        int mx=0;
+        HashMap<Integer, Integer> hm = new HashMap<>();
+        for(int i=0;i<p.length;i++){
+            tot[p[i]]++;
+            mx=Math.max(mx,tot[p[i]]);
+            hm.put(tot[p[i]],p[i]);
+            track.put(t[i],hm.get(mx));
+        }
+    }
+    
+    public int q(int t) {
+        return track.get(track.floorKey(t));
+    }
+}
+
+/**
+ * Your TopVotedCandidate object will be instantiated and called as such:
+ * TopVotedCandidate obj = new TopVotedCandidate(persons, times);
+ * int param_1 = obj.q(t);
+ */
