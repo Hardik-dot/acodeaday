@@ -1,0 +1,16 @@
+class Solution {
+    public int minMoves(int target, int maxDoubles) {
+        int ct=0;
+        
+        while(target>1&&maxDoubles>0){
+            if(target%2==0){
+                target/=2;
+                maxDoubles--;
+            }else{
+                target--;
+            }
+            ct++;
+        }
+        return ct+target-1;
+    }
+}
