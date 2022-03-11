@@ -1,0 +1,20 @@
+class Solution {
+    public String decodeCiphertext(String encodedText, int rows) {
+        if(rows == 1 || encodedText.length() == 0)
+            return encodedText;
+        
+        char[] enc = encodedText.toCharArray();
+        int col=enc.length/rows;
+        StringBuilder sb = new StringBuilder();
+        for(int i=0;i<col;i++){
+            int j=i;
+            while(j<enc.length){
+                sb.append(enc[j]);
+                j+=col+1;
+            }
+        }
+        while(sb.charAt(sb.length()-1)==' ')
+            sb.setLength(sb.length()-1);
+        return sb.toString();
+    }
+}
