@@ -1,0 +1,20 @@
+class Solution {
+    public int minOperationsMaxProfit(int[] c, int bc, int rc) {
+        int carry=0,running=0,max=0,ppl=0,ind=-1,i=0;
+        for(;i<c.length||carry!=0;i++){
+            if(i<c.length)
+                carry+=c[i];
+            int now = Math.min(carry,4);
+            
+            ppl+=now;
+            running=bc*ppl-(i+1)*rc;
+            if(max<running){
+                max=running;
+                ind=i+1;
+            }
+            carry-=now;
+        }
+        
+        return ind;
+    }
+}
