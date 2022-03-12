@@ -1,0 +1,17 @@
+class Solution {
+    public String shiftingLetters(String s, int[] shifts) {
+        int n = s.length();
+        int[] suffix = new int[n];
+        suffix[n-1]=shifts[n-1]%26;
+        for(int i=n-2;i>=0;i--){
+            suffix[i]=(shifts[i]+suffix[i+1])%26;
+        }
+        char[] tmp = s.toCharArray();
+        StringBuilder out = new StringBuilder();
+        for(int i=0;i<n;i++){
+            int v = (suffix[i]+tmp[i]-'a')%26+'a';
+            out.append((char)v);
+        }
+        return out.toString();        
+    }
+}
