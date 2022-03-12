@@ -1,0 +1,29 @@
+class Solution {
+    private String aligned(String s){
+        char[] orig = s.toCharArray();
+        int diff=orig[0]-'a';
+        if(diff!=0){
+            for(int i=0;i<s.length();i++){
+                int v = (int)(orig[i]-'a');
+                v=(v-diff)%26;
+                if(v<0) v=26+v;
+                orig[i]=(char)(v+'a');
+            }
+        }
+        return String.valueOf(orig);
+    }
+    
+    public List<List<String>> groupStrings(String[] strings) {
+        HashMap<String,List<String>> map = new HashMap<>();
+        for(String s:strings){
+            String val = aligned(s);
+            List<String> all = map.getOrDefault(val,new ArrayList<>());
+            all.add(s);
+            map.put(val,all);
+        }
+        List<List<String>> ans = new ArrayList<>();
+        for(Map.Entry<String,List<String>> e:map.entrySet())
+            ans.add(e.getValue());
+        return ans;
+    }
+}
