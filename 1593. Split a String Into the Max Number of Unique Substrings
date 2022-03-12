@@ -1,0 +1,20 @@
+class Solution {
+    int ans=0;
+    private void tryall(String s,HashSet<String> hs, int ct){
+        if(s.length()==0){
+           ans=Math.max(ans,ct); 
+        }
+        for(int i=0;i<s.length();i++){
+            if(!hs.contains(s.substring(0,i+1))){
+                hs.add(s.substring(0,i+1));
+                tryall(s.substring(i+1),hs,ct+1);
+                hs.remove(s.substring(0,i+1));
+            }
+        }    
+    }
+    
+    public int maxUniqueSplit(String s) {
+        tryall(s,new HashSet<>(),0);
+        return ans;
+    }
+}
