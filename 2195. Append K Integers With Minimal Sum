@@ -1,0 +1,17 @@
+class Solution {
+    
+    public long minimalKSum(int[] nums, int k) {
+        long ans = k * (k + 1L) / 2;
+        TreeSet<Integer> unique = new TreeSet<>();
+        for (int num : nums) {
+            unique.add(num);
+        }
+        while (!unique.isEmpty()) {
+            int first = unique.pollFirst();
+            if (k >= first) {
+                ans += ++k - first;
+            }
+        }
+        return ans;
+    }
+}
