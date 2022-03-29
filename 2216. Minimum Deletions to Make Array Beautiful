@@ -1,0 +1,25 @@
+class Solution {
+    private int aux(List<Integer> nums, int ind) {
+        
+        for(;ind+1<nums.size();ind++){
+            if(ind%2==0){
+                while(ind+1<nums.size()&&nums.get(ind).equals(nums.get(ind+1)))
+                    nums.remove(ind+1);    
+            }    
+        }
+        
+        if(nums.size()%2==1) 
+            nums.remove(nums.size()-1);
+                 
+        return ind;
+    }
+    
+    public int minDeletion(int[] nums) {
+        List<Integer> li = new ArrayList<>();
+
+        for(int i:nums) 
+            li.add(i);
+        aux(li,0);
+        return nums.length-li.size();
+    }
+}
