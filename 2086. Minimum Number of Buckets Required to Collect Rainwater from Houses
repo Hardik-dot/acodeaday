@@ -1,0 +1,18 @@
+class Solution {
+    public int minimumBuckets(String street) {
+        char[] str = street.toCharArray();
+        int ct=0;
+        for(int i=0;i<str.length;i++){
+            if(str[i]=='H'){
+                if(i+1<str.length&&str[i+1]=='.'){
+                    ct++;
+                    if(i+2<str.length&&str[i+2]=='H')
+                        str[i+2]='X';
+                }else if(i-1>=0&&str[i-1]=='.')
+                    ct++;
+                else return -1;
+            }
+        }
+        return ct;
+    }
+}
