@@ -1,0 +1,30 @@
+class Solution {
+    public boolean check(List<String> ing, HashSet<String> sup) {
+        for(String i:ing)
+            if(!sup.contains(i))
+                return false;
+        return true;
+    }
+    
+    public List<String> findAllRecipes(String[] recipes, List<List<String>> ingredients, String[] supplies) {
+        HashSet<String> sup = new HashSet<String>();
+        List<String> ans = new ArrayList<>();
+        
+        for(String s:supplies)
+            sup.add(s);
+        
+        int k=1;
+        do{
+            k=0;
+            for(int i=0;i<recipes.length;i++){
+                if(!sup.contains(recipes[i])&&check(ingredients.get(i),sup)){
+                    sup.add(recipes[i]);
+                    ans.add(recipes[i]);
+                    k++;
+                }
+            } 
+        }while(k!=0);
+        
+        return ans;
+    }
+}
