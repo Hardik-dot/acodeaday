@@ -1,0 +1,15 @@
+class Solution {
+    public int minSwaps(int[] data) {
+        int win = Arrays.stream(data).sum();
+        int left=0,rt=0,ones=0,ans=0;
+        
+        while(rt<data.length){
+            ones+=data[rt++];
+            if(rt-left>win)
+                ones-=data[left++];
+            ans=Math.max(ans,ones);
+        }
+        
+        return win-ans;
+    }
+}
