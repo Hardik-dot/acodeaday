@@ -1,0 +1,17 @@
+
+class Solution {
+    public String[] sortFeatures(String[] features, String[] responses) {
+        HashMap<String,Integer> hm = new HashMap<>();
+        for(String ft:features)
+            hm.put(ft,0);
+        for(String res:responses){
+            Set<String> hs = new HashSet<>();
+            Collections.addAll(hs,res.split(" "));
+            for(String w:hs)
+                if(hm.containsKey(w))
+                    hm.put(w,hm.get(w)+1);
+        }
+        Arrays.sort(features, (a,b)->hm.get(b)-hm.get(a));
+        return (features);
+    }
+}
