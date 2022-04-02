@@ -1,0 +1,27 @@
+class Solution {
+    public int smallestCommonElement(int[][] mat) {
+        int smol=mat[0][0];
+        int[] s = new int[mat.length];
+        int ans=-1;
+        while(true){
+            int i=0;
+            for(;i<mat.length;i++){
+                if(mat[i][s[i]]!=smol){
+                    while(s[i]<mat[0].length&&mat[i][s[i]]<smol)
+                        s[i]++;
+                    if(s[i]==mat[0].length) return -1;
+                    if(mat[i][s[i]]!=smol){
+                        smol=mat[i][s[i]];
+                        break;
+                    }
+                }
+            }
+            if(i==mat.length) {
+                ans=smol;
+                break;
+            }
+                
+        }
+        return ans;
+    }
+}
