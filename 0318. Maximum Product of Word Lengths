@@ -1,0 +1,29 @@
+class Solution {
+    private void build(String[] words,int[][] freq){
+        for(int i=0;i<words.length;i++){
+            char[] arr = words[i].toCharArray();
+            for(char c:arr)
+                freq[i][c-'a']++;
+        }
+    }
+    
+    private boolean check(int[] one, int[] two){
+        for(int i=0;i<26;i++)
+            if(one[i]*two[i]!=0)
+                return false;
+        return true;
+    }
+    
+    public int maxProduct(String[] words) {
+        int[][] freq = new int[words.length][26];
+        build(words,freq);
+        int mx=0;
+        for(int i=0;i<words.length;i++){
+            for(int j=i+1;j<words.length;j++){
+                if(words[i].length()*words[j].length()>mx&&check(freq[i],freq[j]))
+                    mx = words[i].length()*words[j].length();
+            }
+        }
+        return mx;
+    }
+}
