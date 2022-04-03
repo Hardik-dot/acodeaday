@@ -1,0 +1,22 @@
+class Solution {
+    public int checkCommonFactor(int a, int b){
+        int tmp=0;
+        while(a%b!=0){
+            tmp=a;
+            a=b;
+            b=tmp%a;
+        }
+        return b;
+    }
+    public List<String> simplifiedFractions(int n) {
+        List<String> ans =new ArrayList<>();
+        for(int i=1;i<n;i++){
+            for(int j=i+1;j<=n;j++){
+                if(checkCommonFactor(j,i)==1){
+                    ans.add(String.valueOf(i)+"/"+String.valueOf(j));
+                }
+            }
+        }
+        return ans;
+    }
+}
