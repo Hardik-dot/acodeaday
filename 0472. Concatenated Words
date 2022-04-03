@@ -1,0 +1,37 @@
+class Solution {
+    public boolean check(String w, HashSet<String> hs, TreeSet<Integer> ts){
+        if(w.length()==0) return true;
+        for(int len:ts){
+            if(w.length()<len) break;
+            if(hs.contains(w.substring(0,len))&&check(w.substring(len),hs,ts))
+                return true;
+        }
+        return false;
+    }
+    
+    public List<String> findAllConcatenatedWordsInADict(String[] words) {
+        HashSet<String> hs = new HashSet<>();
+        TreeSet<Integer> ts = new TreeSet<>();
+        List<String> ans = new ArrayList<>();
+        
+        for(String w:words){
+            if(w.length()!=0){
+            hs.add(w);
+            ts.add(w.length());
+            }
+        }
+        
+        for(String w:words){
+            int fl=0;
+            if(hs.contains(w)) {
+                hs.remove(w);fl=1;
+            }
+            if(w.length()!=0&&check(w,hs,ts))
+                ans.add(w);
+            if(fl==1)
+                hs.add(w);
+        }
+        
+        return ans;
+    }
+}
