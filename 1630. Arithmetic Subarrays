@@ -1,0 +1,25 @@
+class Solution {
+    private Boolean check(int[] nums, int l, int r){
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for(int i=l;i<=r;i++)
+            pq.add(nums[i]);
+        int a=pq.poll(),b=pq.poll();
+        while(!pq.isEmpty()){
+            if(b-a!=pq.peek()-b)
+                return false;
+            a=b;
+            b=pq.poll();
+        }
+        return true;
+    }
+    
+    public List<Boolean> checkArithmeticSubarrays(int[] nums, int[] l, int[] r) {
+        List<Boolean> ans = new ArrayList<>();
+        for(int i=0;i<l.length;i++){
+            if(r[i]-l[i]<2||check(nums,l[i],r[i]))
+                ans.add(true);
+            else ans.add(false);
+        }
+        return ans;
+    }
+}
