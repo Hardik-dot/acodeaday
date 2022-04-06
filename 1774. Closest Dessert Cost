@@ -1,0 +1,19 @@
+class Solution {
+    int result=Integer.MAX_VALUE;
+    private boolean aux(int[] tc, int target, int ind, int curr){
+        if( Math.abs(target - curr) < Math.abs(target - result) || Math.abs(target - curr) == Math.abs(target - result) && curr < result)
+            result = curr;
+        if(curr == target) return true;
+        if(ind==tc.length || curr > target) return false;
+
+        return aux(tc,target,ind+1,curr)||aux(tc,target,ind+1,curr+tc[ind])||aux(tc,target,ind+1,curr+2*tc[ind]);
+        
+    }
+    
+    public int closestCost(int[] baseCosts, int[] toppingCosts, int target) {
+        for(int bc:baseCosts){
+            if(aux(toppingCosts,target,0,bc)) return target;
+        }
+        return result;
+    }
+}
