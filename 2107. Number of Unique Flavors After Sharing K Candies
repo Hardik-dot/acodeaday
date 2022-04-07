@@ -1,0 +1,17 @@
+class Solution {
+    public int shareCandies(int[] candies, int k) {
+        HashMap<Integer, Integer> hm = new HashMap<>();
+        for(int i=k;i<candies.length;i++)
+            hm.put(candies[i],hm.getOrDefault(candies[i],0)+1);
+        
+        int ans=hm.size();
+        for(int i=0;i+k<candies.length;i++){
+            if(candies[i]==candies[i+k]) continue;
+            hm.put(candies[i],hm.getOrDefault(candies[i],0)+1);
+            hm.put(candies[i+k],hm.get(candies[i+k])-1);
+            if(hm.get(candies[i+k])==0) hm.remove(candies[i+k]);
+            ans=Math.max(ans,hm.size());
+        }
+        return ans;
+    }
+}
