@@ -1,0 +1,38 @@
+class Solution {
+    public List<String> removeComments(String[] source) {
+        List<String> ans = new ArrayList<>();
+        boolean multi=false;
+        String prev="";
+        for(int i=0;i<source.length;i++){
+            String x=source[i];
+            StringBuilder sb = new StringBuilder();
+            for(int j=0;j<source[i].length();j++){
+                char c=source[i].charAt(j);
+                if(source[i].charAt(j)=='/'&&!multi){
+                    if(j+1<source[i].length()){
+                        if(source[i].charAt(j+1)=='*'){
+                            prev=sb.toString();
+                            multi = true;
+                            j++;
+                        }else if(source[i].charAt(j+1)=='/')
+                            break;
+                        else sb.append("/");
+                    }else sb.append("/");
+                }else if(source[i].charAt(j)=='*'){
+                    if(j+1<source[i].length()&&source[i].charAt(j+1)=='/'&&multi){
+                        multi=false;
+                        if(sb.length()==0&&!ans.isEmpty()&&prev.equals(ans.get(ans.size()-1))){
+                            sb = new StringBuilder(ans.remove(ans.size()-1));
+                        }
+                        j++;
+                    }else if(!multi) sb.append("*");
+                }
+                else if(!multi)
+                    sb.append(source[i].charAt(j));
+            }
+            if(sb.length()>0)
+            ans.add(sb.toString());
+        }
+        return ans;
+    }
+}
