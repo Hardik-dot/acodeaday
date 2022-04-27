@@ -1,0 +1,58 @@
+class Solution {
+    static class trie{
+        trie[] child;
+        boolean isEnd;
+        trie(){
+            child = new trie[26];
+        }
+    }
+    
+    static trie head;
+    static List<String> tmp;
+    
+    private static void insert(char[] word){
+        trie curr=head;
+        for(char c:word){
+            if(curr.child[c-'a']==null)
+                curr.child[c-'a']=new trie();
+            curr=curr.child[c-'a'];
+        }
+        curr.isEnd=true;
+    }
+    
+    private static void traverse(trie curr,StringBuilder sb){
+        if(curr.isEnd)
+            tmp.add(sb.toString());
+        for(int i=0;i<26&&tmp.size()<3;i++){
+            if(curr.child[i]!=null){
+                sb.append((char)('a'+i));
+                traverse(curr.child[i],sb);
+                sb.setLength(sb.length()-1);
+            }
+        }
+    }
+    
+    private void search(String word){
+        trie curr=head;
+        tmp=new ArrayList<>();
+        
+        for(char c:word.toCharArray()){
+            if(curr.child[c-'a']==null)
+                return;
+            curr=curr.child[c-'a'];
+        }
+        traverse(curr,new StringBuilder(word));
+    }
+        
+    public List<List<String>> suggestedProducts(String[] products, String searchWord) {
+        head = new trie();
+        for(String w:products)
+            insert(w.toCharArray());
+        List<List<String>> ans= new ArrayList<>();
+        for(int i=0;i<searchWord.length();i++){
+            search(searchWord.substring(0,i+1));
+            ans.add(new ArrayList<>(tmp));
+        }
+        return ans;
+    }
+}
