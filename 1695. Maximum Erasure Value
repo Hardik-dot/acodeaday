@@ -1,0 +1,18 @@
+class Solution {
+    public int maximumUniqueSubarray(int[] nums) {
+        HashMap<Integer, Integer> hm = new HashMap<>();
+        int[] prefix = new int[nums.length+1];
+        
+        int l=0,ans=0;
+        for(int i=0;i<nums.length;i++){
+            prefix[i+1]=prefix[i]+nums[i];
+            
+            if(hm.containsKey(nums[i]))
+                l=Math.max(l,hm.get(nums[i])+1);
+
+            ans=Math.max(ans,prefix[i+1]-prefix[l]);
+            hm.put(nums[i],i);
+        }
+        return ans;
+    }
+}
