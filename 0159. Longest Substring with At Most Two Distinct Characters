@@ -1,0 +1,38 @@
+class Solution {
+    public int lengthOfLongestSubstringTwoDistinct(String s) {
+        int c1=-1,c2=-1;
+        int x=0,y=0,i=0;
+        char[] in = s.toCharArray();
+        c1=in[0];
+        for(;i<s.length();i++){
+            if(in[i]!=c1){
+                c2=in[i];
+                y=i;
+                break;
+            }
+            x=i;
+        }
+        int ans=i,left=0;
+        if(c2==-1) return ans;
+        for(;i<s.length();i++){
+            if(in[i]==c1)
+                x=i;
+            else if(in[i]==c2)
+                y=i;
+            else{
+                left=Math.min(x,y)+1;
+                if(x>y){
+                    c2=in[i];
+                    y=i;
+                }else{
+                    c1=in[i];
+                    x=i;
+                }
+                
+            }
+            ans=Math.max(ans,i-left);
+        }
+        
+        return ans+1;
+    }
+}
