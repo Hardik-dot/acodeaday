@@ -1,0 +1,40 @@
+class Solution {
+    private boolean loop(String[] board, char c, boolean fl){
+        for(int row=0;row<3;row++){
+            int i=0;
+            for(i=0;i<3;i++){
+                if((fl&board[row].charAt(i)!=c)||(!fl&board[i].charAt(row)!=c))
+                    break;
+            }
+            if(i==3)
+                return true;
+        }
+        return false;
+    }
+    
+    private boolean check(String[] board, char c){
+        return loop(board,c,true)||loop(board,c,false)||(board[0].charAt(0)==c&board[1].charAt(1)==c&board[2].charAt(2)==c)||(board[0].charAt(2)==c&board[1].charAt(1)==c&board[2].charAt(0)==c);         
+                                                         
+    }
+    
+    public boolean validTicTacToe(String[] board) {
+        int x=0,o=0;
+        for(String s:board){
+            for(char c:s.toCharArray())
+                if(c=='X') x++;
+                else if(c=='O') o++;
+        }
+        if((x-o)==0){
+            boolean of = check(board,'O');
+            boolean xf = check(board,'X');
+            if((of&!xf)||(!of&!xf))
+                return true;
+        }else if((x-o)==1){
+            boolean of = check(board,'O');
+            boolean xf = check(board,'X');
+            if((xf&!of)||(!of&!xf))
+                return true;
+        }
+        return false;
+    }
+}
