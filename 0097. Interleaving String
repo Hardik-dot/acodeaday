@@ -1,0 +1,29 @@
+class Solution {
+    char[] a,b,c;
+    Boolean[][] dp;
+    private boolean dfs(int l, int r, int k){
+        if(k==c.length){
+            if(l==a.length&&r==b.length)
+                return true;
+            return false;
+        }
+        if(dp[l][r]!=null)
+            return dp[l][r];
+        boolean ans=false;
+        if((l<a.length&&a[l]==c[k]))
+            ans=dfs(l+1,r,k+1);
+        if((r<b.length&&b[r]==c[k]))
+            ans=ans|dfs(l,r+1,k+1);
+        return dp[l][r]=ans;
+    }
+    
+    public boolean isInterleave(String s1, String s2, String s3) {
+        a = s1.toCharArray(); 
+        b = s2.toCharArray();
+        c = s3.toCharArray();
+        
+        dp = new Boolean[a.length+1][b.length+1];
+        
+        return dfs(0,0,0);
+    }
+}
