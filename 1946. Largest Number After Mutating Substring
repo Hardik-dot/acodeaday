@@ -1,0 +1,18 @@
+class Solution {
+    public String maximumNumber(String num, int[] change) {
+        char[] onum = num.toCharArray();
+        boolean ch=false;
+        for(int i=0;i<num.length();i++){
+            int orig = onum[i]-'0', news = change[orig];
+            if(orig<change[orig]){
+                onum[i]=(char)(change[orig]+'0');
+                ch=true;
+            }else if(orig==change[orig]&&ch){
+                onum[i]=(char)(change[orig]+'0');
+                ch=true;
+            }else if(ch)
+                break;
+        }
+        return new String(onum);
+    }
+}
