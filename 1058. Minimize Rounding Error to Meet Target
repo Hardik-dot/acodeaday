@@ -1,0 +1,32 @@
+class Solution {
+    HashMap<String, Double> dp;
+    private Double dfs(String[] p, int target, int i){
+        if(target<=0||i==p.length){
+            if(target==0&&i==p.length)
+                return 0.0;
+            return Double.MAX_VALUE;
+        }
+        String key = target+","+i;
+        if(dp.containsKey(key)) return dp.get(key);
+        Double curr = Double.parseDouble(p[i]);
+        
+        Double r1 = dfs(p,target-(int)Math.ceil(curr),i+1);
+        if(r1!=Double.MAX_VALUE)
+            r1+= Math.abs(Math.ceil(curr)-curr);
+        
+        Double r2 = dfs(p,target-(int)Math.floor(curr),i+1);
+        if(r2!=Double.MAX_VALUE)
+            r2+= Math.abs(Math.floor(curr)-curr);
+        
+        dp.put(key,Math.min(r1,r2));
+        return dp.get(key);
+    }
+    
+    public String minimizeError(String[] prices, int target) {
+            dp = new HashMap<String,Double>();
+        Double ans = dfs(prices,target,0);
+        if(ans!=Double.MAX_VALUE)
+            return String.format("%.3f",ans);
+        return "-1";
+    }
+}
