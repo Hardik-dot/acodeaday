@@ -1,0 +1,20 @@
+class Solution {
+    public int[][] insert(int[][] inv, int[] ninv) {
+        List<int[]> out = new ArrayList<>();
+        int i=0;
+        while(i<inv.length&&ninv[0]>inv[i][1])
+            out.add(inv[i++]);
+        
+        int ns=ninv[0],ne=ninv[1];
+        while(i<inv.length&&ninv[1]>=inv[i][0]){
+            ns=Math.min(ns,inv[i][0]);
+            ne=Math.max(ne,inv[i][1]);
+            i++;
+        }
+        
+        out.add(new int[]{ns,ne});
+        while(i<inv.length)
+            out.add(inv[i++]);
+        return out.toArray(new int[out.size()][2]);
+    }
+}
