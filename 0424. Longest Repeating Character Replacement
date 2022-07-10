@@ -1,0 +1,19 @@
+class Solution {
+    public int characterReplacement(String s, int k) {
+        int start=0,maxLen=0,maxf=0;
+        int[] charct = new int[26];
+        
+        for(int end=0;end<s.length();end++){
+            charct[s.charAt(end)-'A']++;
+            maxf=Math.max(maxf,charct[s.charAt(end)-'A']);
+            
+            while(end-start-maxf+1 > k){
+                charct[s.charAt(start)-'A']--;
+                start++;
+            }
+            maxLen = Math.max(maxLen, end-start+1);
+        }
+        
+        return maxLen;
+    }
+}
