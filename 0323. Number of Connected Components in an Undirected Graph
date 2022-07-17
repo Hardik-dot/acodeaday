@@ -1,0 +1,32 @@
+class Solution {
+    int[] parent;
+    private int find(int id){
+        if(parent[id]<0) return id;
+        return parent[id]=find(parent[id]);
+    }
+
+    private void union(int pa, int pb){
+        if(pa<=pb){
+            parent[pa]+=parent[pb];
+            parent[pb]=pa;
+        }else{
+            parent[pb]+=parent[pa];
+            parent[pa]=pb;
+        }
+    }
+    
+    public int countComponents(int n, int[][] edges) {    
+        parent = new int[n];
+        Arrays.fill(parent,-1);
+        for(int[] e:edges){
+            int pa=find(e[0]),pb=find(e[1]);
+            if(pa==pb&&pa!=-1) continue;
+            union(pa,pb);
+        }
+        int[] par = parent;
+        int ans=0;
+        for(int v:parent)
+            if(v<0) ans++;
+        return ans;
+    }
+}
