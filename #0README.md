@@ -5,3 +5,5 @@ https://leetcode.com/problems/validate-binary-search-tree/discuss/32112/Learn-on
 
 similar qs
 https://leetcode.com/problems/combination-sum/solution/
+
+Union find https://leetcode.com/tag/union-find/
