@@ -19,11 +19,31 @@ class Solution {
         return Math.min(dp[0],dp[1]);
     }
     
-    public int minCostClimbingStairs(int[] cost) {
+    public int minCostClimbingStairsOld(int[] cost) {
         int n = cost.length;
         dp=new int[n+1];
         //dp[n]=Math.min(auxrecur(n-1,cost),auxrecur(n-2,cost));
         return auxiter(n,cost);
+    }
+    
+    public int minCostClimbingStairs(int[] cost) {
+        int a=cost[0],b=cost[1],i=2,n=cost.length,c=0;
+        for(;i<n;i++){
+            c=Math.min(a,b)+cost[i];
+            a=b;b=c;
+        }
+        return Math.min(a,b);
+    }
+    
+    public int minCostClimbingStairsDP(int[] cost) {
+        Integer[] dp = new Integer[cost.length+1];
+        dp[0]=cost[0];
+        dp[1]=cost[1];
+        int i=2;
+        for(i=2;i<cost.length;i++)
+            dp[i]=Math.min(dp[i-1],dp[i-2])+cost[i];
+        
+        return Math.min(dp[i-1],dp[i-2]);
     }
        
 }
