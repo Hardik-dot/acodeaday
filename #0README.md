@@ -7,3 +7,4 @@ similar qs
 https://leetcode.com/problems/combination-sum/solution/
 
 Union find https://leetcode.com/tag/union-find/
+Topo sort https://leetcode.com/discuss/general-discussion/1078072/introduction-to-topological-sort
