@@ -1,0 +1,31 @@
+class Solution {
+    private boolean checkType(char s){
+        if(s>='0'&&s<='9') return true;
+        return false;
+    }
+    public String[] reorderLogFiles(String[] logs) {
+        PriorityQueue<String[]> pq = new PriorityQueue<>((a,b)->{
+            if(a[1].equals(b[1])) return a[0].compareTo(b[0]);
+            return a[1].compareTo(b[1]);
+        });
+        
+        LinkedList<String> dig = new LinkedList<>();
+        
+        for(String l:logs){
+            int ind1 = l.indexOf(" ");
+            String id=l.substring(0,ind1);
+            if(checkType(l.charAt(ind1+1)))
+                dig.add(l);
+            else 
+                pq.add(new String[]{id,l.substring(ind1+1)});
+        }
+        int i=0;
+        for(;i<logs.length&&!pq.isEmpty();i++)
+            logs[i]=pq.peek()[0]+" "+pq.poll()[1];
+        
+        for(int j=0;i<logs.length;i++,j++)
+            logs[i]=dig.get(j);
+        
+        return logs;
+    }
+}
