@@ -1,0 +1,27 @@
+class Solution {
+    public char[][] updateBoard(char[][] board, int[] click) {
+        int n=board.length,m=board[0].length;
+        int r=click[0],c=click[1];
+        int[][] dirs=new int[][]{{-1,0},{1,0},{0,-1},{0,1},{1,1},{1,-1},{-1,1},{-1,-1}};
+        
+        if(board[r][c]=='M'){
+            board[r][c]='X';
+        }else{
+            int mines=0;
+            for(int[] d:dirs){
+                int nr=r+d[0],nc=c+d[1];
+                if(nr>=0&&nc>=0&&nr<n&&nc<m&&(board[nr][nc]=='M'|| board[nr][nc] == 'X'))
+                    mines++;
+            }    
+            if(mines==0){
+                board[r][c]='B';
+                for(int[] d:dirs){
+                    int nr=r+d[0],nc=c+d[1];
+                    if(nr>=0&&nc>=0&&nr<n&&nc<m&&board[nr][nc] == 'E')
+                        board=updateBoard(board,new int[]{nr,nc});
+                } 
+            }else board[r][c]=(char)(mines+'0');
+        }
+        return board;
+    }
+}
