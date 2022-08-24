@@ -1,0 +1,41 @@
+class Solution {
+    public int candy(int[] ratings) {
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b)->a[0]-b[0]);
+        int[] candy=new int[ratings.length];
+        for(int i=0;i<ratings.length;i++)
+            pq.add(new int[]{ratings[i],i});
+        int ct=0;
+        
+        while(!pq.isEmpty()){
+            int[] pt=pq.poll();
+            int ind=pt[1],rat=pt[0];
+            int left=0,lrat=0,right=0,rrat=0;
+            if(ind==0){
+                lrat=rat;
+            }else{
+                left=candy[ind-1];
+                lrat=ratings[ind-1];
+            }
+            
+            if(ind==candy.length-1){
+                rrat=rat;
+            }else{
+                right=candy[ind+1];
+                rrat=ratings[ind+1];
+            }
+            
+
+            if(rat==lrat&&rat==rrat)
+                candy[ind]=1;
+            else if(rat==lrat)
+                candy[ind]=right+1;
+            else if(rat==rrat)
+                candy[ind]=left+1;
+            else 
+                candy[ind]=Math.max(left,right)+1;
+            
+            ct+=candy[ind];
+        }
+        return ct;
+    }
+}
