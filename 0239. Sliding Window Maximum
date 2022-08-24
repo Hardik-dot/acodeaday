@@ -1,0 +1,31 @@
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b)->b-a);
+        HashMap<Integer,Integer> hm = new HashMap<>();
+        int[] res=new int[nums.length-k+1];
+        
+        for(int i=0;i<k;i++)
+            pq.add(nums[i]);
+        res[0]=pq.peek();
+        
+        for(int i=k;i<nums.length;i++){
+            hm.put(nums[i-k],hm.getOrDefault(nums[i-k],0)+1);
+            
+            pq.add(nums[i]);
+            while(true){
+                int lval=pq.poll();
+                if(hm.containsKey(lval)){
+                    hm.put(lval,hm.get(lval)-1);
+                    if(hm.get(lval)==0)
+                        hm.remove(lval);
+                }else{
+                    pq.add(lval);
+                    break;
+                }
+            }
+            
+            res[i-k+1]=pq.peek();
+        }
+        return res;
+    }
+}
