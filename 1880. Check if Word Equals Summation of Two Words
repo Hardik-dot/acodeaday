@@ -1,0 +1,13 @@
+class Solution {
+    private int val(char[] w){
+        StringBuilder sb = new StringBuilder();
+        for(char c:w){
+            sb.append((int)(c-'a'));
+        }
+        return Integer.parseInt(sb.toString());
+    }
+    public boolean isSumEqual(String f, String s, String t) {
+        int a=val(f.toCharArray()),b=val(s.toCharArray()),c=val(t.toCharArray());
+        return (a+b)==c;
+    }
+}
