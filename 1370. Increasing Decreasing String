@@ -1,0 +1,31 @@
+class Solution {
+    int i=0;
+    private void update(PriorityQueue<int[]> min, PriorityQueue<int[]> max,char[] wrd){
+        while(!min.isEmpty()){
+            int[] pt=min.poll();
+            wrd[i++]=(char)pt[0];
+            pt[1]--;
+            if(pt[1]>0) max.add(pt);
+        }
+    }
+    public String sortString(String s) {
+        char[] wrd = s.toCharArray();
+        int[] freq = new int[26];
+        
+        PriorityQueue<int[]> min = new PriorityQueue<>((a,b)->a[0]-b[0]);
+        PriorityQueue<int[]> max = new PriorityQueue<>((a,b)->-a[0]+b[0]);
+        for(char c:wrd)
+            freq[c-'a']++;
+        
+        for(i=0;i<26;i++){
+            if(freq[i]!=0)
+                min.add(new int[]{i+'a',freq[i]});
+        }
+        i=0;
+        while(i<s.length()){
+            update(min,max,wrd);
+            update(max,min,wrd);
+        }
+        return new String(wrd);
+    }
+}
