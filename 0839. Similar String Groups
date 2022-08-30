@@ -1,0 +1,53 @@
+class Solution {
+    class UF{
+        int[] parent;
+        int ct;
+        UF(int n){
+            parent = new int[n];
+            for(int i=0;i<n;i++)
+                parent[i]=i;
+            ct=n;
+        }
+        
+        private int find(int x){
+            if(parent[x]==x) return x;
+            return parent[x]=find(parent[x]);
+        }
+        
+        protected void union(int a, int b){
+            int pa=find(a),pb=find(b);
+            if(pa!=pb){
+                parent[pa]=pb;
+                ct--;
+            }
+            
+        }
+    }
+    
+    private boolean similarity(String a, String b){
+        Character ac=null,bc=null;
+        for(int i=0;i<a.length();i++){
+            if(a.charAt(i)!=b.charAt(i)){
+                if(ac==null){
+                    ac=a.charAt(i);
+                    bc=b.charAt(i);
+                }else if(a.charAt(i)==bc&&b.charAt(i)==ac){
+                    ac='.';
+                }else
+                    return false;
+            }
+        }
+        return true;
+    }
+    
+    public int numSimilarGroups(String[] strs) {
+        UF uf = new UF(strs.length);
+        for(int i=0;i<strs.length;i++){
+            for(int j=i+1;j<strs.length;j++){
+                if(uf.find(i)!=uf.find(j)&&similarity(strs[i],strs[j]))
+                    uf.union(i,j);
+            }
+        }    
+        return uf.ct;
+    }
+}
