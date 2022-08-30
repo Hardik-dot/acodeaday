@@ -1,0 +1,17 @@
+class Solution {
+    public boolean canConstruct(String s, int k) {
+        char[] wrd = s.toCharArray();
+        int[] freq=new int[26];
+        int odd=0;
+        for(char c:wrd)
+            freq[c-'a']++;
+        for(int i:freq){
+            if(i%2!=0){
+                if(odd==k)
+                    return false;
+                odd++;
+            }
+        }
+        return odd<=k&&k<=s.length();
+    }
+}
