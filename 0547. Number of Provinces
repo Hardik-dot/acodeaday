@@ -1,0 +1,36 @@
+class Solution {
+    class UF{
+        int[] parent;
+        int size;
+        UF(int n){
+            size=n;
+            parent = new int[n];
+            for(int i=0;i<n;i++)
+                parent[i]=i;
+        }
+        
+        private int find(int x){
+            if(x==parent[x]) return x;
+            return parent[x]=find(parent[x]);
+        }
+        
+        protected void union(int a, int b){
+            int pa=find(a), pb=find(b);
+            if(pa!=pb){
+                parent[pa]=pb;
+                size--;
+            }
+            
+        }
+    }
+    public int findCircleNum(int[][] ic) {
+        UF uf = new UF(ic.length);
+        for(int i=0;i<ic.length;i++){
+            for(int j=i+1;j<ic.length;j++){
+                if(ic[i][j]==1)
+                uf.union(i,j);
+            }
+        }
+        return uf.size;
+    }
+}
