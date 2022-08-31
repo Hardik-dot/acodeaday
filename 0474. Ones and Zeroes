@@ -1,26 +1,35 @@
 class Solution {
-    Integer dp[][][];
-    public int helper(int[][] enc, int m, int n, int ind){
+    int[][] enc;
+    Integer[][][] dp;
+    private int aux(int ind, int one, int zero){
         if(ind==enc.length) return 0;
-        if(dp[ind][m][n]==null){
-            int a=-1;
-            if(m-enc[ind][0]>=0&&n-enc[ind][1]>=0)
-                a = helper(enc,m-enc[ind][0],n-enc[ind][1],ind+1)+1;
-            int b = helper(enc,m,n,ind+1);
-            dp[ind][m][n]= Math.max(a,b);
+        if(dp[ind][zero][one]==null){
+            int keep=-1;
+            if(zero-enc[ind][0]>=0&&one-enc[ind][1]>=0)
+                keep=aux(ind+1,one-enc[ind][1],zero-enc[ind][0])+1;
+            int avoid = aux(ind+1,one,zero);
+            dp[ind][zero][one]=Math.max(keep,avoid);
         }
-        return dp[ind][m][n];
+        return dp[ind][zero][one];
     }
-    
     public int findMaxForm(String[] strs, int m, int n) {
-        int[][] enc = new int[strs.length][2];
-        dp=new Integer[strs.length][m+1][n+1];
-        int i=0;
-        for(String s:strs){
-            for(char c:s.toCharArray())
+        enc=new int[strs.length][2];
+        dp = new Integer[strs.length][m+1][n+1];
+        for(int i=0;i<strs.length;i++){
+            for(char c:strs[i].toCharArray()){
                 enc[i][c-'0']++;
-            i++;
+            }
         }
-        return helper(enc,m,n,0);
+        
+        int[][] store = new int[m+1][n+1];
+        for(int k=0;k<strs.length;k++){
+            for(int i=m;i>=enc[k][0];i--){
+                for(int j=n;j>=enc[k][1];j--){
+                    store[i][j]=Math.max(store[i-enc[k][0]][j-enc[k][1]]+1,store[i][j]);
+                }
+            }
+        }
+        return store[m][n];
+        //return aux(0,n,m);
     }
 }
