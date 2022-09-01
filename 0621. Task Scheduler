@@ -1,0 +1,51 @@
+class Solution {
+    public int leastInterval(char[] tasks, int n) {
+        HashMap<Character, Integer> hm = new HashMap<>();
+        for(char c:tasks){
+            hm.put(c,hm.getOrDefault(c,0)+1);
+        }
+        
+        PriorityQueue<Integer> pq =new PriorityQueue<>((a,b)->b-a);
+        HashMap<Integer, Integer> cd = new HashMap<>();
+        pq.addAll(hm.values());
+        int ans=0;
+        while(!pq.isEmpty()||!cd.isEmpty()){
+            if(cd.containsKey(ans)){
+                pq.offer(cd.remove(ans));
+            }
+            if(!pq.isEmpty()){
+                int v=pq.poll()-1;
+                if(v>0)
+                    cd.put(ans+n+1,v);
+            }
+            ans++;
+        }
+        return ans;
+    }
+    
+    public int leastInterval_HM_PQ(char[] tasks, int n) {
+        HashMap<Character, Integer> hm = new HashMap<>();
+        for(char c:tasks){
+            hm.put(c,hm.getOrDefault(c,0)+1);
+        }
+        
+        PriorityQueue<Integer> pq =new PriorityQueue<>((a,b)->b-a);
+        pq.addAll(hm.values());
+        int ans=0;
+        
+        while(!pq.isEmpty()){
+            LinkedList<Integer> temp=new LinkedList<>();
+            int k=n+1;
+            while(k>0&&!pq.isEmpty()){
+                int currTask = pq.poll()-1;
+                if(currTask>0)
+                    temp.add(currTask);
+                ans++;k--;
+            }
+            if(temp.size()>0)
+                ans+=k;
+            pq.addAll(temp);
+        }
+        return ans;
+    }
+}
