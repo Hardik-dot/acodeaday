@@ -1,0 +1,13 @@
+class Solution {
+    public boolean judgeSquareSum(int c) {
+        long end=(long)Math.sqrt(c)+1,start=0L;
+        while(start<=end){
+            long val=start*start+end*end;
+            if(val==c) return true;
+            if(val<c)
+                start++;
+            else end--;
+        }
+        return false;
+    }
+}
