@@ -1,0 +1,22 @@
+class Solution {
+    public String frequencySort(String s) {
+        HashMap<Integer, Integer> freqmap = new HashMap<>();
+        for(char c:s.toCharArray())
+            freqmap.put(c-'a',freqmap.getOrDefault(c-'a',0)+1);    
+        
+        PriorityQueue<int[]> maxheap = new PriorityQueue<>((a,b)->b[0]-a[0]);
+        
+        for(Map.Entry<Integer, Integer> e:freqmap.entrySet()){
+            maxheap.add(new int[]{e.getValue(),e.getKey()});
+        }
+        char[] ans=new char[s.length()];
+        int j=0;
+        while(!maxheap.isEmpty()){
+            int[] pt=maxheap.poll();
+            for(int i=0;i<pt[0];i++)
+                ans[j++]=(char)(pt[1]+'a');
+        }
+            
+        return new String(ans);
+    }
+}
