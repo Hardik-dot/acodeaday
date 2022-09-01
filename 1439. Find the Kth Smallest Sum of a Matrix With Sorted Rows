@@ -1,0 +1,21 @@
+class Solution {
+    public int kthSmallest(int[][] mat, int k) {
+        int n=mat.length,m=mat[0].length;
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b)->b-a);
+        pq.add(0);
+        for(int i=0;i<n;i++){
+            PriorityQueue<Integer> temp = new PriorityQueue<>((a,b)->b-a);
+            while(!pq.isEmpty()){
+                int v=pq.poll();
+                for(int j=0;j<m;j++){
+                    temp.add(v+mat[i][j]);
+                    if(temp.size()>k) temp.poll();
+                }
+            }
+            pq=temp;
+        }
+        
+        while(pq.size()>k) pq.poll();
+        return pq.peek();
+    }
+}
