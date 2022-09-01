@@ -1,0 +1,50 @@
+class Solution {
+    private int firstDecr(char[] inp){
+        int i=inp.length-2;
+        while(i>=0){
+            if(inp[i]<inp[i+1])
+                break;
+            i--;
+        }
+        return i;
+    }
+    
+    private int closestEle(char[] inp, int start){
+        int ele=start+1, ind=start+1;
+        while(ind<inp.length){
+            if(inp[ind]>inp[start]&&inp[ind]<=inp[ele])
+                ele=ind;
+            ind++;
+        }
+        return ele;
+    }
+    
+    private void swap(char[] inp, int i, int j){
+        char x=inp[i];
+        inp[i]=inp[j];
+        inp[j]=x;
+    }
+    
+    private void reverse(char[] inp, int start){
+        int end=inp.length-1;
+        while(start<end){
+            swap(inp,start,end);
+            start++;end--;
+        }
+    }
+    
+    public int nextGreaterElement(int n) {
+        char[] inp = (n+"").toCharArray();
+        int i=firstDecr(inp);
+        if(i<0) return -1;
+        int j=closestEle(inp,i);
+        swap(inp,i,j);
+        reverse(inp,i+1);
+        
+        try {
+            return Integer.parseInt(new String(inp));
+        } catch (Exception e) {
+            return -1;
+        }
+    }
+}
