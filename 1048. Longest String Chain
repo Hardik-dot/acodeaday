@@ -1,39 +1,44 @@
 class Solution {
-    int res[];
-    int dp[][];
-    public int compa(String a, String b){
-        for(int i=0;i<b.length();i++){
-            String sb= b.substring(0,i)+b.substring(i+1,b.length());
-            if(a.equals(sb))
-                return 1;
+    HashMap<String, Integer> hm = new HashMap<>();
+    private List<List<String>> groupByLength(String[] words){
+        List<List<String>> groups = new ArrayList<>();
+        for(String w:words){
+            while(groups.size()<=w.length())
+                groups.add(new ArrayList<>());
+            groups.get(w.length()).add(w);
         }
-        return -1;
+        return groups;
     }
     
-    public int aux(int ix,String[] words){
-        int v=0;
-        if(res[ix]!=0)
-            return res[ix];
-        for(int i=ix+1;i<words.length;i++){
-            if(words[i].length()-words[ix].length()>1)
-                break;
-            if(dp[ix][i]==0)
-                dp[ix][i]=compa(words[ix],words[i]);
-            if(dp[ix][i]==1)
-                v=Math.max(v,aux(i,words)+1);
+    private boolean pred(String small, String big) {
+        int off=0,i=0;
+        for(;i<small.length()&&off<=1;i++){
+            if(small.charAt(i)!=big.charAt(i+off)){
+                off++;i--;}
         }
-        res[ix]=v;
-        return v;
+        return i==small.length();
+    }
+    
+    private int dfs(List<List<String>> groups, String curr){
+        if(!hm.containsKey(curr)){
+            int ans=0;
+            if(curr.length()<groups.size()){
+                for(String s:groups.get(curr.length()+1)){
+                    if(pred(curr,s))
+                        ans=Math.max(ans,dfs(groups,s));
+                }
+            }
+            hm.put(curr,ans+1);
+        }
+        return hm.get(curr);
     }
     
     public int longestStrChain(String[] words) {
-        Arrays.sort(words,(a,b)->(a.length()-b.length()));
-        dp=new int[words.length][words.length];
-        res=new int[words.length];
-        int v=1;
-        for(int i=0;i<words.length;i++)
-            v=Math.max(aux(i,words)+1,v);
-        
-        return v;
+        List<List<String>> groups = groupByLength(words);
+        groups.add(new ArrayList<>());
+        int ans=0;
+        for(String s:words)
+            ans=Math.max(ans,dfs(groups,s));
+        return ans;
     }
 }
