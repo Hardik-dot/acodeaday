@@ -1,0 +1,32 @@
+class Solution {
+    //HashMap<Integer, List<StringBuilder>> hm;
+    private List<StringBuilder> dfs(String s,HashSet<String> wd, int ind) {
+        if(ind==s.length())
+            return Arrays.asList(new StringBuilder(""));
+        //if(hm.containsKey(ind)) return hm.get(ind);
+        
+        List<StringBuilder> nxt=new ArrayList<>();
+        for(int i=ind;i<s.length();i++){
+            if(wd.contains(s.substring(ind,i+1))){
+                List<StringBuilder> values = dfs(s,wd,i+1);
+                for(StringBuilder sb:values){
+                    sb.insert(0,s.substring(ind,i+1)+" ");
+                    nxt.add(sb);
+                }
+            }
+        }
+        //hm.put(ind,nxt);
+        return nxt;
+    }
+    
+    public List<String> wordBreak(String s, List<String> wd) {
+        //hm=new HashMap<>();
+        List<StringBuilder> tm =dfs(s,new HashSet<>(wd),0);
+        List<String> ans = new ArrayList<>();
+        for(StringBuilder c:tm){
+             c=c.deleteCharAt(c.length()-1);
+            ans.add(c.toString());
+        }
+        return ans;
+    }
+}
