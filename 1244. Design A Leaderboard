@@ -1,0 +1,51 @@
+class Leaderboard {
+    PriorityQueue<int[]> pq;
+    HashMap<Integer, Integer> hm;
+    HashMap<Integer, Integer> time;
+    int t=0;
+    public Leaderboard() {
+        pq=new PriorityQueue<>((a,b)->b[1]-a[1]);
+        hm=new HashMap<>();
+        time=new HashMap<>();
+    }
+    
+    public void addScore(int pid, int score) {
+        score+=hm.getOrDefault(pid,0);
+        if(!time.containsKey(pid))
+            time.put(pid,t);
+        hm.put(pid,score);
+        pq.add(new int[]{pid,score,t});
+        t++;
+    }
+    
+    public int top(int K) {
+        HashSet<Integer> vis = new HashSet<>();
+        Queue<int[]> q = new LinkedList<>();
+        PriorityQueue<int[]> pre=pq;
+        int score=0;
+        while(K>0){
+            int[] stat = pq.poll();
+            if(vis.contains(stat[0])||!hm.containsKey(stat[0])||stat[2]<time.get(stat[0]))
+                continue;
+            vis.add(stat[0]);
+            score+=stat[1];
+            q.add(stat);
+            K--;
+        }
+        pq.addAll(q);
+        return score;
+    }
+    
+    public void reset(int playerId) {
+        hm.remove(playerId);
+        time.remove(playerId);t++;
+    }
+}
+
+/**
+ * Your Leaderboard object will be instantiated and called as such:
+ * Leaderboard obj = new Leaderboard();
+ * obj.addScore(playerId,score);
+ * int param_2 = obj.top(K);
+ * obj.reset(playerId);
+ */
