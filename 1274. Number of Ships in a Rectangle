@@ -1,0 +1,29 @@
+/**
+ * // This is Sea's API interface.
+ * // You should not implement it, or speculate about its implementation
+ * class Sea {
+ *     public boolean hasShips(int[] topRight, int[] bottomLeft);
+ * }
+ */
+
+class Solution {
+    public int countShips(Sea sea, int[] topRight, int[] bottomLeft) {
+        if(!sea.hasShips(topRight,bottomLeft)) 
+            return 0;
+        
+        int blx=bottomLeft[0],bly=bottomLeft[1];
+        int trx=topRight[0],tryy=topRight[1];
+        
+        int mx = (trx+blx)/2, my=(tryy+bly)/2,ans=0;
+        
+        if(blx==trx&&bly==tryy)
+            return 1;
+        
+        ans+=countShips(sea, new int[]{mx,my}, new int[]{blx,bly});
+        ans+=countShips(sea, new int[]{trx,tryy}, new int[]{mx+1,my+1});
+        
+        ans+=countShips(sea, new int[]{mx,tryy}, new int[]{blx,my+1});
+        ans+=countShips(sea, new int[]{trx,my}, new int[]{mx+1,bly});
+        return ans;
+    }
+}
