@@ -1,0 +1,52 @@
+class Solution {
+    private boolean crush(int[][] board) {
+        int n=board.length,m=board[0].length;
+        boolean fl=false;
+        for(int i=n-1;i>=0;i--){
+            for(int j=0;j<m;j++){
+                if(board[i][j]==0) continue;
+                if(j+2<m&&Math.abs(board[i][j])==Math.abs(board[i][j+1])&&Math.abs(board[i][j+1])==Math.abs(board[i][j+2])){
+                    //int v=Math.abs(board[i][j]);
+                    board[i][j]=board[i][j+1]=board[i][j+2]=Math.abs(board[i][j])*-1;
+                    fl=true;
+                    //while(j<m&&Math.abs(board[i][j])==v)
+                        //board[i][j++]=v*-1;
+                }
+            }
+        }
+        
+        
+        for(int j=0;j<m;j++){
+            for(int i=n-1;i>=0;i--){
+                if(board[i][j]==0) continue;
+                if(i-2>=0&&Math.abs(board[i][j])==Math.abs(board[i-1][j])&&Math.abs(board[i][j])==Math.abs(board[i-2][j])){
+                    //int v=Math.abs(board[i][j]);
+                    fl=true;
+                    board[i][j]=board[i-1][j]=board[i-2][j]=Math.abs(board[i][j])*-1;
+                    //while(i>=0&&Math.abs(board[i][j])==v)
+                        //board[i--][j]=v*-1;
+                }   
+            }
+        }
+        return fl;
+    }
+    
+    public int[][] candyCrush(int[][] board) {
+        int n=board.length,m=board[0].length;
+        if(!crush(board))
+            return board;
+        
+        for(int j=0;j<m;j++){
+            int slow=n-1;
+            for(int i=n-1;i>=0;i--){
+                if(board[i][j]>0)
+                    board[slow--][j]=board[i][j];
+            }
+            
+            while(slow>=0)
+                board[slow--][j]=0;
+        }
+        
+        return candyCrush(board);
+    }
+}
